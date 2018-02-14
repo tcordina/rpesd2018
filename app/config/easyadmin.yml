@@ -1,0 +1,19 @@
+easy_admin:
+    site_name: 'ProjetS4'
+    formats:
+        date: 'd/m/Y'
+        time: 'H:i'
+        datetime: 'd/m/Y H:i:s'
+    entities:
+        UserAdmin:
+            class: AppBundle\Entity\UserAdmin
+            list:
+                fields: ['id', 'username', 'email', 'enabled', 'last_login', 'roles', 'imageName']
+            form:
+                fields: ['username', 'email', 'roles', { property: 'imageFile', type: 'vich_image' }]
+            disabled_actions: ['new']
+        Carte:
+          class: AppBundle\Entity\Carte
+    design:
+        menu: [{ label: 'Website home', route: 'homepage' }, 'UserAdmin', 'Carte']
+        brand_color: '#333333'
