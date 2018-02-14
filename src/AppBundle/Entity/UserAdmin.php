@@ -29,7 +29,7 @@ class UserAdmin extends BaseUser
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      * @var string
      */
-    protected $imageName;
+    protected $imageName = 'default_profile.png';
 
     /**
      * @Assert\File(
@@ -42,7 +42,7 @@ class UserAdmin extends BaseUser
     protected $imageFile;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $updatedAt;
