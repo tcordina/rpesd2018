@@ -78,6 +78,9 @@ fos_user:
         sender_name: "%mailer_user%"
     service:
         mailer: fos_user.mailer.twig_swift
+    profile:
+        form:
+            type: AppBundle\Form\ProfileType
 
 vich_uploader:
     db_driver: orm
