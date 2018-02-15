@@ -3,5 +3,9 @@
 <div class="container fos_user_user_show">
     <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <img width="150px" src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="Photo de profile de {{ user.username }}">
+    {% if user.imageName is empty %}
+        <img src="{{ gravatar(user.email) }}" />
+    {% else %}
+        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="photo de {{ user.username }}" width="150px">
+    {% endif %}
 </div>

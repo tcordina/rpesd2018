@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Partie</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ partie.id }}</td>
+            </tr>
+            <tr>
+                <th>Mainj1</th>
+                <td>{{ partie.mainJ1 }}</td>
+            </tr>
+            <tr>
+                <th>Mainj2</th>
+                <td>{{ partie.mainJ2 }}</td>
+            </tr>
+            <tr>
+                <th>Tourjoueurid</th>
+                <td>{{ partie.tourJoueurId }}</td>
+            </tr>
+            <tr>
+                <th>Compteuractionstour</th>
+                <td>{{ partie.compteurActionsTour }}</td>
+            </tr>
+            <tr>
+                <th>Pioche</th>
+                <td>{{ partie.pioche }}</td>
+            </tr>
+            <tr>
+                <th>Plateauj1</th>
+                <td>{{ partie.plateauJ1 }}</td>
+            </tr>
+            <tr>
+                <th>Plateauj2</th>
+                <td>{{ partie.plateauJ2 }}</td>
+            </tr>
+            <tr>
+                <th>Defausse</th>
+                <td>{{ partie.defausse }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Scorej1</th>
+                <td>{{ partie.scoreJ1 }}</td>
+            </tr>
+            <tr>
+                <th>Scorej2</th>
+                <td>{{ partie.scoreJ2 }}</td>
+            </tr>
+            <tr>
+                <th>Ended</th>
+                <td>{% if partie.ended %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('partie_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('partie_edit', { 'id': partie.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

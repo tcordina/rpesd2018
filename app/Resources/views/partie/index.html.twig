@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Parties list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Mainj1</th>
+                <th>Mainj2</th>
+                <th>Tourjoueurid</th>
+                <th>Compteuractionstour</th>
+                <th>Pioche</th>
+                <th>Plateauj1</th>
+                <th>Plateauj2</th>
+                <th>Defausse</th>
+                <th>Createdat</th>
+                <th>Scorej1</th>
+                <th>Scorej2</th>
+                <th>Ended</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partie in parties %}
+            <tr>
+                <td><a href="{{ path('partie_show', { 'id': partie.id }) }}">{{ partie.id }}</a></td>
+                <td>{{ partie.mainJ1 }}</td>
+                <td>{{ partie.mainJ2 }}</td>
+                <td>{{ partie.tourJoueurId }}</td>
+                <td>{{ partie.compteurActionsTour }}</td>
+                <td>{{ partie.pioche }}</td>
+                <td>{{ partie.plateauJ1 }}</td>
+                <td>{{ partie.plateauJ2 }}</td>
+                <td>{{ partie.defausse }}</td>
+                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ partie.scoreJ1 }}</td>
+                <td>{{ partie.scoreJ2 }}</td>
+                <td>{% if partie.ended %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('partie_show', { 'id': partie.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('partie_edit', { 'id': partie.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('partie_new') }}">Create a new partie</a>
+        </li>
+    </ul>
+{% endblock %}

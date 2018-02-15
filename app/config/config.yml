@@ -90,5 +90,6 @@ vich_uploader:
             upload_destination: '%kernel.root_dir%/../web/uploads/images/profile'
 
 ornicar_gravatar:
+    rating: g
     size: 150
-    default: '/uploads/images/profile/default_profile.png'
+    default: retro

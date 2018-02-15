@@ -29,7 +29,7 @@ class UserAdmin extends BaseUser
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      * @var string
      */
-    protected $imageName = 'default_profile.png';
+    protected $imageName;
 
     /**
      * @Assert\File(
