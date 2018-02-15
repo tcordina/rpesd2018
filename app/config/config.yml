@@ -88,3 +88,7 @@ vich_uploader:
         profile_images:
             uri_prefix: '%app.path.profile_images%'
             upload_destination: '%kernel.root_dir%/../web/uploads/images/profile'
+
+ornicar_gravatar:
+    size: 150
+    default: '/uploads/images/profile/default_profile.png'

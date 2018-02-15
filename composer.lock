@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "755b0c3c29d1a67010331f977a390ffe",
+    "content-hash": "80a4607d87d4af4aedf307dc99f1647d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1282,6 +1282,70 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
+        },
+        {
+            "name": "ornicar/gravatar-bundle",
+            "version": "1.2.0",
+            "target-dir": "Ornicar/GravatarBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/henrikbjorn/GravatarBundle.git",
+                "reference": "87c866dc369a502f25b3fe206e9190ee3111eb57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/henrikbjorn/GravatarBundle/zipball/87c866dc369a502f25b3fe206e9190ee3111eb57",
+                "reference": "87c866dc369a502f25b3fe206e9190ee3111eb57",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/framework-bundle": "~4.0|~3.0|~2.0",
+                "symfony/templating": "~4.0|~3.0|~2.0"
+            },
+            "conflict": {
+                "twig/twig": "<1.12"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7",
+                "twig/extensions": "1.0.*"
+            },
+            "suggest": {
+                "twig/twig": "For gravatar twig extension usage"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Ornicar\\GravatarBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com"
+                },
+                {
+                    "name": "Henrik Bjørnskov",
+                    "email": "henrik@bjrnskov.dk"
+                }
+            ],
+            "description": "This bundles provides a Gravatar API various utilities to work with it in templates",
+            "keywords": [
+                "Symfony2",
+                "gravatar",
+                "templating",
+                "twig"
+            ],
+            "time": "2018-01-04T11:15:27+00:00"
         },
         {
             "name": "pagerfanta/pagerfanta",

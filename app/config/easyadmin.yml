@@ -8,12 +8,19 @@ easy_admin:
         UserAdmin:
             class: AppBundle\Entity\UserAdmin
             list:
-                fields: ['id', 'username', 'email', 'enabled', 'last_login', 'roles', 'imageName']
+                fields: ['id', 'username', 'email', 'enabled', 'last_login', 'roles', 'imageName', 'updatedAt']
             form:
                 fields: ['username', 'email', 'roles', { property: 'imageFile', type: 'vich_image' }]
             disabled_actions: ['new']
         Carte:
           class: AppBundle\Entity\Carte
+          list:
+              fields: ['type', 'valeur', 'imageName', 'updatedAt']
+          form:
+              fields: ['type', 'valeur', { property: 'imageFile', type: 'vich_image' }]
     design:
-        menu: [{ label: 'Website home', route: 'homepage' }, 'UserAdmin', 'Carte']
+        menu:
+            - { label: 'Accueil', route: 'homepage', icon: 'home' }
+            - { entity: 'UserAdmin', label: 'Utilisateurs', icon: 'user' }
+            - { entity: 'Carte', label: 'Cartes', icon: 'th-large' }
         brand_color: '#333333'
