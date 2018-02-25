@@ -6,6 +6,6 @@
     {% if user.imageName is empty %}
         <img src="{{ gravatar(user.email) }}" />
     {% else %}
-        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="photo de {{ user.username }}" width="150px">
+        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" width="150px">
     {% endif %}
 </div>

@@ -3,18 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * UserAdmin
+ * Objectif
  *
- * @ORM\Table(name="user_admin")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserAdminRepository")
- * @Vich\Uploadable
+ * @ORM\Table(name="objectif")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectifRepository")
  */
-class UserAdmin extends BaseUser
+class Objectif
 {
     /**
      * @var int
@@ -23,7 +22,14 @@ class UserAdmin extends BaseUser
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Valeur", type="integer")
+     */
+    private $valeur;
 
     /**
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
@@ -42,10 +48,11 @@ class UserAdmin extends BaseUser
     protected $imageFile;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $updatedAt;
+
 
     /**
      * Get id
@@ -58,27 +65,27 @@ class UserAdmin extends BaseUser
     }
 
     /**
-     * @param File|null $image
+     * Set valeur
+     *
+     * @param integer $valeur
+     *
+     * @return Objectif
      */
-    public function setImageFile(File $image = null)
+    public function setValeur($valeur)
     {
-        $this->imageFile = $image;
+        $this->valeur = $valeur;
 
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
+        return $this;
     }
 
     /**
-     * @return File
+     * Get valeur
+     *
+     * @return int
      */
-    public function getImageFile()
+    public function getValeur()
     {
-        return $this->imageFile;
+        return $this->valeur;
     }
 
     /**
@@ -86,7 +93,7 @@ class UserAdmin extends BaseUser
      *
      * @param string $imageName
      *
-     * @return UserAdmin
+     * @return Objectif
      */
     public function setImageName($imageName)
     {
@@ -110,7 +117,7 @@ class UserAdmin extends BaseUser
      *
      * @param \DateTime $updatedAt
      *
-     * @return UserAdmin
+     * @return Objectif
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -127,5 +134,29 @@ class UserAdmin extends BaseUser
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set posJeton
+     *
+     * @param integer $posJeton
+     *
+     * @return Objectif
+     */
+    public function setPosJeton($posJeton)
+    {
+        $this->posJeton = $posJeton;
+
+        return $this;
+    }
+
+    /**
+     * Get posJeton
+     *
+     * @return integer
+     */
+    public function getPosJeton()
+    {
+        return $this->posJeton;
     }
 }

@@ -26,6 +26,15 @@ class UserAdmin extends BaseUser
     protected $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="Joueur1")
+     */
+    private $parties1;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="Joueur2")
+     */
+    private $parties2;
+
+    /**
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      * @var string
      */
@@ -127,5 +136,73 @@ class UserAdmin extends BaseUser
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add parties1
+     *
+     * @param \AppBundle\Entity\Partie $parties1
+     *
+     * @return UserAdmin
+     */
+    public function addParties1(\AppBundle\Entity\Partie $parties1)
+    {
+        $this->parties1[] = $parties1;
+
+        return $this;
+    }
+
+    /**
+     * Remove parties1
+     *
+     * @param \AppBundle\Entity\Partie $parties1
+     */
+    public function removeParties1(\AppBundle\Entity\Partie $parties1)
+    {
+        $this->parties1->removeElement($parties1);
+    }
+
+    /**
+     * Get parties1
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParties1()
+    {
+        return $this->parties1;
+    }
+
+    /**
+     * Add parties2
+     *
+     * @param \AppBundle\Entity\Partie $parties2
+     *
+     * @return UserAdmin
+     */
+    public function addParties2(\AppBundle\Entity\Partie $parties2)
+    {
+        $this->parties2[] = $parties2;
+
+        return $this;
+    }
+
+    /**
+     * Remove parties2
+     *
+     * @param \AppBundle\Entity\Partie $parties2
+     */
+    public function removeParties2(\AppBundle\Entity\Partie $parties2)
+    {
+        $this->parties2->removeElement($parties2);
+    }
+
+    /**
+     * Get parties2
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParties2()
+    {
+        return $this->parties2;
     }
 }

@@ -3,18 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Carte
+ * Objectif
  *
- * @ORM\Table(name="carte")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CarteRepository")
- * @Vich\Uploadable
+ * @ORM\Table(name="objectif")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectifRepository")
  */
-class Carte
+class Objectif
 {
     /**
      * @var int
@@ -28,27 +27,19 @@ class Carte
     /**
      * @var int
      *
-     * @ORM\Column(name="valeur", type="integer")
+     * @ORM\Column(name="Valeur", type="integer")
      */
     private $valeur;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="objectif", type="integer")
-     */
-    private $objectif;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
+     * @var string
      */
-    private $imageName;
+    protected $imageName;
 
     /**
      * @Assert\File(
-     *     maxSize="5M",
+     *     maxSize="1M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
      * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")
@@ -78,7 +69,7 @@ class Carte
      *
      * @param integer $valeur
      *
-     * @return Carte
+     * @return Objectif
      */
     public function setValeur($valeur)
     {
@@ -98,11 +89,11 @@ class Carte
     }
 
     /**
-     * Set image
+     * Set imageName
      *
-     * @param string $image
+     * @param string $imageName
      *
-     * @return Carte
+     * @return Objectif
      */
     public function setImageName($imageName)
     {
@@ -112,7 +103,7 @@ class Carte
     }
 
     /**
-     * Get image
+     * Get imageName
      *
      * @return string
      */
@@ -122,35 +113,11 @@ class Carte
     }
 
     /**
-     * @param File|null $image
-     */
-    public function setImageFile(File $image = null)
-    {
-        $this->imageFile = $image;
-
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    /**
-     * @return File
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
      *
-     * @return Carte
+     * @return Objectif
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -170,26 +137,26 @@ class Carte
     }
 
     /**
-     * Set objectif
+     * Set posJeton
      *
-     * @param integer $objectif
+     * @param integer $posJeton
      *
-     * @return Carte
+     * @return Objectif
      */
-    public function setObjectif($objectif)
+    public function setPosJeton($posJeton)
     {
-        $this->objectif = $objectif;
+        $this->posJeton = $posJeton;
 
         return $this;
     }
 
     /**
-     * Get objectif
+     * Get posJeton
      *
      * @return integer
      */
-    public function getObjectif()
+    public function getPosJeton()
     {
-        return $this->objectif;
+        return $this->posJeton;
     }
 }

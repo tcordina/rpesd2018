@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -11,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="carte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CarteRepository")
+ * @Vich\Uploadable
  */
 class Carte
 {
@@ -24,18 +26,18 @@ class Carte
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="valeur", type="integer")
      */
     private $valeur;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="objectif", type="integer")
+     */
+    private $objectif;
 
     /**
      * @var string
@@ -46,7 +48,7 @@ class Carte
 
     /**
      * @Assert\File(
-     *     maxSize="1M",
+     *     maxSize="5M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
      * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")
@@ -69,30 +71,6 @@ class Carte
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Carte
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -142,5 +120,52 @@ class Carte
     {
         return $this->imageName;
     }
-}
 
+    /**
+     * @param File|null $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Carte
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+}

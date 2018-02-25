@@ -10,6 +10,14 @@
                 <td>{{ partie.id }}</td>
             </tr>
             <tr>
+                <th>Joueur1</th>
+                <td>{{ partie.joueur1 }}</td>
+            </tr>
+            <tr>
+                <th>Joueur2</th>
+                <td>{{ partie.joueur2 }}</td>
+            </tr>
+            <tr>
                 <th>Mainj1</th>
                 <td>{{ partie.mainJ1 }}</td>
             </tr>
@@ -18,44 +26,44 @@
                 <td>{{ partie.mainJ2 }}</td>
             </tr>
             <tr>
-                <th>Tourjoueurid</th>
-                <td>{{ partie.tourJoueurId }}</td>
-            </tr>
-            <tr>
-                <th>Compteuractionstour</th>
-                <td>{{ partie.compteurActionsTour }}</td>
-            </tr>
-            <tr>
                 <th>Pioche</th>
                 <td>{{ partie.pioche }}</td>
             </tr>
             <tr>
-                <th>Plateauj1</th>
-                <td>{{ partie.plateauJ1 }}</td>
+                <th>Cartesjouees</th>
+                <td>{{ partie.cartesJouees }}</td>
             </tr>
             <tr>
-                <th>Plateauj2</th>
-                <td>{{ partie.plateauJ2 }}</td>
+                <th>Objectifs</th>
+                <td>{{ partie.objectifs }}</td>
             </tr>
             <tr>
-                <th>Defausse</th>
-                <td>{{ partie.defausse }}</td>
+                <th>Pointsj1</th>
+                <td>{{ partie.pointsJ1 }}</td>
             </tr>
             <tr>
-                <th>Createdat</th>
-                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <th>Pointsj2</th>
+                <td>{{ partie.pointsJ2 }}</td>
             </tr>
             <tr>
-                <th>Scorej1</th>
-                <td>{{ partie.scoreJ1 }}</td>
+                <th>Actionsj1</th>
+                <td>{{ partie.actionsJ1 }}</td>
             </tr>
             <tr>
-                <th>Scorej2</th>
-                <td>{{ partie.scoreJ2 }}</td>
+                <th>Actionsj2</th>
+                <td>{{ partie.actionsJ2 }}</td>
+            </tr>
+            <tr>
+                <th>Tourjoueurid</th>
+                <td>{{ partie.tourJoueurId }}</td>
             </tr>
             <tr>
                 <th>Ended</th>
                 <td>{% if partie.ended %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>
     </table>

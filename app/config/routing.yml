@@ -1,3 +1,11 @@
+app_partie:
+    resource: "@AppBundle/Controller/PartieController.php"
+    type:     annotation
+
+app_objectif:
+    resource: "@AppBundle/Controller/ObjectifController.php"
+    type:     annotation
+
 app_carte:
     resource: "@AppBundle/Controller/CarteController.php"
     type:     annotation
