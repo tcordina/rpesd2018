@@ -83,9 +83,20 @@ class PartieController extends Controller
             $partie->setJetons(json_encode($t));
 
             $t = array(
-                'j1' => $actions,
-                'j2' => $actions
+                'j1' => [],
+                'j2' => []
             );
+            foreach ($actions as $act){
+                $t['j1'][$act->getId()-1]['id'] = $act->getId();
+                $t['j1'][$act->getId()-1]['nom'] = $act->getNom();
+                $t['j1'][$act->getId()-1]['jouee'] = $act->getJouee();
+                $t['j1'][$act->getId()-1]['cartes'] = $act->getCartes();
+                $t['j2'][$act->getId()-1]['id'] = $act->getId();
+                $t['j2'][$act->getId()-1]['nom'] = $act->getNom();
+                $t['j2'][$act->getId()-1]['jouee'] = $act->getJouee();
+                $t['j2'][$act->getId()-1]['cartes'] = $act->getCartes();
+            }
+            //die(var_dump($t, json_encode($t)));
             $partie->setActions(json_encode($t));
 
             $em = $this->getDoctrine()->getManager();
@@ -110,9 +121,23 @@ class PartieController extends Controller
     public function showAction(Partie $partie)
     {
         $deleteForm = $this->createDeleteForm($partie);
+        $em = $this->getDoctrine()->getManager();
+        $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
+        $cartes = $em->getRepository('AppBundle:Carte')->findAll();
+
+        $plateau = [
+            'mainJ1' => json_decode($partie->getMainJ1()),
+            'mainJ2' => json_decode($partie->getMainJ2()),
+            'pioche' => json_decode($partie->getPioche()),
+            'actions' => json_decode($partie->getActions()),
+            'jetons' => json_decode($partie->getJetons())
+        ];
 
         return $this->render('partie/show.html.twig', array(
             'partie' => $partie,
+            'objectifs' => $objectifs,
+            'cartes' => $cartes,
+            'plateau' => $plateau,
             'delete_form' => $deleteForm->createView(),
         ));
     }

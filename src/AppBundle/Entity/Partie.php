@@ -79,13 +79,6 @@ class Partie
      */
     private $cartesJouees;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="Objectifs", type="json_array", nullable=true)
-     */
-    private $objectifs;
-
     /*
      * @var int
      *
@@ -125,14 +118,18 @@ class Partie
 
     public function __construct()
     {
-        $this->createdAt = date('Y-m-d H:i:s');
+        //$date = date('Y-m-d H:i:s');
+        $this->createdAt = new \DateTime("now");
         $this->ended = 0;
+        $this->tourJoueurId = 1;
     }
+
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -140,51 +137,51 @@ class Partie
     }
 
     /**
-     * Set joueur1
+     * Set plateauJ1
      *
-     * @param string $joueur1
+     * @param array $plateauJ1
      *
      * @return Partie
      */
-    public function setJoueur1($joueur1)
+    public function setPlateauJ1($plateauJ1)
     {
-        $this->joueur1 = $joueur1;
+        $this->plateauJ1 = $plateauJ1;
 
         return $this;
     }
 
     /**
-     * Get joueur1
+     * Get plateauJ1
      *
-     * @return string
+     * @return array
      */
-    public function getJoueur1()
+    public function getPlateauJ1()
     {
-        return $this->joueur1;
+        return $this->plateauJ1;
     }
 
     /**
-     * Set joueur2
+     * Set plateauJ2
      *
-     * @param string $joueur2
+     * @param array $plateauJ2
      *
      * @return Partie
      */
-    public function setJoueur2($joueur2)
+    public function setPlateauJ2($plateauJ2)
     {
-        $this->joueur2 = $joueur2;
+        $this->plateauJ2 = $plateauJ2;
 
         return $this;
     }
 
     /**
-     * Get joueur2
+     * Get plateauJ2
      *
-     * @return string
+     * @return array
      */
-    public function getJoueur2()
+    public function getPlateauJ2()
     {
-        return $this->joueur2;
+        return $this->plateauJ2;
     }
 
     /**
@@ -260,6 +257,30 @@ class Partie
     }
 
     /**
+     * Set jetons
+     *
+     * @param array $jetons
+     *
+     * @return Partie
+     */
+    public function setJetons($jetons)
+    {
+        $this->jetons = $jetons;
+
+        return $this;
+    }
+
+    /**
+     * Get jetons
+     *
+     * @return array
+     */
+    public function getJetons()
+    {
+        return $this->jetons;
+    }
+
+    /**
      * Set cartesJouees
      *
      * @param array $cartesJouees
@@ -284,123 +305,27 @@ class Partie
     }
 
     /**
-     * Set objectifs
+     * Set actions
      *
-     * @param array $objectifs
+     * @param array $actions
      *
      * @return Partie
      */
-    public function setObjectifs($objectifs)
+    public function setActions($actions)
     {
-        $this->objectifs = $objectifs;
+        $this->actions = $actions;
 
         return $this;
     }
 
     /**
-     * Get objectifs
+     * Get actions
      *
      * @return array
      */
-    public function getObjectifs()
+    public function getActions()
     {
-        return $this->objectifs;
-    }
-
-    /**
-     * Set pointsJ1
-     *
-     * @param integer $pointsJ1
-     *
-     * @return Partie
-     */
-    public function setPointsJ1($pointsJ1)
-    {
-        $this->pointsJ1 = $pointsJ1;
-
-        return $this;
-    }
-
-    /**
-     * Get pointsJ1
-     *
-     * @return int
-     */
-    public function getPointsJ1()
-    {
-        return $this->pointsJ1;
-    }
-
-    /**
-     * Set pointsJ2
-     *
-     * @param integer $pointsJ2
-     *
-     * @return Partie
-     */
-    public function setPointsJ2($pointsJ2)
-    {
-        $this->pointsJ2 = $pointsJ2;
-
-        return $this;
-    }
-
-    /**
-     * Get pointsJ2
-     *
-     * @return int
-     */
-    public function getPointsJ2()
-    {
-        return $this->pointsJ2;
-    }
-
-    /**
-     * Set actionsJ1
-     *
-     * @param array $actionsJ1
-     *
-     * @return Partie
-     */
-    public function setActionsJ1($actionsJ1)
-    {
-        $this->actionsJ1 = $actionsJ1;
-
-        return $this;
-    }
-
-    /**
-     * Get actionsJ1
-     *
-     * @return array
-     */
-    public function getActionsJ1()
-    {
-        return $this->actionsJ1;
-    }
-
-    /**
-     * Set actionsJ2
-     *
-     * @param array $actionsJ2
-     *
-     * @return Partie
-     */
-    public function setActionsJ2($actionsJ2)
-    {
-        $this->actionsJ2 = $actionsJ2;
-
-        return $this;
-    }
-
-    /**
-     * Get actionsJ2
-     *
-     * @return array
-     */
-    public function getActionsJ2()
-    {
-        return $this->actionsJ2;
+        return $this->actions;
     }
 
     /**
@@ -420,7 +345,7 @@ class Partie
     /**
      * Get tourJoueurId
      *
-     * @return int
+     * @return integer
      */
     public function getTourJoueurId()
     {
@@ -444,7 +369,7 @@ class Partie
     /**
      * Get ended
      *
-     * @return bool
+     * @return boolean
      */
     public function getEnded()
     {
@@ -476,98 +401,50 @@ class Partie
     }
 
     /**
-     * Set plateauJ1
+     * Set joueur1
      *
-     * @param array $plateauJ1
+     * @param \AppBundle\Entity\UserAdmin $joueur1
      *
      * @return Partie
      */
-    public function setPlateauJ1($plateauJ1)
+    public function setJoueur1(\AppBundle\Entity\UserAdmin $joueur1 = null)
     {
-        $this->plateauJ1 = $plateauJ1;
+        $this->joueur1 = $joueur1;
 
         return $this;
     }
 
     /**
-     * Get plateauJ1
+     * Get joueur1
      *
-     * @return array
+     * @return \AppBundle\Entity\UserAdmin
      */
-    public function getPlateauJ1()
+    public function getJoueur1()
     {
-        return $this->plateauJ1;
+        return $this->joueur1;
     }
 
     /**
-     * Set plateauJ2
+     * Set joueur2
      *
-     * @param array $plateauJ2
+     * @param \AppBundle\Entity\UserAdmin $joueur2
      *
      * @return Partie
      */
-    public function setPlateauJ2($plateauJ2)
+    public function setJoueur2(\AppBundle\Entity\UserAdmin $joueur2 = null)
     {
-        $this->plateauJ2 = $plateauJ2;
+        $this->joueur2 = $joueur2;
 
         return $this;
     }
 
     /**
-     * Get plateauJ2
+     * Get joueur2
      *
-     * @return array
+     * @return \AppBundle\Entity\UserAdmin
      */
-    public function getPlateauJ2()
+    public function getJoueur2()
     {
-        return $this->plateauJ2;
-    }
-
-    /**
-     * Set jetons
-     *
-     * @param array $jetons
-     *
-     * @return Partie
-     */
-    public function setJetons($jetons)
-    {
-        $this->jetons = $jetons;
-
-        return $this;
-    }
-
-    /**
-     * Get jetons
-     *
-     * @return array
-     */
-    public function getJetons()
-    {
-        return $this->jetons;
-    }
-
-    /**
-     * Set actions
-     *
-     * @param array $actions
-     *
-     * @return Partie
-     */
-    public function setActions($actions)
-    {
-        $this->actions = $actions;
-
-        return $this;
-    }
-
-    /**
-     * Get actions
-     *
-     * @return array
-     */
-    public function getActions()
-    {
-        return $this->actions;
+        return $this->joueur2;
     }
 }

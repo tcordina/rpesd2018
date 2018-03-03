@@ -1,72 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+        #plateau li {
+            display: inline-block;
+            list-style-type: none;
+        }
+    </style>
     <h1>Partie</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ partie.id }}</td>
-            </tr>
-            <tr>
-                <th>Joueur1</th>
-                <td>{{ partie.joueur1 }}</td>
-            </tr>
-            <tr>
-                <th>Joueur2</th>
-                <td>{{ partie.joueur2 }}</td>
-            </tr>
-            <tr>
-                <th>Mainj1</th>
-                <td>{{ partie.mainJ1 }}</td>
-            </tr>
-            <tr>
-                <th>Mainj2</th>
-                <td>{{ partie.mainJ2 }}</td>
-            </tr>
-            <tr>
-                <th>Pioche</th>
-                <td>{{ partie.pioche }}</td>
-            </tr>
-            <tr>
-                <th>Cartesjouees</th>
-                <td>{{ partie.cartesJouees }}</td>
-            </tr>
-            <tr>
-                <th>Objectifs</th>
-                <td>{{ partie.objectifs }}</td>
-            </tr>
-            <tr>
-                <th>Pointsj1</th>
-                <td>{{ partie.pointsJ1 }}</td>
-            </tr>
-            <tr>
-                <th>Pointsj2</th>
-                <td>{{ partie.pointsJ2 }}</td>
-            </tr>
-            <tr>
-                <th>Actionsj1</th>
-                <td>{{ partie.actionsJ1 }}</td>
-            </tr>
-            <tr>
-                <th>Actionsj2</th>
-                <td>{{ partie.actionsJ2 }}</td>
-            </tr>
-            <tr>
-                <th>Tourjoueurid</th>
-                <td>{{ partie.tourJoueurId }}</td>
-            </tr>
-            <tr>
-                <th>Ended</th>
-                <td>{% if partie.ended %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    {{ dump(plateau) }}
+    {{ dump(cartes) }}
+    {{ dump(objectifs) }}
+<div align="center" id="plateau">
+    <ul>
+        <b>Main J2</b>
+        {% for carte in plateau.mainJ2 %}
+            <li>{{ cartes[carte-1].id }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        <b>Actions J2</b>
+        {% for action in plateau.actions.j2 %}
+            {% if action.jouee %}
+                <li style="color:darkred;">{{ action.nom }}</li>
+            {% else %}
+                <li style="color:dodgerblue;">{{ action.nom }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+        <br/>
+    <ul>
+        <b>Pioche</b>
+        {% for carte in plateau.pioche %}
+            <li>{{ cartes[carte-1].id }}</li>
+        {% endfor %}
+        <br/>
+        <b>Haut de pioche</b>
+        {{ cartes[plateau.pioche|first].id-1 }}
+    </ul>
+        <br/>
+    <ul>
+        <b>Actions J1</b>
+        {% for action in plateau.actions.j1 %}
+            {% if action.jouee %}
+                <li style="color:darkred;">{{ action.nom }}</li>
+            {% else %}
+                <li style="color:dodgerblue;">{{ action.nom }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul>
+        <b>Main J1</b>
+        {% for carte in plateau.mainJ1 %}
+            <li>{{ cartes[carte-1].id }}</li>
+        {% endfor %}
+    </ul>
+</div>
 
     <ul>
         <li>
