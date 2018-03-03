@@ -124,7 +124,6 @@ class PartieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
         $cartes = $em->getRepository('AppBundle:Carte')->findAll();
-
         $plateau = [
             'mainJ1' => json_decode($partie->getMainJ1()),
             'mainJ2' => json_decode($partie->getMainJ2()),

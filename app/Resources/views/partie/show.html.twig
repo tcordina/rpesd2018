@@ -1,62 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        #plateau li {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
-    <h1>Partie</h1>
+<style>
+    #plateau li {
+        display: inline-block;
+        list-style-type: none;
+    }
+</style>
+<h1>Partie</h1>
+<div align="center" id="plateau">
+    {%  for carte in plateau.actions.j2[0].cartes %}
+        <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+    {% else %}
+        <div>Pas de carte secret.</div>
+    {% endfor %}
+    {% for carte in plateau.mainJ2 %}
+        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }}</div>
+    {% endfor %}
+    <ul>
+        {% for action in plateau.actions.j2 %}
+            {% if action.jouee %}
+                <li style="background:darkred; padding: 5px 30px">{{ action.nom }}</li>
+            {% else %}
+                <li style="background:lightgreen; padding: 5px 30px">{{ action.nom }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <br/>
+    {% for objectif in objectifs %}
+    <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
+        {% if objectif.id in plateau.jetons.j2 %}
+            <div style="position: absolute">Jeton J2</div>
+        {% elseif objectif.id in plateau.jetons.neutre %}
+            <div style="position: absolute">Jeton neutre</div>
+        {% elseif objectif.id in plateau.jetons.j1 %}
+            <div style="position: absolute">Jeton J1</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div style="margin-left: 50px;display:inline-block;background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche|first].id-1 }}</div>
+    <br/>
+    <ul>
+        {% for action in plateau.actions.j1 %}
+            {% if action.jouee %}
+                <li style="background:darkred; padding: 5px 30px">{{ action.nom }}</li>
+            {% else %}
+                <li style="background:cornflowerblue; padding: 5px 30px">{{ action.nom }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% for carte in plateau.mainJ1 %}
+        <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">{{ cartes[carte-1].id }}</div>
+    {% endfor %}
+    {%  for carte in plateau.actions.j1[0].cartes %}
+        <div style="display:inline-block;background:cornflowerblue;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+    {% else %}
+        <div>Pas de carte secret.</div>
+    {% endfor %}
+</div>
 
     {{ dump(plateau) }}
     {{ dump(cartes) }}
     {{ dump(objectifs) }}
-<div align="center" id="plateau">
-    <ul>
-        <b>Main J2</b>
-        {% for carte in plateau.mainJ2 %}
-            <li>{{ cartes[carte-1].id }}</li>
-        {% endfor %}
-    </ul>
-    <ul>
-        <b>Actions J2</b>
-        {% for action in plateau.actions.j2 %}
-            {% if action.jouee %}
-                <li style="color:darkred;">{{ action.nom }}</li>
-            {% else %}
-                <li style="color:dodgerblue;">{{ action.nom }}</li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-        <br/>
-    <ul>
-        <b>Pioche</b>
-        {% for carte in plateau.pioche %}
-            <li>{{ cartes[carte-1].id }}</li>
-        {% endfor %}
-        <br/>
-        <b>Haut de pioche</b>
-        {{ cartes[plateau.pioche|first].id-1 }}
-    </ul>
-        <br/>
-    <ul>
-        <b>Actions J1</b>
-        {% for action in plateau.actions.j1 %}
-            {% if action.jouee %}
-                <li style="color:darkred;">{{ action.nom }}</li>
-            {% else %}
-                <li style="color:dodgerblue;">{{ action.nom }}</li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    <ul>
-        <b>Main J1</b>
-        {% for carte in plateau.mainJ1 %}
-            <li>{{ cartes[carte-1].id }}</li>
-        {% endfor %}
-    </ul>
-</div>
 
     <ul>
         <li>
