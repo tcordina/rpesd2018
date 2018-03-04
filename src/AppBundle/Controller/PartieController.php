@@ -37,6 +37,8 @@ class PartieController extends Controller
      *
      * @Route("/new", name="partie_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -117,6 +119,8 @@ class PartieController extends Controller
      *
      * @Route("/{id}", name="partie_show")
      * @Method("GET")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Partie $partie)
     {
@@ -142,10 +146,45 @@ class PartieController extends Controller
     }
 
     /**
+     * @Route("/piocher/{partie}", name="partie_piocher")
+     * @Method("POST")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function piocherAction(Partie $partie)
+    {
+        $joueur = $partie->getTourJoueurId();
+        $pioche = json_decode($partie->getPioche());
+
+        if($joueur == 1) {
+            $main = json_decode($partie->getMainJ1());
+            array_push($main, $pioche[0]);
+            unset($pioche[0]);
+            $partie->setMainJ1(json_encode(array_values($main)));
+            $partie->setPioche(json_encode(array_values($pioche)));
+        }else {
+            $main = json_decode($partie->getMainJ2());
+            array_push($main, $pioche[0]);
+            unset($pioche[0]);
+            $partie->setMainJ2(json_encode(array_values($main)));
+            $partie->setPioche(json_encode(array_values($pioche)));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->flush();
+
+        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
+    }
+
+    /**
      * Displays a form to edit an existing partie entity.
      *
      * @Route("/{id}/edit", name="partie_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Partie $partie)
     {
@@ -171,6 +210,9 @@ class PartieController extends Controller
      *
      * @Route("/{id}", name="partie_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Partie $partie)
     {
