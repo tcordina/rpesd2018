@@ -11,6 +11,7 @@
         text-decoration: none;
     }
 </style>
+    {# Si utilisateur courrant == J2, inverser l'affichage i.e. si partie.joueur2.id == getToken passé en parametre de return #}
 <h1>Partie</h1>
 <div align="center" id="plateau">
     {%  for carte in plateau.actions.j2[0].cartes %}
@@ -44,37 +45,16 @@
     {% endfor %}
     <div style="margin-left: 50px;display:inline-block;">
         <div style="background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche|first].id-1 }}</div>
-        <form action="{{ path('partie_piocher', {'partie': partie.id}) }}" method="POST">
-            <button class="btn btn-info" type="submit">Piocher ({{ plateau.pioche|length }} cartes)</button>
-        </form>
     </div>
     <br/>
     <ul>
         {% for action in plateau.actions.j1 %}
-            {% if action.jouee %}
+              {% if action.jouee %}
                 <li style="background:darkred; padding: 5px 30px">{{ action.nom}}</li>
             {% else %}
-                <a style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'carte': 15}) }}">
+                <a style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'carte': 20}) }}">
                     <li>{{ action.nom }}</li>
                 </a>
-                {#{% switch action.nom %}
-                {% case "secret" %}
-                <a style="background:cornflowerblue; padding: 5px 30px" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'carte': 15}) }}">
-                    <li>{{ action.nom }}</li>
-                </a>
-                {% case "compromis" %}
-                <a style="background:cornflowerblue; padding: 5px 30px" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'cartes': }) }}">
-                    <li>{{ action.nom }}</li>
-                </a>
-                {% case " cadeau" %}
-                <a style="background:cornflowerblue; padding: 5px 30px" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'cartes': }) }}">
-                    <li>{{ action.nom }}</li>
-                </a>
-                {% case "concurrence" %}
-                <a style="background:cornflowerblue; padding: 5px 30px" href="{{ path('action_'~action.nom, {'partie': partie.id, 'joueur': 'j1', 'cartes': }) }}">
-                    <li>{{ action.nom }}</li>
-                </a>
-                {% endswitch %}#}
             {% endif %}
         {% endfor %}
     </ul>
@@ -87,6 +67,13 @@
     {% else %}
         <div>Pas de carte secret.</div>
     {% endfor %}
+    <form action="{{ path('partie_changerTour', {'partie': partie.id}) }}" method="POST">
+        {% if plateau.tourJoue.j1 == true %}
+        <button class="btn btn-info" type="submit">Travail terminé !</button>
+        {% else %}
+        <button class="btn btn-info" disabled>Travail terminé</button>
+        {% endif %}
+    </form>
 </div>
 
     {{ dump(partie) }}

@@ -43,12 +43,18 @@ class ActionController extends PartieController
                 if (($key = array_search($carte->getId(), $main)) !== false) {
                     unset($main[$key]);
                     $partie->setMainJ1(json_encode(array_values($main)));
+                    $played = json_decode($partie->getTourActions());
+                    $played->j1 = true;
+                    $partie->setTourActions(json_encode($played));
                 }
             }else{
                 $main = json_decode($partie->getMainJ2());
                 if (($key = array_search($carte->getId(), $main)) !== false) {
                     unset($main[$key]);
                     $partie->setMainJ2(json_encode(array_values($main)));
+                    $played = json_decode($partie->getTourActions());
+                    $played->j2 = true;
+                    $partie->setTourActions(json_encode($played));
                 }
             }
 

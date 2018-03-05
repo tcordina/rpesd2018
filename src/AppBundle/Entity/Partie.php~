@@ -22,11 +22,11 @@ class Partie
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserAdmin", inversedBy="parties1", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserAdmin", inversedBy="parties1")
      */
     private $joueur1;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserAdmin", inversedBy="parties2", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserAdmin", inversedBy="parties2")
      */
     private $joueur2;
 
@@ -445,7 +445,7 @@ class Partie
      *
      * @return Partie
      */
-    public function setJoueur2(\AppBundle\Entity\UserAdmin $joueur2)
+    public function setJoueur2(\AppBundle\Entity\UserAdmin $joueur2 = null)
     {
         $this->joueur2 = $joueur2;
 
@@ -484,29 +484,5 @@ class Partie
     public function getTourActions()
     {
         return $this->tourActions;
-    }
-
-    /**
-     * Set carteEcartee
-     *
-     * @param integer $carteEcartee
-     *
-     * @return Partie
-     */
-    public function setCarteEcartee($carteEcartee)
-    {
-        $this->carteEcartee = $carteEcartee;
-
-        return $this;
-    }
-
-    /**
-     * Get carteEcartee
-     *
-     * @return integer
-     */
-    public function getCarteEcartee()
-    {
-        return $this->carteEcartee;
     }
 }

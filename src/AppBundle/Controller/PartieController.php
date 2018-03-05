@@ -43,18 +43,21 @@ class PartieController extends Controller
     public function newAction(Request $request)
     {
         $partie = new Partie();
-        $user = $this->getUser();
 
         $form = $this->createForm('AppBundle\Form\PartieType', $partie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             $partie->setJoueur1($user);
             $em = $this->getDoctrine()->getManager();
             $cartes = $em->getRepository('AppBundle:Carte')->findAll();
             $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
             $actions = $em->getRepository('AppBundle:Action')->findAll();
             shuffle($cartes);
+            $partie->setCarteEcartee($cartes[0]->getId());
+            unset($cartes[0]);
+            $cartes = array_values($cartes);
 
             $t = array();
             for($i=0; $i<6; $i++){
@@ -101,6 +104,12 @@ class PartieController extends Controller
             //die(var_dump($t, json_encode($t)));
             $partie->setActions(json_encode($t));
 
+            $t = array(
+                'j1' => false,
+                'j2' => false
+            );
+            $partie->setTourActions(json_encode($t));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
             $em->flush();
@@ -133,7 +142,9 @@ class PartieController extends Controller
             'mainJ2' => json_decode($partie->getMainJ2()),
             'pioche' => json_decode($partie->getPioche()),
             'actions' => json_decode($partie->getActions()),
-            'jetons' => json_decode($partie->getJetons())
+            'jetons' => json_decode($partie->getJetons()),
+            'cartesj' => $this->cartesEnAttente($partie),
+            'tourJoue' => json_decode($partie->getTourActions())
         ];
 
         return $this->render('partie/show.html.twig', array(
@@ -146,14 +157,11 @@ class PartieController extends Controller
     }
 
     /**
-     * @Route("/piocher/{partie}", name="partie_piocher")
-     * @Method("POST")
      * @param Partie $partie
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param int $joueur
      */
-    public function piocherAction(Partie $partie)
+    protected function piocherAction(Partie $partie, $joueur)
     {
-        $joueur = $partie->getTourJoueurId();
         $pioche = json_decode($partie->getPioche());
 
         if($joueur == 1) {
@@ -174,6 +182,28 @@ class PartieController extends Controller
         $em->persist($partie);
         $em->flush();
 
+    }
+
+    /**
+     * @Route("/changerTour/{partie}", name="partie_changerTour")
+     * @Method("POST")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function changerTourAction(Partie $partie)
+    {
+        if($partie->getTourJoueurId() == 1) {
+            $partie->setTourJoueurId(2);
+            $joueur = 'j2';
+            $this->piocherAction($partie, 2);
+        }else {
+            $partie->setTourJoueurId(1);
+            $joueur = 'j1';
+            $this->piocherAction($partie, 1);
+        }
+        $actions = json_decode($partie->getTourActions());
+        $actions->$joueur = false;
+        $partie->setTourActions(json_encode($actions));
         return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
     }
 
@@ -242,5 +272,16 @@ class PartieController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Retourne null si aucune carte n'est jouéee (évite erreur)
+     *
+     * @param Partie $partie
+     * @return mixed|null
+     */
+    protected function cartesEnAttente(Partie $partie)
+    {
+        return empty($partie->getCartesJouees()) ? null : json_decode($partie->getCartesJouees());
     }
 }
