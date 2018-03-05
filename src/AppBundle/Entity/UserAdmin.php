@@ -35,10 +35,22 @@ class UserAdmin extends BaseUser
     private $parties2;
 
     /**
+     * @var int
+     * @ORM\Column(name="elo", type="integer")
+     */
+    private $elo;
+
+    /**
+     * @var string
+     * @ORM\Column(name="rank", type="string")
+     */
+    private $rank;
+
+    /**
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      * @var string
      */
-    protected $imageName;
+    private $imageName;
 
     /**
      * @Assert\File(
@@ -48,13 +60,20 @@ class UserAdmin extends BaseUser
      * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")
      * @var File
      */
-    protected $imageFile;
+    private $imageFile;
 
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var \DateTime
      */
-    protected $updatedAt;
+    private $updatedAt;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setElo(1200);
+        $this->setRank('argent');
+    }
 
     /**
      * Get id
@@ -204,5 +223,59 @@ class UserAdmin extends BaseUser
     public function getParties2()
     {
         return $this->parties2;
+    }
+
+    /**
+     * Set elo
+     *
+     * @param integer $elo
+     *
+     * @return UserAdmin
+     */
+    public function setElo($elo)
+    {
+        $this->elo = $elo;
+        $this->eloChange($elo);
+
+        return $this;
+    }
+
+    /**
+     * Get elo
+     *
+     * @return integer
+     */
+    public function getElo()
+    {
+        return $this->elo;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param string $rank
+     *
+     * @return UserAdmin
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return string
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    private function eloChange($elo)
+    {
+        // switch break avec les différentes valeurs de $elo puis setRank()
     }
 }

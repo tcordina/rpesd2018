@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Partie controller.
@@ -60,19 +61,19 @@ class PartieController extends Controller
             $cartes = array_values($cartes);
 
             $t = array();
-            for($i=0; $i<6; $i++){
+            for($i=0; $i<7; $i++){
                 $t[] = $cartes[$i]->getId();
             }
             $partie->setMainJ1(json_encode($t));
 
             $t = array();
-            for($i=6; $i<12; $i++){
+            for($i=7; $i<13; $i++){
                 $t[] = $cartes[$i]->getId();
             }
             $partie->setMainJ2(json_encode($t));
 
             $t = array();
-            for ($i=12; $i<count($cartes); $i++) {
+            for ($i=13; $i<count($cartes); $i++) {
                 $t[] = $cartes[$i]->getId();
             }
             $partie->setPioche(json_encode($t));
@@ -101,7 +102,6 @@ class PartieController extends Controller
                 $t['j2'][$act->getId()-1]['jouee'] = $act->getJouee();
                 $t['j2'][$act->getId()-1]['cartes'] = $act->getCartes();
             }
-            //die(var_dump($t, json_encode($t)));
             $partie->setActions(json_encode($t));
 
             $t = array(
@@ -133,27 +133,71 @@ class PartieController extends Controller
      */
     public function showAction(Partie $partie)
     {
-        $deleteForm = $this->createDeleteForm($partie);
-        $em = $this->getDoctrine()->getManager();
-        $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
-        $cartes = $em->getRepository('AppBundle:Carte')->findAll();
-        $plateau = [
-            'mainJ1' => json_decode($partie->getMainJ1()),
-            'mainJ2' => json_decode($partie->getMainJ2()),
-            'pioche' => json_decode($partie->getPioche()),
-            'actions' => json_decode($partie->getActions()),
-            'jetons' => json_decode($partie->getJetons()),
-            'cartesj' => $this->cartesEnAttente($partie),
-            'tourJoue' => json_decode($partie->getTourActions())
-        ];
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
+            $deleteForm = $this->createDeleteForm($partie);
+            $em = $this->getDoctrine()->getManager();
+            $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
+            $cartes = $em->getRepository('AppBundle:Carte')->findAll();
+            $plateau = [
+                'mainJ1' => json_decode($partie->getMainJ1()),
+                'mainJ2' => json_decode($partie->getMainJ2()),
+                'pioche' => json_decode($partie->getPioche()),
+                'actions' => json_decode($partie->getActions()),
+                'jetons' => json_decode($partie->getJetons()),
+                'cartesj' => $this->cartesEnAttente($partie),
+                'tourJoue' => json_decode($partie->getTourActions())
+            ];
+            $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
 
-        return $this->render('partie/show.html.twig', array(
-            'partie' => $partie,
-            'objectifs' => $objectifs,
-            'cartes' => $cartes,
-            'plateau' => $plateau,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            return $this->render('partie/show.html.twig', array(
+                'partie' => $partie,
+                'objectifs' => $objectifs,
+                'cartes' => $cartes,
+                'plateau' => $plateau,
+                'joueur' => $joueur,
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else {
+            throw new NotFoundHttpException('Page introuvable');
+        }
+    }
+
+    /**
+     * @Route("/plateau/{id}", name="partie_plateau")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function plateauAction(Partie $partie)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
+            $deleteForm = $this->createDeleteForm($partie);
+            $em = $this->getDoctrine()->getManager();
+            $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
+            $cartes = $em->getRepository('AppBundle:Carte')->findAll();
+            $plateau = [
+                'mainJ1' => json_decode($partie->getMainJ1()),
+                'mainJ2' => json_decode($partie->getMainJ2()),
+                'pioche' => json_decode($partie->getPioche()),
+                'actions' => json_decode($partie->getActions()),
+                'jetons' => json_decode($partie->getJetons()),
+                'cartesj' => $this->cartesEnAttente($partie),
+                'tourJoue' => json_decode($partie->getTourActions())
+            ];
+            $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
+
+            return $this->render('partie/plateau.html.twig', array(
+                'partie' => $partie,
+                'objectifs' => $objectifs,
+                'cartes' => $cartes,
+                'plateau' => $plateau,
+                'joueur' => $joueur,
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else {
+            throw new NotFoundHttpException('Page introuvable');
+        }
     }
 
     /**
