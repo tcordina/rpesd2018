@@ -78,6 +78,14 @@ class PartieController extends Controller
             }
             $partie->setPioche(json_encode($t));
 
+            $t = array();
+
+            foreach($objectifs as $obj) {
+                $t[$obj->getId()] = [];
+            }
+            $partie->setTerrainJ1(json_encode($t));
+            $partie->setTerrainJ2(json_encode($t));
+
             $t = array(
                 'j1' => [],
                 'j2' => [],
