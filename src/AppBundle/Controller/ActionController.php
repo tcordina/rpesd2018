@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Carte;
 use AppBundle\Entity\Partie;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,18 +18,55 @@ use Symfony\Component\HttpFoundation\Request;
 class ActionController extends PartieController
 {
     /**
-     * @Route("/secret/{partie}/{joueur}/{carte}", name="action_secret")
-     * @Method("GET")
+     * @Route("/handle", name="action_handler")
+     * @param Request $request
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function actionHandler(Request $request)
+    {
+        $action = $request->request->get('action');
+        $postCartes = $request->request->get('cartes');
+        $partieId = (int) $request->request->get('partie');
+        $joueur = $request->request->get('joueur');
+        $partie = $this->getDoctrine()->getRepository('AppBundle:Partie')->find($partieId);
+        $cards = $this->getDoctrine()->getRepository('AppBundle:Carte')->findAll();
+        foreach($postCartes as $carte) {
+            $cartes[] = $cards[$carte-1];
+        }
+        //die(var_dump($action, $cartes, $partie, $joueur));
+        switch ($action) {
+            case 'secret':
+                if(!isset($cartes[1])) {
+                    return $this->secretAction($partie, $joueur, $cartes[0]);
+                }else {
+                    // return avec flashdata
+                    return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                }
+                break;
+            case 'compromis':
+                return $this->compromisAction();
+                break;
+            case 'cadeau':
+                return $this->cadeauAction();
+                break;
+            case 'concurrence':
+                return $this->concurrenceAction();
+                break;
+        }
+        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+    }
+
+    /**
+     * @Route("/secret/{partie}/{joueur}", name="action_secret")
+     * @Method("POST")
      * @param Partie $partie
      * @param $joueur
      * @param Carte $carte
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function secretAction(Partie $partie, $joueur, Carte $carte)
+    private function secretAction(Partie $partie, $joueur, Carte $carte)
     {
         $em = $this->getDoctrine()->getManager();
-        //$partie = $em->getRepository('AppBundle:Partie')->find($partie);
-
         if(in_array($carte->getId(), json_decode($partie->getMainJ1()))) {
             $actions = json_decode($partie->getActions());
 
@@ -38,7 +74,7 @@ class ActionController extends PartieController
             $actions->$joueur[0]->cartes = [$carte->getId()];
             $partie->setActions(json_encode($actions));
 
-            if($joueur == 'j1'){
+            if ($joueur == 'j1') {
                 $main = json_decode($partie->getMainJ1());
                 if (($key = array_search($carte->getId(), $main)) !== false) {
                     unset($main[$key]);
@@ -47,7 +83,7 @@ class ActionController extends PartieController
                     $played->j1 = true;
                     $partie->setTourActions(json_encode($played));
                 }
-            }else{
+            } else {
                 $main = json_decode($partie->getMainJ2());
                 if (($key = array_search($carte->getId(), $main)) !== false) {
                     unset($main[$key]);
@@ -61,9 +97,10 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
+            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
         }else {
-            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
+            // return avec un flashdata
+            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
         }
     }
 
@@ -71,7 +108,7 @@ class ActionController extends PartieController
      * @Route("/compromis", name="action_compromis")
      * @return string
      */
-    public function compromisAction()
+    private function compromisAction()
     {
         return new Response('compromis');
     }
@@ -80,7 +117,7 @@ class ActionController extends PartieController
      * @Route("/cadeau", name="action_cadeau")
      * @return string
      */
-    public function cadeauAction()
+    private function cadeauAction()
     {
         return new Response('cadeau');
     }
@@ -89,7 +126,7 @@ class ActionController extends PartieController
      * @Route("/concurrence", name="action_concurrence")
      * @return string
      */
-    public function concurrenceAction()
+    private function concurrenceAction()
     {
         return new Response('concurrence');
     }
