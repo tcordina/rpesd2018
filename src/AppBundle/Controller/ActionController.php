@@ -24,15 +24,21 @@ class ActionController extends PartieController
      */
     public function actionHandler(Request $request)
     {
-        $action = $request->request->get('action');
-        $postCartes = $request->request->get('cartes');
         $partieId = (int) $request->request->get('partie');
-        $joueur = $request->request->get('joueur');
         $partie = $this->getDoctrine()->getRepository('AppBundle:Partie')->find($partieId);
         $cards = $this->getDoctrine()->getRepository('AppBundle:Carte')->findAll();
-        foreach($postCartes as $carte) {
-            $cartes[] = $cards[$carte-1];
+
+        $action = $request->request->get('action');
+        if (!empty($request->request->get('cartes'))) {
+            $postCartes = $request->request->get('cartes');
+            foreach($postCartes as $carte) {
+                $cartes[] = $cards[$carte-1];
+            }
+        } else {
+            $carte = $request->request->get('carte');
+            $cartes = $cards[$carte-1];
         }
+        $joueur = $request->request->get('joueur');
         //die(var_dump($action, $cartes, $partie, $joueur));
         switch ($action) {
             case 'secret':
@@ -51,7 +57,7 @@ class ActionController extends PartieController
                 break;
             case 'cadeau_choix':
                 $objectif = $request->request->get('objectif');
-                die(var_dump($request->request));
+                //die(var_dump($request->request));
                 return $this->cadeauChoixAction($partie, $joueur, $cartes, $objectif);
                 break;
             case 'concurrence':
@@ -122,24 +128,48 @@ class ActionController extends PartieController
     private function compromisAction(Partie $partie, $joueur, $cartes)
     {
         if($joueur == 'j1') {
+            $main = json_decode($partie->getMainJ1());
             foreach ($cartes as $carte) {
-                if (!in_array($carte->getId(), json_decode($partie->getMainJ1()))) {
+                if (!in_array($carte->getId(), $main)) {
                     return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
                 } else {
                     $cards[] = $carte->getId();
+                    if (($key = array_search($carte->getId(), $main)) !== false) {
+                        unset($main[$key]);
+                    }
                 }
             }
+            $partie->setMainJ1(json_encode(array_values($main)));
+            $played = json_decode($partie->getTourActions());
+            $played->j1 = true;
+            $partie->setTourActions(json_encode($played));
         }else {
+            $main = json_decode($partie->getMainJ2());
             foreach ($cartes as $carte) {
-                if (!in_array($carte->getId(), json_decode($partie->getMainJ2()))) {
+                if (!in_array($carte->getId(), $main)) {
                     return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
                 } else {
                     $cards[] = $carte->getId();
+                    if (($key = array_search($carte->getId(), $main)) !== false) {
+                        unset($main[$key]);
+                    }
                 }
             }
+            $partie->setMainJ2(json_encode(array_values($main)));
+            $played = json_decode($partie->getTourActions());
+            $played->j2 = true;
+            $partie->setTourActions(json_encode($played));
         }
+        $actions = json_decode($partie->getActions());
+        $actions->$joueur[1]->jouee = true;
+        $actions->$joueur[1]->cartes = $cards;
+        $partie->setActions(json_encode($actions));
 
-        return new Response('cadeau');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->flush();
+
+        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
 
     /**
@@ -151,24 +181,16 @@ class ActionController extends PartieController
      */
     private function cadeauAction(Partie $partie, $joueur, $cartes)
     {
-        //die(var_dump($cartes));
-        foreach ($cartes as $carte) {
-            if (!in_array($carte->getId(), json_decode($partie->getMainJ1()))) {
-                return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
-            }else {
-                $cards[] = $carte->getId();
-            }
-        }
-        $actions = json_decode($partie->getActions());
-        $actions->$joueur[2]->jouee = true;
-        $actions->$joueur[2]->cartes = $cards;
-        $partie->setActions(json_encode($actions));
-
         if ($joueur == 'j1') {
             $main = json_decode($partie->getMainJ1());
             foreach ($cartes as $carte) {
-                if (($key = array_search($carte->getId(), $main)) !== false) {
-                    unset($main[$key]);
+                if (!in_array($carte->getId(), $main)) {
+                    return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                }else {
+                    $cards[] = $carte->getId();
+                    if (($key = array_search($carte->getId(), $main)) !== false) {
+                        unset($main[$key]);
+                    }
                 }
             }
             $partie->setMainJ1(json_encode(array_values($main)));
@@ -178,8 +200,13 @@ class ActionController extends PartieController
         }else {
             $main = json_decode($partie->getMainJ2());
             foreach ($cartes as $carte) {
-                if (($key = array_search($carte->getId(), $main)) !== false) {
-                    unset($main[$key]);
+                if (!in_array($carte->getId(), $main)) {
+                    return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                }else {
+                    $cards[] = $carte->getId();
+                    if (($key = array_search($carte->getId(), $main)) !== false) {
+                        unset($main[$key]);
+                    }
                 }
             }
             $partie->setMainJ2(json_encode(array_values($main)));
@@ -187,6 +214,10 @@ class ActionController extends PartieController
             $played->j2 = true;
             $partie->setTourActions(json_encode($played));
         }
+        $actions = json_decode($partie->getActions());
+        $actions->$joueur[2]->jouee = true;
+        $actions->$joueur[2]->cartes = $cards;
+        $partie->setActions(json_encode($actions));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($partie);
@@ -199,25 +230,43 @@ class ActionController extends PartieController
 
     private function cadeauChoixAction(Partie $partie, $joueur, $cartes, $objectifId)
     {
-        die(var_dump($objectifId));
-        $objectif = $this->getDoctrine()->getRepository('AppBundle:Objectif')->find($objectifId);
+        //die(var_dump($objectifId));
         $actions = json_decode($partie->getActions());
-        die(var_dump($cartes, $actions->$joueur[2]->cartes, $objectif));
         if($joueur == 'j1') {
-            foreach ($cartes as $carte) {
-                var_dump($carte);
-                if (!in_array($carte->getId(), $actions->$joueur[2]->carte)) {
+            $terrain = json_decode($partie->getTerrainJ1());
+            $carte = $cartes;
+                if (!in_array($carte->getId(), $actions->$joueur[2]->cartes)) {
                     return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
                 }else {
-                    $cards[] = $carte->getId();
+                    if (($key = array_search($carte->getId(), $actions->$joueur[2]->cartes)) !== false) {
+                        $terrain->$objectifId[] = $carte->getId();
+                        unset($actions->$joueur[2]->cartes[$key]);
+                        $actions->$joueur[2]->cartes = array_values($actions->$joueur[2]->cartes);
+                        $partie->setTerrainJ1(json_encode($terrain));
+                        $partie->setActions(json_encode($actions));
+                    }
+                }
+        }else {
+            $terrain = json_decode($partie->getTerrainJ2());
+            $carte = $cartes;
+            if (!in_array($carte->getId(), $actions->$joueur[2]->cartes)) {
+                return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            }else {
+                if (($key = array_search($carte->getId(), $actions->$joueur[2]->cartes)) !== false) {
+                    $terrain->$objectifId[] = $carte->getId();
+                    unset($actions->$joueur[2]->cartes[$key]);
+                    $actions->$joueur[2]->cartes = array_values($actions->$joueur[2]->cartes);
+                    $partie->setTerrainJ2(json_encode($terrain));
+                    $partie->setActions(json_encode($actions));
                 }
             }
-            die();
-        }else {
-
         }
 
-        return new Response('le choix !');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->flush();
+
+        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
 
     /**
