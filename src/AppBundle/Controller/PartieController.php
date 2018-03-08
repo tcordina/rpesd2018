@@ -114,7 +114,7 @@ class PartieController extends Controller
 
             $t = array(
                 'j1' => false,
-                'j2' => false
+                'j2' => true
             );
             $partie->setTourActions(json_encode($t));
 
@@ -153,7 +153,6 @@ class PartieController extends Controller
                 'pioche' => json_decode($partie->getPioche()),
                 'actions' => json_decode($partie->getActions()),
                 'jetons' => json_decode($partie->getJetons()),
-                'cartesj' => $this->cartesEnAttente($partie),
                 'tourJoue' => json_decode($partie->getTourActions())
             ];
             $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
@@ -190,7 +189,6 @@ class PartieController extends Controller
                 'pioche' => json_decode($partie->getPioche()),
                 'actions' => json_decode($partie->getActions()),
                 'jetons' => json_decode($partie->getJetons()),
-                'cartesj' => $this->cartesEnAttente($partie),
                 'tourJoue' => json_decode($partie->getTourActions())
             ];
             $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
@@ -244,18 +242,22 @@ class PartieController extends Controller
      */
     public function changerTourAction(Partie $partie)
     {
+        $joue = json_decode($partie->getTourActions());
         if($partie->getTourJoueurId() == 1) {
+            $joue->j2 = false;
             $partie->setTourJoueurId(2);
-            $joueur = 'j2';
             $this->piocherAction($partie, 2);
         }else {
+            $joue->j1 = false;
             $partie->setTourJoueurId(1);
-            $joueur = 'j1';
             $this->piocherAction($partie, 1);
         }
-        $actions = json_decode($partie->getTourActions());
-        $actions->$joueur = false;
-        $partie->setTourActions(json_encode($actions));
+        $partie->setTourActions(json_encode($joue));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->flush();
+
         return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
     }
 
@@ -326,14 +328,4 @@ class PartieController extends Controller
         ;
     }
 
-    /**
-     * Retourne null si aucune carte n'est jouéee (évite erreur)
-     *
-     * @param Partie $partie
-     * @return mixed|null
-     */
-    protected function cartesEnAttente(Partie $partie)
-    {
-        return empty($partie->getCartesJouees()) ? null : json_decode($partie->getCartesJouees());
-    }
 }
