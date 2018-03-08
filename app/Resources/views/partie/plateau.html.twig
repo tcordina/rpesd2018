@@ -1,17 +1,14 @@
+{% extends 'base.html.twig' %}
 {# Si utilisateur courrant == J2, inverser l'affichage #}
 {# Bouger la partie du joueur courant dans show.html.twig #}
-<style>
-    #plateau li {
-        display: inline-block;
-        list-style-type: none;
-    }
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-</style>
+{% block body %}
 <h1>Partie</h1>
 <div align="center" id="plateau">
+    {% if flash is defined %}
+    <div class="alert alert-danger">
+        <p>{{ flash }}</p>
+    </div>
+    {% endif %}
     {% if plateau.actions.j1[2].cartes is not empty %}
         <div style="border: 2px solid #333">
             {% for carte in plateau.actions.j1[2].cartes %}
@@ -21,6 +18,37 @@
                     <input type="hidden" name="partie" value="{{ partie.id }}">
                     <input type="hidden" name="joueur" value="j1">
                     <input type="hidden" name="action" value="cadeau_choix">
+                    <button class="btn btn-info" type="submit">Choisir</button>
+                </form>
+            {% endfor %}
+        </div>
+    {% elseif plateau.actions.j1[3].cartes is not empty %}
+        <div style="border: 2px solid #333">
+            {% for carte in plateau.actions.j1[3].cartes %}
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                {% if loop.index0 %2 == 0 %}
+                    <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id}) }}" method="post">
+                        <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        <input type="hidden" name="partie" value="{{ partie.id }}">
+                        <input type="hidden" name="joueur" value="j1">
+                        <input type="hidden" name="action" value="concurrence_choix">
+                {% else %}
+                        <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        <button class="btn btn-info" type="submit">Choisir</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if plateau.actions.j1[3].choisies is defined and plateau.actions.j1[3].choisies is not empty %}
+        <div style="border: 2px solid #333">
+            {% for carte in plateau.actions.j1[3].choisies.j1 %}
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <form id="concurrence_choix_2" action="{{ path('action_handler', {'partie': partie.id}) }}" method="post">
+                    <input type="hidden" name="carte" value="{{ cartes[carte-1].id }}">
+                    <input type="hidden" name="partie" value="{{ partie.id }}">
+                    <input type="hidden" name="joueur" value="j1">
+                    <input type="hidden" name="action" value="concurrence_choix_2">
                     <button class="btn btn-info" type="submit">Choisir</button>
                 </form>
             {% endfor %}
@@ -47,7 +75,9 @@
     {% for objectif in objectifs %}
         <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
             {% if plateau.actions.j1[2].cartes is not empty %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix" required>
+                <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix" required>
+            {% elseif plateau.actions.j1[3].choisies is defined and plateau.actions.j1[3].choisies is not empty %}
+                <input type="radio" value="{{ objectif.id }}" name="objectif" form="concurrence_choix_2" required>
             {% endif %}
             {% if objectif.id in plateau.jetons.j2 %}
                 <div style="position: absolute">Jeton J2</div>
@@ -75,7 +105,7 @@
     {% for carte in plateau.mainJ1 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
             {{ cartes[carte-1].id }}
-            <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}" required>
+            <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
 
     {% endfor %}
@@ -109,3 +139,5 @@
 {{ dump(plateau) }}
 {{ dump(cartes) }}
 {{ dump(objectifs) }}
+{{ dump(joueur) }}
+{% endblock %}
