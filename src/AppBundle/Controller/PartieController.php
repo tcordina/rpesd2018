@@ -171,6 +171,7 @@ class PartieController extends Controller
     }
 
     /**
+     * Charge le plateau via appel AJAX
      * @Route("/plateau/{id}", name="partie_plateau")
      * @param Partie $partie
      * @return \Symfony\Component\HttpFoundation\Response
@@ -207,13 +208,16 @@ class PartieController extends Controller
     }
 
     /**
+     * Piocher une carte
      * @param Partie $partie
      * @param int $joueur
      */
     protected function piocherAction(Partie $partie, $joueur)
     {
         $pioche = json_decode($partie->getPioche());
+        if(empty($pioche)) {
 
+        }
         if($joueur == 1) {
             $main = json_decode($partie->getMainJ1());
             array_push($main, $pioche[0]);
@@ -235,6 +239,7 @@ class PartieController extends Controller
     }
 
     /**
+     * Changer de tour
      * @Route("/changerTour/{partie}", name="partie_changerTour")
      * @Method("POST")
      * @param Partie $partie
@@ -327,5 +332,4 @@ class PartieController extends Controller
             ->getForm()
         ;
     }
-
 }

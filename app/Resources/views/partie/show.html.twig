@@ -29,8 +29,8 @@
     <script>
         $(document).ready(function() {
             setInterval(function () {
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-            }, 1500);
+                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+            }, 1500)
         })
     </script>
 {% endblock %}

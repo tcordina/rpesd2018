@@ -33,13 +33,6 @@ class Carte
     private $valeur;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="objectif", type="integer")
-     */
-    private $objectif;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
@@ -169,27 +162,4 @@ class Carte
         return $this->updatedAt;
     }
 
-    /**
-     * Set objectif
-     *
-     * @param integer $objectif
-     *
-     * @return Carte
-     */
-    public function setObjectif($objectif)
-    {
-        $this->objectif = $objectif;
-
-        return $this;
-    }
-
-    /**
-     * Get objectif
-     *
-     * @return integer
-     */
-    public function getObjectif()
-    {
-        return $this->objectif;
-    }
 }
