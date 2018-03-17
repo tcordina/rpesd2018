@@ -84,6 +84,17 @@
         {% endif %}
     {% endfor %}
     <br/><br/>
+    {# affichage des cartes objets jouées par j2 #}
+    {% for objectif in objectifs %}
+        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
+            {% for carte in plateau.terrainJ2[objectif.id] %}
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+            {% else %}
+                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
         <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
@@ -118,6 +129,17 @@
             <div style="border:1px solid orange;width:75px;height:112.5px;"></div>
         </div>
     {% endif %}
+    <br/><br/>
+    {# affichage des cartes objets jouées par j1 #}
+    {% for objectif in objectifs %}
+        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
+            {% for carte in plateau.terrainJ1[objectif.id] %}
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+            {% else %}
+                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
     <br/><br/>
     {# affichage des actions de j1 #}
     {% for action in plateau.actions.j1 %}
@@ -261,6 +283,17 @@
         {% endif %}
     {% endfor %}
     <br/><br/>
+    {# affichage des cartes objets jouées par j1 #}
+    {% for objectif in objectifs %}
+        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
+            {% for carte in plateau.terrainJ1[objectif.id] %}
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+            {% else %}
+                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
         <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
@@ -284,7 +317,6 @@
         {% endif %}
         </div>
     {% endfor %}
-
     {# affichage de la pioche #}
     {% if plateau.pioche is not empty %}
         <div style="margin-left: 50px;display:inline-block;">
@@ -295,6 +327,17 @@
             <div style="border:1px solid orange;width:75px;height:112.5px;"></div>
         </div>
     {% endif %}
+    <br/><br/>
+    {# affichage des cartes objets jouées par j2 #}
+    {% for objectif in objectifs %}
+        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
+            {% for carte in plateau.terrainJ2[objectif.id] %}
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+            {% else %}
+                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
     <br/><br/>
     {# affichage des actions de j2 #}
     {% for action in plateau.actions.j2 %}
@@ -359,11 +402,5 @@
     </form>
 {% endif %}
 </div>
-
-    {{ dump(partie) }}
-    {{ dump(plateau) }}
-    {{ dump(cartes) }}
-    {{ dump(objectifs) }}
-    {{ dump(joueur) }}
 
 {% endblock %}

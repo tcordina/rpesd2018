@@ -72,7 +72,7 @@ class ActionController extends PartieController
                 return $this->concurrenceChoix2OwnAction($partie, $joueur, $cartes, $objectif);
                 break;
         }
-        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
     }
 
     private function secretAction(Partie $partie, $joueur, $carte)
@@ -115,11 +115,11 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
             $session->getFlashBag()->add('notice', 'Veuillez séléctionner une seule carte');
-            return $this->redirectToRoute('partie_plateau', [
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
             ]);
         }
@@ -132,7 +132,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ1());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -148,7 +148,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ2());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -170,11 +170,11 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
             $session->getFlashBag()->add('notice', 'Veuillez séléctionner 2 cartes');
-            return $this->redirectToRoute('partie_plateau', [
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
             ]);
         }
@@ -187,7 +187,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ1());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -203,7 +203,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ2());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -225,11 +225,13 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            $this->changerTourAction($partie);
+
+            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
             $session->getFlashBag()->add('notice', 'Veuillez séléctionner 3 cartes');
-            return $this->redirectToRoute('partie_plateau', [
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
             ]);
         }
@@ -240,9 +242,10 @@ class ActionController extends PartieController
         $em = $this->getDoctrine()->getManager();
         $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
         if($carte->getValeur() !== $objectif->getValeur()) {
-            return $this->redirectToRoute('partie_plateau', [
+            $session = new Session();
+            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
-                'flash' => 'Vous ne pouvez pas séléctionner cette carte avec cet objectif'
             ]);
         }else {
             if (!is_array($carte)) {
@@ -250,7 +253,7 @@ class ActionController extends PartieController
                 if ($joueur == 'j1') {
                     $terrain = json_decode($partie->getTerrainJ1());
                     if (!in_array($carte->getId(), $actions->j2[2]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[2]->cartes)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -263,7 +266,7 @@ class ActionController extends PartieController
                 } elseif ($joueur == 'j2') {
                     $terrain = json_decode($partie->getTerrainJ2());
                     if (!in_array($carte->getId(), $actions->j1[2]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j1[2]->cartes)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -278,11 +281,13 @@ class ActionController extends PartieController
                 $em->persist($partie);
                 $em->flush();
 
-                return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                $this->changerTourAction($partie);
+
+                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
             } else {
                 $session = new Session();
                 $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_plateau', [
+                return $this->redirectToRoute('partie_show', [
                     'id' => $partie->getId(),
                 ]);
             }
@@ -294,9 +299,10 @@ class ActionController extends PartieController
         $em = $this->getDoctrine()->getManager();
         $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
         if($carte->getValeur() !== $objectif->getValeur()) {
-            return $this->redirectToRoute('partie_plateau', [
+            $session = new Session();
+            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
-                'flash' => 'Vous ne pouvez pas séléctionner cette carte avec cet objectif'
             ]);
         }else {
             if (!is_array($carte)) {
@@ -304,20 +310,24 @@ class ActionController extends PartieController
                 if ($joueur == 'j1') {
                     $terrain = json_decode($partie->getTerrainJ1());
                     if (!in_array($carte->getId(), $actions->j1[2]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j1[2]->cartes)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
-                            unset($actions->$joueur[2]->cartes[$key]);
+                            unset($actions->j1[2]->cartes[$key]);
                             $actions->j1[2]->cartes = array_values($actions->j1[2]->cartes);
                             $partie->setTerrainJ1(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j1[2]->cartes)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 } elseif ($joueur == 'j2') {
                     $terrain = json_decode($partie->getTerrainJ2());
                     if (!in_array($carte->getId(), $actions->j2[2]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[2]->cartes)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -325,6 +335,10 @@ class ActionController extends PartieController
                             $actions->j2[2]->cartes = array_values($actions->j2[2]->cartes);
                             $partie->setTerrainJ2(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j2[2]->cartes)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 }
@@ -333,11 +347,15 @@ class ActionController extends PartieController
                 $em->persist($partie);
                 $em->flush();
 
-                return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                if(empty($actions->j1[2]->cartes)) {
+                    $this->changerTourAction($partie);
+                }
+
+                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
             } else {
                 $session = new Session();
                 $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_plateau', [
+                return $this->redirectToRoute('partie_show', [
                     'id' => $partie->getId(),
                 ]);
             }
@@ -351,7 +369,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ1());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -367,7 +385,7 @@ class ActionController extends PartieController
                 $main = json_decode($partie->getMainJ2());
                 foreach ($cartes as $carte) {
                     if (!in_array($carte->getId(), $main)) {
-                        return $this->redirectToRoute('partie_plateau', ['partie' => $partie]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         $cards[] = $carte->getId();
                         if (($key = array_search($carte->getId(), $main)) !== false) {
@@ -385,15 +403,17 @@ class ActionController extends PartieController
             $actions->$joueur[3]->cartes = $cards;
             $partie->setActions(json_encode($actions));
 
+            $this->changerTourAction($partie);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
             $session->getFlashBag()->add('notice', 'Veuillez séléctionner 4 cartes');
-            return $this->redirectToRoute('partie_plateau', [
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
             ]);
         }
@@ -406,7 +426,7 @@ class ActionController extends PartieController
             if ($joueur == 'j1') {
                 foreach($cartes as $carte) {
                     if (!in_array($carte->getId(), $actions->j2[3]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[3]->cartes)) !== false) {
                             $actions->j2[3]->choisies['j1'][] = $actions->j2[3]->cartes[$key];
@@ -421,7 +441,7 @@ class ActionController extends PartieController
             } elseif ($joueur == 'j2') {
                 foreach($cartes as $carte) {
                     if (!in_array($carte->getId(), $actions->j1[3]->cartes)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j1[3]->cartes)) !== false) {
                             $actions->j1[3]->choisies['j2'][] = $actions->j1[3]->cartes[$key];
@@ -441,11 +461,11 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
             $session->getFlashBag()->add('notice', 'Veuillez séléctionner 2 cartes');
-            return $this->redirectToRoute('partie_plateau', [
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
             ]);
         }
@@ -456,9 +476,10 @@ class ActionController extends PartieController
         $em = $this->getDoctrine()->getManager();
         $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
         if($carte->getValeur() !== $objectif->getValeur()) {
-            return $this->redirectToRoute('partie_plateau', [
+            $session = new Session();
+            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
-                'flash' => 'Vous ne pouvez pas séléctionner cette carte avec cet objectif'
             ]);
         }else {
             if (!is_array($carte)) {
@@ -467,7 +488,7 @@ class ActionController extends PartieController
                     $terrain = json_decode($partie->getTerrainJ1());
                     //die(var_dump($actions->$joueur[3]->choisies->$joueur));
                     if (!in_array($carte->getId(), $actions->j2[3]->choisies->j1)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[3]->choisies->j1)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -475,12 +496,16 @@ class ActionController extends PartieController
                             $actions->j2[3]->choisies->j1 = array_values($actions->j2[3]->choisies->j1);
                             $partie->setTerrainJ1(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j2[3]->choisies->j1)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 } elseif ($joueur == 'j2') {
                     $terrain = json_decode($partie->getTerrainJ2());
                     if (!in_array($carte->getId(), $actions->j1[3]->choisies->j2)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j1[3]->choisies->j2)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -488,6 +513,10 @@ class ActionController extends PartieController
                             $actions->j1[3]->choisies->j2 = array_values($actions->j1[3]->choisies->j2);
                             $partie->setTerrainJ2(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j1[3]->choisies->j2)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 }
@@ -496,11 +525,11 @@ class ActionController extends PartieController
                 $em->persist($partie);
                 $em->flush();
 
-                return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
             } else {
                 $session = new Session();
                 $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_plateau', [
+                return $this->redirectToRoute('partie_show', [
                     'id' => $partie->getId(),
                 ]);
             }
@@ -512,9 +541,10 @@ class ActionController extends PartieController
         $em = $this->getDoctrine()->getManager();
         $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
         if($carte->getValeur() !== $objectif->getValeur()) {
-            return $this->redirectToRoute('partie_plateau', [
+            $session = new Session();
+            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
+            return $this->redirectToRoute('partie_show', [
                 'id' => $partie->getId(),
-                'flash' => 'Vous ne pouvez pas séléctionner cette carte avec cet objectif'
             ]);
         }else {
             if (!is_array($carte)) {
@@ -522,7 +552,7 @@ class ActionController extends PartieController
                 if ($joueur == 'j1') {
                     $terrain = json_decode($partie->getTerrainJ1());
                     if (!in_array($carte->getId(), $actions->j1[3]->choisies->j1)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j1[3]->choisies->j1)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -530,12 +560,16 @@ class ActionController extends PartieController
                             $actions->j1[3]->choisies->j1 = array_values($actions->j1[3]->choisies->j1);
                             $partie->setTerrainJ1(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j1[3]->choisies->j1)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 } elseif ($joueur == 'j2') {
                     $terrain = json_decode($partie->getTerrainJ2());
                     if (!in_array($carte->getId(), $actions->j2[3]->choisies->j2)) {
-                        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[3]->choisies->j2)) !== false) {
                             $terrain->$objectifId[] = $carte->getId();
@@ -543,6 +577,10 @@ class ActionController extends PartieController
                             $actions->j2[3]->choisies->j2 = array_values($actions->j2[3]->choisies->j2);
                             $partie->setTerrainJ2(json_encode($terrain));
                             $partie->setActions(json_encode($actions));
+
+                            if(empty($actions->j2[3]->choisies->j2)) {
+                                $this->changerTourAction($partie);
+                            }
                         }
                     }
                 }
@@ -551,11 +589,15 @@ class ActionController extends PartieController
                 $em->persist($partie);
                 $em->flush();
 
-                return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
+                if(empty($actions->$joueur[2]->cartes)) {
+                    $this->changerTourAction($partie);
+                }
+
+                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
             } else {
                 $session = new Session();
                 $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_plateau', [
+                return $this->redirectToRoute('partie_show', [
                     'id' => $partie->getId(),
                 ]);
             }

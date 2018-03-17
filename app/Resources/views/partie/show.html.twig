@@ -25,12 +25,48 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+    {% if (joueur == 1) %}
+        <script>
+            $(document).ready(function() {
+                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+                setInterval(function() {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
+                        success: function (res) {
+                            console.log(res)
+                            if(res == '2'){
+                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                            }
+                        }
+                    })
+                }, 2000);
+            })
+        </script>
+    {% elseif (joueur == 2) %}
+        <script>
+            $(document).ready(function() {
+                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+                setInterval(function() {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
+                        success: function (res) {
+                            console.log(res)
+                            if(res == '1'){
+                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                            }
+                        }
+                    })
+                }, 1500);
+            })
+        </script>
+    {% endif %}
 
-    <script>
-        $(document).ready(function() {
-            setInterval(function () {
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
-            }, 1500)
-        })
-    </script>
+    {{ dump(partie) }}
+    {{ dump(plateau) }}
+    {{ dump(cartes) }}
+    {{ dump(objectifs) }}
+    {{ dump(joueur) }}
+
 {% endblock %}

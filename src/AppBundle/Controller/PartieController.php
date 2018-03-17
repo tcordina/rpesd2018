@@ -6,6 +6,7 @@ use AppBundle\Entity\Partie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -150,6 +151,8 @@ class PartieController extends Controller
             $plateau = [
                 'mainJ1' => json_decode($partie->getMainJ1()),
                 'mainJ2' => json_decode($partie->getMainJ2()),
+                'terrainJ1' => json_decode($partie->getTerrainJ1()),
+                'terrainJ2' => json_decode($partie->getTerrainJ2()),
                 'pioche' => json_decode($partie->getPioche()),
                 'actions' => json_decode($partie->getActions()),
                 'jetons' => json_decode($partie->getJetons()),
@@ -187,10 +190,12 @@ class PartieController extends Controller
             $plateau = [
                 'mainJ1' => json_decode($partie->getMainJ1()),
                 'mainJ2' => json_decode($partie->getMainJ2()),
-                'pioche' => json_decode($partie->getPioche()),
-                'actions' => json_decode($partie->getActions()),
-                'jetons' => json_decode($partie->getJetons()),
-                'tourJoue' => json_decode($partie->getTourActions())
+                'terrainJ1' => json_decode($partie->getTerrainJ1(), true),
+                'terrainJ2' => json_decode($partie->getTerrainJ2(), true),
+                'pioche' => json_decode($partie->getPioche(), true),
+                'actions' => json_decode($partie->getActions(), true),
+                'jetons' => json_decode($partie->getJetons(), true),
+                'tourJoue' => json_decode($partie->getTourActions(), true)
             ];
             $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
 
@@ -211,12 +216,13 @@ class PartieController extends Controller
      * Piocher une carte
      * @param Partie $partie
      * @param int $joueur
+     * @return void
      */
     protected function piocherAction(Partie $partie, $joueur)
     {
         $pioche = json_decode($partie->getPioche());
         if(empty($pioche)) {
-
+            return $this->finMancheAction($partie);
         }
         if($joueur == 1) {
             $main = json_decode($partie->getMainJ1());
@@ -264,6 +270,21 @@ class PartieController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
+    }
+
+    /**
+     * @Route("/cetaki/{partie}", name="partie_cetaki")
+     * @param Partie $partie
+     * @return Response
+     */
+    public function cetakiAction(Partie $partie)
+    {
+        return new Response($partie->getTourJoueurId());
+    }
+
+    public function finMancheAction(Partie $partie)
+    {
+        return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
 
     /**
