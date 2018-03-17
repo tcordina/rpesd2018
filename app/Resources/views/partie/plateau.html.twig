@@ -19,16 +19,6 @@
             {% endfor %}
             </form>
         </div>
-    {% elseif plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length < 3 %}
-        <div style="border: 2px solid #333">
-            <form id="cadeau_choix_2" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-            {% for carte in plateau.actions.j1.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                <input type="hidden" name="action" value="cadeau_choix_2">
-                <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
-            {% endfor %}
-            </form>
-        </div>
     {% elseif plateau.actions.j2.3.cartes is not empty %}
         {# si j2 a joué "concurrence" #}
         <div style="border: 2px solid #333">
@@ -45,34 +35,12 @@
                 {% endif %}
             {% endfor %}
         </div>
-    {% elseif plateau.actions.j2.3.choisies.j1 is defined and plateau.actions.j2.3.choisies.j1 is not empty %}
-        {# si j1 a choisi ses cartes lors de "concurrence" lancé par j2 #}
-        <div style="border: 2px solid #333">
-            <form id="concurrence_choix_2" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-            {% for carte in plateau.actions.j2.3.choisies.j1 %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                    <input type="hidden" name="action" value="concurrence_choix_2">
-                    <button class="btn btn-info" type="submit" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-            {% endfor %}
-            </form>
-        </div>
-    {% elseif plateau.actions.j1.3.choisies.j1 is defined and plateau.actions.j1.3.choisies.j1 is not empty %}
-        <div style="border: 2px solid #333">
-            <form id="concurrence_choix_2_own" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-
-                {% for carte in plateau.actions.j1.3.choisies.j1 %}
-                    <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                    <input type="hidden" name="action" value="concurrence_choix_2_own">
-                    <button class="btn btn-info" type="submit" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-                {% endfor %}
-            </form>
-        </div>
     {% endif %}
     <br/><br/>
     {# affichage de la main de j2#}
     {% for carte in plateau.mainJ2 %}
         {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }}</div>
+        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }} | {{ cartes[carte-1].valeur }}</div>
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j2 #}
@@ -88,7 +56,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -97,17 +65,7 @@
     <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
-        {# affichage des input radio si action en cours #}
-        {% if plateau.actions.j2.2.cartes is not empty %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix" required>
-        {% elseif plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length < 3 %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix_2" required>
-        {% elseif plateau.actions.j2.3.choisies.j1 is defined and plateau.actions.j2.3.choisies.j1 is not empty %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="concurrence_choix_2" required>
-        {% elseif plateau.actions.j1.3.choisies.j1 is defined and plateau.actions.j1.3.choisies.j1 is not empty %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="concurrence_choix_2_own" required>
-        {% endif %}
+        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }} | {{ objectif.valeur }}
         {# affichage des jetons #}
         {% if objectif.id in plateau.jetons.j2 %}
             <div style="position: absolute">Jeton J2</div>
@@ -134,7 +92,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -144,7 +102,7 @@
     {# affichage des actions de j1 #}
     {% for action in plateau.actions.j1 %}
         {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 1 %}
+        {% if partie.tourJoueurId == 1 and plateau.actions.j2.2.cartes is empty and plateau.actions.j1.2.cartes is empty %}
             {% if plateau.tourJoue.j1 == 0 %}
                 <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
                 {% if action.jouee %}
@@ -172,7 +130,7 @@
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            {{ cartes[carte-1].id }}
+            {{ cartes[carte-1].id }} | {{ cartes[carte-1].objectif }}
             <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
@@ -191,17 +149,6 @@
     {% else %}
         {# si pas de cartes compromis #}
     {% endfor %}
-    <br/><br/>
-    {# bouton fin de tour #}
-    <form action="{{ path('partie_changerTour', {'partie': partie.id}) }}" method="POST">
-    {% if partie.tourJoueurId == 2 %}
-        <button class="btn btn-info" disabled>Travail terminé</button>
-    {% elseif plateau.tourJoue.j1 == true %}
-        <button class="btn btn-info" type="submit">Travail terminé !</button>
-    {% else %}
-        <button class="btn btn-info" disabled>Travail terminé</button>
-    {% endif %}
-    </form>
 
 {% elseif joueur == 2 %}
     {# affichage des cartes des actions de j1 #}
@@ -214,16 +161,6 @@
                 <br/>
                     <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
                 <br/>
-            {% endfor %}
-            </form>
-        </div>
-    {% elseif plateau.actions.j2.2.cartes is not empty and plateau.actions.j2.2.cartes|length < 3 %}
-        <div style="border: 2px solid #333">
-            <form id="cadeau_choix_2" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-            {% for carte in plateau.actions.j2.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                    <input type="hidden" name="action" value="cadeau_choix_2">
-                    <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
             {% endfor %}
             </form>
         </div>
@@ -243,35 +180,12 @@
                 {% endif %}
             {% endfor %}
         </div>
-    {% elseif plateau.actions.j1.3.choisies.j2 is defined and plateau.actions.j1.3.choisies.j2 is not empty %}
-        {# si j2 a choisi ses cartes lors de "concurrence" lancé par j1 #}
-        <div style="border: 2px solid #333">
-            <form id="concurrence_choix_2" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-
-            {% for carte in plateau.actions.j1.3.choisies.j2 %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                <input type="hidden" name="action" value="concurrence_choix_2">
-                <button class="btn btn-info" type="submit" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-            {% endfor %}
-            </form>
-        </div>
-    {% elseif plateau.actions.j2.3.choisies.j2 is defined and plateau.actions.j2.3.choisies.j2 is not empty %}
-        <div style="border: 2px solid #333">
-            <form id="concurrence_choix_2_own" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-
-                {% for carte in plateau.actions.j2.3.choisies.j2 %}
-                    <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
-                    <input type="hidden" name="action" value="concurrence_choix_2_own">
-                    <button class="btn btn-info" type="submit" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-                {% endfor %}
-            </form>
-        </div>
     {% endif %}
     <br/><br/>
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
         {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }}</div>
+        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }} | {{ cartes[carte-1].objectif }}</div>
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j1 #}
@@ -287,7 +201,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -296,17 +210,7 @@
     <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }}
-        {# affichage des input radio si action en cours #}
-        {% if plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length == 3 %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix" required>
-        {% elseif plateau.actions.j2.2.cartes is not empty and plateau.actions.j2.2.cartes|length < 3 %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="cadeau_choix_2" required>
-        {% elseif plateau.actions.j1.3.choisies.j2 is defined and plateau.actions.j1.3.choisies.j2 is not empty  %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="concurrence_choix_2" required>
-        {% elseif plateau.actions.j2.3.choisies.j2 is defined and plateau.actions.j2.3.choisies.j2 is not empty %}
-            <input type="radio" value="{{ objectif.id }}" name="objectif" form="concurrence_choix_2_own" required>
-        {% endif %}
+        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }} | {{ objectif.valeur }}
         {# affichage des jetons #}
         {% if objectif.id in plateau.jetons.j2 %}
             <div style="position: absolute">Jeton J2</div>
@@ -332,7 +236,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.id }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -342,7 +246,7 @@
     {# affichage des actions de j2 #}
     {% for action in plateau.actions.j2 %}
         {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 2 %}
+        {% if partie.tourJoueurId == 2 and plateau.actions.j1.2.cartes is empty and plateau.actions.j2.2.cartes is empty %}
             {% if plateau.tourJoue.j2 == 0 %}
                 <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
                 {% if action.jouee %}
@@ -370,7 +274,7 @@
     {# affichage de la main de j2 #}
     {% for carte in plateau.mainJ2 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            {{ cartes[carte-1].id }}
+            {{ cartes[carte-1].id }} | {{ cartes[carte-1].valeur }}
             <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
@@ -389,17 +293,6 @@
     {% else %}
         {# si pas de cartes compromis #}
     {% endfor %}
-    <br/><br/>
-    {# bouton fin de tour #}
-    <form action="{{ path('partie_changerTour', {'partie': partie.id}) }}" method="POST">
-        {% if partie.tourJoueurId == 1 %}
-            <button class="btn btn-info" disabled>Travail terminé</button>
-        {% elseif plateau.tourJoue.j2 == true %}
-            <button class="btn btn-info" type="submit">Travail terminé !</button>
-        {% else %}
-            <button class="btn btn-info" disabled>Travail terminé</button>
-        {% endif %}
-    </form>
 {% endif %}
 </div>
 

@@ -29,7 +29,7 @@
         <script>
             $(document).ready(function() {
                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-                setInterval(function() {
+                var cetakiInt = setInterval(function() {
                     $.ajax({
                         type: "GET",
                         url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
@@ -37,28 +37,34 @@
                             console.log(res)
                             if(res == '2'){
                                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                            }else if(res == '1'){
+                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                                clearInterval(cetakiInt)
                             }
                         }
                     })
-                }, 2000);
+                }, 3000);
             })
         </script>
     {% elseif (joueur == 2) %}
         <script>
             $(document).ready(function() {
                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-                setInterval(function() {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
-                        success: function (res) {
-                            console.log(res)
-                            if(res == '1'){
-                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                    var cetakiInt = setInterval(function () {
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
+                            success: function (res) {
+                                console.log(res)
+                                if (res == '1') {
+                                    $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                                } else if (res == '2') {
+                                    $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                                    clearInterval(cetakiInt)
+                                }
                             }
-                        }
-                    })
-                }, 1500);
+                        })
+                    }, 3000)
             })
         </script>
     {% endif %}
