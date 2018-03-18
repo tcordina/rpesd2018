@@ -5,6 +5,7 @@
 {% for message in app.flashes('notice') %}
     {{ message }}
 {% endfor %}
+<p>Manche n° {{ partie.manche }}</p>
 {% if joueur == 1 %}
 
     {# affichage des cartes des actions de j2 #}

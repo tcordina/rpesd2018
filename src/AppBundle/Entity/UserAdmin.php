@@ -36,6 +36,20 @@ class UserAdmin extends BaseUser
 
     /**
      * @var int
+     *
+     * @Orm\Column(name="wins", type="integer")
+     */
+    private $wins;
+
+    /**
+     * @var int
+     *
+     * @Orm\Column(name="losses", type="integer")
+     */
+    private $losses;
+
+    /**
+     * @var int
      * @ORM\Column(name="elo", type="integer")
      */
     private $elo;
@@ -83,6 +97,46 @@ class UserAdmin extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWins()
+    {
+        return $this->wins;
+    }
+
+    /**
+     * @param int $wins
+     *
+     * @return UserAdmin
+     */
+    public function setWins($wins)
+    {
+        $this->wins = $wins;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLosses()
+    {
+        return $this->losses;
+    }
+
+    /**
+     * @param int $losses
+     *
+     * @return UserAdmin
+     */
+    public function setLosses($losses)
+    {
+        $this->losses = $losses;
+
+        return $this;
     }
 
     /**

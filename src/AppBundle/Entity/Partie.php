@@ -111,9 +111,23 @@ class Partie
     /**
      * @var int
      *
+     * @ORM\Column(name="manche", type="integer")
+     */
+    private $manche;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="carteEcartee", type="integer")
      */
     private $carteEcartee;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="winner", type="integer", nullable=true)
+     */
+    private $winner;
 
     /**
      * @var bool
@@ -132,10 +146,8 @@ class Partie
 
     public function __construct()
     {
-        //$date = date('Y-m-d H:i:s');
         $this->createdAt = new \DateTime("now");
         $this->ended = 0;
-        $this->tourJoueurId = 1;
     }
 
 
@@ -304,6 +316,26 @@ class Partie
     public function setCartesJouees($cartesJouees)
     {
         $this->cartesJouees = $cartesJouees;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getManche()
+    {
+        return $this->manche;
+    }
+
+    /**
+     * @param int $manche
+     *
+     * @return Partie
+     */
+    public function setManche($manche)
+    {
+        $this->manche = $manche;
 
         return $this;
     }
@@ -508,6 +540,26 @@ class Partie
     public function getCarteEcartee()
     {
         return $this->carteEcartee;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @param int $winner
+     *
+     * @return Partie
+     */
+    public function setWinner($winner)
+    {
+        $this->winner = $winner;
+
+        return $this;
     }
 
     /**

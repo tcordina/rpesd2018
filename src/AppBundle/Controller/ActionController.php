@@ -49,26 +49,13 @@ class ActionController extends PartieController
                 return $this->cadeauAction($partie, $joueur, $cartes);
                 break;
             case 'cadeau_choix':
-                $objectif = $request->request->get('objectif');
-                return $this->cadeauChoixAction($partie, $joueur, $cartes, $objectif);
-                break;
-            case 'cadeau_choix_2':
-                $objectif = $request->request->get('objectif');
-                return $this->cadeauChoix2Action($partie, $joueur, $cartes, $objectif);
+                return $this->cadeauChoixAction($partie, $joueur, $cartes);
                 break;
             case 'concurrence':
                 return $this->concurrenceAction($partie, $joueur, $cartes);
                 break;
             case 'concurrence_choix':
                 return $this->concurrenceChoixAction($partie, $joueur, $cartes);
-                break;
-            case 'concurrence_choix_2':
-                $objectif = $request->request->get('objectif');
-                return $this->concurrenceChoix2Action($partie, $joueur, $cartes, $objectif);
-                break;
-            case 'concurrence_choix_2_own':
-                $objectif = $request->request->get('objectif');
-                return $this->concurrenceChoix2OwnAction($partie, $joueur, $cartes, $objectif);
                 break;
         }
         return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
@@ -240,7 +227,7 @@ class ActionController extends PartieController
         }
     }
 
-    private function cadeauChoixAction(Partie $partie, $joueur, Carte $carte, $objectifId)
+    private function cadeauChoixAction(Partie $partie, $joueur, Carte $carte)
     {
         $em = $this->getDoctrine()->getManager();
         $objectif = $em->getRepository('AppBundle:Objectif')->find($carte->getObjectif());
@@ -296,63 +283,9 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
-            return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-        } else {
-            $session = new Session();
-            $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-            return $this->redirectToRoute('partie_show', [
-                'id' => $partie->getId(),
-            ]);
-        }
-    }
-
-    private function cadeauChoix2Action(Partie $partie, $joueur, $carte, $objectifId)
-    {
-        //die(var_dump($joueur));
-        $em = $this->getDoctrine()->getManager();
-        $objectif = $em->getRepository('AppBundle:Objectif')->find($carte->getObjectif());
-        $objectifId = $objectif->getId();
-        if (!is_array($carte)) {
-            $actions = json_decode($partie->getActions());
-            if ($joueur == 'j1') {
-                $terrain = json_decode($partie->getTerrainJ1());
-                if (!in_array($carte->getId(), $actions->j1[2]->cartes)) {
-                    return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                } else {
-                    if (($key = array_search($carte->getId(), $actions->j1[2]->cartes)) !== false) {
-                        $terrain->$objectifId[] = $carte->getId();
-                        unset($actions->j1[2]->cartes[$key]);
-                        $actions->j1[2]->cartes = array_values($actions->j1[2]->cartes);
-                        $partie->setTerrainJ1(json_encode($terrain));
-                        $partie->setActions(json_encode($actions));
-
-                        if(empty($actions->j1[2]->cartes)) {
-                            $this->changerTourAction($partie);
-                        }
-                    }
-                }
-            } elseif ($joueur == 'j2') {
-                $terrain = json_decode($partie->getTerrainJ2());
-                if (!in_array($carte->getId(), $actions->j2[2]->cartes)) {
-                    return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                } else {
-                    if (($key = array_search($carte->getId(), $actions->j2[2]->cartes)) !== false) {
-                        $terrain->$objectifId[] = $carte->getId();
-                        unset($actions->j2[2]->cartes[$key]);
-                        $actions->j2[2]->cartes = array_values($actions->j2[2]->cartes);
-                        $partie->setTerrainJ2(json_encode($terrain));
-                        $partie->setActions(json_encode($actions));
-
-                        if(empty($actions->j2[2]->cartes)) {
-                            $this->changerTourAction($partie);
-                        }
-                    }
-                }
+            if(empty(json_decode($partie->getMainJ1())) && empty(json_decode($partie->getMainJ2()))) {
+                return $this->changerTourAction($partie);
             }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($partie);
-            $em->flush();
 
             return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         } else {
@@ -496,6 +429,10 @@ class ActionController extends PartieController
             $em->persist($partie);
             $em->flush();
 
+            if(empty(json_decode($partie->getMainJ1())) && empty(json_decode($partie->getMainJ2()))) {
+                return $this->finMancheAction($partie);
+            }
+
             return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
         }else {
             $session = new Session();
@@ -506,136 +443,4 @@ class ActionController extends PartieController
         }
     }
 
-    private function concurrenceChoix2Action(Partie $partie, $joueur, $carte, $objectifId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
-        if($carte->getValeur() !== $objectif->getValeur()) {
-            $session = new Session();
-            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
-            return $this->redirectToRoute('partie_show', [
-                'id' => $partie->getId(),
-            ]);
-        }else {
-            if (!is_array($carte)) {
-                $actions = json_decode($partie->getActions());
-                if ($joueur == 'j1') {
-                    $terrain = json_decode($partie->getTerrainJ1());
-                    //die(var_dump($actions->$joueur[3]->choisies->$joueur));
-                    if (!in_array($carte->getId(), $actions->j2[3]->choisies->j1)) {
-                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                    } else {
-                        if (($key = array_search($carte->getId(), $actions->j2[3]->choisies->j1)) !== false) {
-                            $terrain->$objectifId[] = $carte->getId();
-                            unset($actions->j2[3]->choisies->j1[$key]);
-                            $actions->j2[3]->choisies->j1 = array_values($actions->j2[3]->choisies->j1);
-                            $partie->setTerrainJ1(json_encode($terrain));
-                            $partie->setActions(json_encode($actions));
-
-                            if(empty($actions->j2[3]->choisies->j1)) {
-                                $this->changerTourAction($partie);
-                            }
-                        }
-                    }
-                } elseif ($joueur == 'j2') {
-                    $terrain = json_decode($partie->getTerrainJ2());
-                    if (!in_array($carte->getId(), $actions->j1[3]->choisies->j2)) {
-                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                    } else {
-                        if (($key = array_search($carte->getId(), $actions->j1[3]->choisies->j2)) !== false) {
-                            $terrain->$objectifId[] = $carte->getId();
-                            unset($actions->j1[3]->choisies->j2[$key]);
-                            $actions->j1[3]->choisies->j2 = array_values($actions->j1[3]->choisies->j2);
-                            $partie->setTerrainJ2(json_encode($terrain));
-                            $partie->setActions(json_encode($actions));
-
-                            if(empty($actions->j1[3]->choisies->j2)) {
-                                $this->changerTourAction($partie);
-                            }
-                        }
-                    }
-                }
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($partie);
-                $em->flush();
-
-                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-            } else {
-                $session = new Session();
-                $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_show', [
-                    'id' => $partie->getId(),
-                ]);
-            }
-        }
-    }
-
-    private function concurrenceChoix2OwnAction(Partie $partie, $joueur, $carte, $objectifId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $objectif = $em->getRepository('AppBundle:Objectif')->find($objectifId);
-        if($carte->getValeur() !== $objectif->getValeur()) {
-            $session = new Session();
-            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas joueur une carte de valeur '.$carte->getValeur().' sur un objectif de valeur '.$objectif->getValeur().' !');
-            return $this->redirectToRoute('partie_show', [
-                'id' => $partie->getId(),
-            ]);
-        }else {
-            if (!is_array($carte)) {
-                $actions = json_decode($partie->getActions());
-                if ($joueur == 'j1') {
-                    $terrain = json_decode($partie->getTerrainJ1());
-                    if (!in_array($carte->getId(), $actions->j1[3]->choisies->j1)) {
-                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                    } else {
-                        if (($key = array_search($carte->getId(), $actions->j1[3]->choisies->j1)) !== false) {
-                            $terrain->$objectifId[] = $carte->getId();
-                            unset($actions->j1[3]->choisies->j1[$key]);
-                            $actions->j1[3]->choisies->j1 = array_values($actions->j1[3]->choisies->j1);
-                            $partie->setTerrainJ1(json_encode($terrain));
-                            $partie->setActions(json_encode($actions));
-
-                            if(empty($actions->j1[3]->choisies->j1)) {
-                                $this->changerTourAction($partie);
-                            }
-                        }
-                    }
-                } elseif ($joueur == 'j2') {
-                    $terrain = json_decode($partie->getTerrainJ2());
-                    if (!in_array($carte->getId(), $actions->j2[3]->choisies->j2)) {
-                        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-                    } else {
-                        if (($key = array_search($carte->getId(), $actions->j2[3]->choisies->j2)) !== false) {
-                            $terrain->$objectifId[] = $carte->getId();
-                            unset($actions->j2[3]->choisies->j2[$key]);
-                            $actions->j2[3]->choisies->j2 = array_values($actions->j2[3]->choisies->j2);
-                            $partie->setTerrainJ2(json_encode($terrain));
-                            $partie->setActions(json_encode($actions));
-
-                            if(empty($actions->j2[3]->choisies->j2)) {
-                                $this->changerTourAction($partie);
-                            }
-                        }
-                    }
-                }
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($partie);
-                $em->flush();
-
-                if(empty($actions->$joueur[2]->cartes)) {
-                    $this->changerTourAction($partie);
-                }
-
-                return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
-            } else {
-                $session = new Session();
-                $session->getFlashBag()->add('notice', 'Veuillez séléctionner une carte');
-                return $this->redirectToRoute('partie_show', [
-                    'id' => $partie->getId(),
-                ]);
-            }
-        }
-    }
 }
