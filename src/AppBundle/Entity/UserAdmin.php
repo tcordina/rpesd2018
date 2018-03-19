@@ -87,6 +87,8 @@ class UserAdmin extends BaseUser
         parent::__construct();
         $this->setElo(1200);
         $this->setRank('argent');
+        $this->setWins(0);
+        $this->setLosses(0);
     }
 
     /**
