@@ -61,7 +61,7 @@ class PartieController extends Controller
             unset($cartes[0]);
             $cartes = array_values($cartes);
 
-            $partie->setTourJoueurId(rand(1,2));
+            $partie->setTourJoueurId(random_int(1,2));
 
             $t = array();
             for($i=0; $i<7; $i++){
@@ -224,27 +224,25 @@ class PartieController extends Controller
     protected function piocherAction(Partie $partie, $joueur)
     {
         $pioche = json_decode($partie->getPioche());
-        if(empty($pioche)) {
-            return $this->finMancheAction($partie);
-        }
-        if($joueur == 1) {
-            $main = json_decode($partie->getMainJ1());
-            array_push($main, $pioche[0]);
-            unset($pioche[0]);
-            $partie->setMainJ1(json_encode(array_values($main)));
-            $partie->setPioche(json_encode(array_values($pioche)));
-        }else {
-            $main = json_decode($partie->getMainJ2());
-            array_push($main, $pioche[0]);
-            unset($pioche[0]);
-            $partie->setMainJ2(json_encode(array_values($main)));
-            $partie->setPioche(json_encode(array_values($pioche)));
-        }
+        if(!empty($pioche)) {
+            if ($joueur == 1) {
+                $main = json_decode($partie->getMainJ1());
+                array_push($main, $pioche[0]);
+                unset($pioche[0]);
+                $partie->setMainJ1(json_encode(array_values($main)));
+                $partie->setPioche(json_encode(array_values($pioche)));
+            } else {
+                $main = json_decode($partie->getMainJ2());
+                array_push($main, $pioche[0]);
+                unset($pioche[0]);
+                $partie->setMainJ2(json_encode(array_values($main)));
+                $partie->setPioche(json_encode(array_values($pioche)));
+            }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($partie);
-        $em->flush();
-
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($partie);
+            $em->flush();
+        }
     }
 
     /**
@@ -256,6 +254,7 @@ class PartieController extends Controller
     public function changerTourAction(Partie $partie)
     {
         if($this->isFullyPlayed($partie)){
+            die(var_dump('manche finie'));
             return $this->finMancheAction($partie);
         }
 
@@ -299,7 +298,7 @@ class PartieController extends Controller
         $cartesConcurrenceJ1 = empty($actions->j1[3]->cartes); $cartesConcurrenceJ2 = empty($actions->j2[3]->cartes);
         if($secretJ1 and $secretJ2 and $compromisJ1 and $compromisJ2 and $cadeauJ1 and $cadeauJ2 and $concurrenceJ1 and $concurrenceJ2
             and $cartesCadeauJ1 and $cartesCadeauJ2 and $cartesConcurrenceJ1 and $cartesConcurrenceJ2) {
-            die('manche finie');
+            //die(var_dump($cartesCadeauJ1, $cartesCadeauJ2));
             return true;
         }else {
             return false;
@@ -318,7 +317,6 @@ class PartieController extends Controller
         $terrainJ1 = json_decode($partie->getTerrainJ1());
         $terrainJ2 = json_decode($partie->getTerrainJ2());
         $jetons = json_decode($partie->getJetons(), true);
-
         $card = $actions->j1[0]->cartes[0];
         $carte = $em->getRepository('AppBundle:Carte')->find($card);
         $objectifId = $em->getRepository('AppBundle:Objectif')->find($carte->getObjectif())->getId();
@@ -337,7 +335,6 @@ class PartieController extends Controller
         $terrainJ2 = json_decode($partie->getTerrainJ2(), true);
 
         foreach($jetons['j1'] as $key=>$jeton){
-            $objectifVal = $em->getRepository('AppBundle:Objectif')->find($jeton)->getValeur();
             if(count($terrainJ1[$jeton]) < count($terrainJ2[$jeton])){
                 $jetons['neutre'][] = $jeton;
                 unset($jetons['j1'][$key]);
@@ -346,7 +343,6 @@ class PartieController extends Controller
         $jetons['j1'] = array_values($jetons['j1']);
 
         foreach($jetons['j2'] as $key=>$jeton){
-            $objectifVal = $em->getRepository('AppBundle:Objectif')->find($jeton)->getValeur();
             if(count($terrainJ2[$jeton]) < count($terrainJ1[$jeton])){
                 $jetons['neutre'][] = $jeton;
                 unset($jetons['j2'][$key]);
@@ -355,7 +351,6 @@ class PartieController extends Controller
         $jetons['j2'] = array_values($jetons['j2']);
 
         foreach($jetons['neutre'] as $key=>$jeton){
-            $objectifVal = $em->getRepository('AppBundle:Objectif')->find($jeton)->getValeur();
             if(count($terrainJ1[$jeton]) > count($terrainJ2[$jeton])){
                 $jetons['j1'][] = $jeton;
                 unset($jetons['neutre'][$key]);
@@ -371,16 +366,19 @@ class PartieController extends Controller
         $partie->setJetons(json_encode($jetons));
         $partie->setActions(json_encode($actions));
 
-        $em->persist($partie);
-        $em->flush();
-
         if(array_sum($jetons['j1']) >= 11 || count($jetons['j1']) >= 4){
+            die(var_dump('j1'));
             return $this->winAction($partie, 1);
         }elseif(array_sum($jetons['j2']) >= 11 || count($jetons['j2']) >= 4){
+            die(var_dump('j2'));
             return $this->winAction($partie, 2);
         }else{
+            die(var_dump('nouvelle manche !!!'));
             return $this->newMancheAction($partie);
         }
+
+        $em->persist($partie);
+        $em->flush();
 
         //return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
@@ -390,6 +388,11 @@ class PartieController extends Controller
         return new Response('Le joueur '.$joueur.' a gagné !');
     }
 
+    /**
+     * @Route("/newManche/{partie}", name="partie_newManche")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function newMancheAction(Partie $partie)
     {
         $em = $this->getDoctrine()->getManager();
@@ -401,7 +404,7 @@ class PartieController extends Controller
         unset($cartes[0]);
         $cartes = array_values($cartes);
 
-        $partie->setTourJoueurId(rand(1,2));
+        $partie->setTourJoueurId(random_int(1,2));
 
         $t = array();
         for($i=0; $i<7; $i++){

@@ -14,7 +14,7 @@
         <div style="border: 2px solid #333">
             <form id="cadeau_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
             {% for carte in plateau.actions.j2.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 <input type="hidden" name="action" value="cadeau_choix">
                 <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
             {% endfor %}
@@ -24,7 +24,7 @@
         {# si j2 a joué "concurrence" #}
         <div style="border: 2px solid #333">
             {% for carte in plateau.actions.j2.3.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
                 <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
@@ -41,7 +41,7 @@
     {# affichage de la main de j2#}
     {% for carte in plateau.mainJ2 %}
         {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }} | {{ cartes[carte-1].valeur }}</div>
+        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j2 #}
@@ -57,7 +57,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -66,7 +66,7 @@
     <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }} | {{ objectif.valeur }}
+        <div style="display:inline-block;background:indianred;width:150px;height:225px;">obj:{{ objectif.id }} | val:{{ objectif.valeur }}
         {# affichage des jetons #}
         {% if objectif.id in plateau.jetons.j2 %}
             <div style="position: absolute">Jeton J2</div>
@@ -81,7 +81,7 @@
     {# affichage de la pioche #}
     {% if plateau.pioche is not empty %}
     <div style="margin-left: 50px;display:inline-block;">
-        <div style="background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche.0 - 1].id }}</div>
+        <div style="background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche.0 - 1].valeur }}</div>
     </div>
     {% else %}
         <div style="margin-left: 50px;display:inline-block;">
@@ -93,7 +93,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -103,7 +103,7 @@
     {# affichage des actions de j1 #}
     {% for action in plateau.actions.j1 %}
         {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 1 and plateau.actions.j2.2.cartes is empty and plateau.actions.j1.2.cartes is empty %}
+        {% if partie.tourJoueurId == 1 and plateau.actions.j2.2.cartes is empty and plateau.actions.j2.3.cartes is empty %}
             {% if plateau.tourJoue.j1 == 0 %}
                 <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
                 {% if action.jouee %}
@@ -131,7 +131,7 @@
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            {{ cartes[carte-1].id }} | {{ cartes[carte-1].objectif }}
+            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
             <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
@@ -139,14 +139,14 @@
     <br/><br/>
     {# carte secret #}
     {%  for carte in plateau.actions.j1.0.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
         {# si pas de carte secret #}
     {% endfor %}
 
     {# cartes compromis #}
     {% for carte in plateau.actions.j1.1.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
         {# si pas de cartes compromis #}
     {% endfor %}
@@ -157,7 +157,7 @@
         <div style="border: 2px solid #333">
             <form id="cadeau_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
             {% for carte in plateau.actions.j1.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                     <input type="hidden" name="action" value="cadeau_choix">
                 <br/>
                     <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
@@ -169,7 +169,7 @@
         {# si j1 a joué "concurrence" #}
         <div style="border: 2px solid #333">
             {% for carte in plateau.actions.j1.3.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
                 <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
@@ -186,7 +186,7 @@
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
         {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].id }} | {{ cartes[carte-1].objectif }}</div>
+        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].valeur }}</div>
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j1 #}
@@ -202,7 +202,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.valeur }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -211,7 +211,7 @@
     <br/><br/>
     {# affichage des cartes objectifs #}
     {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">{{ objectif.id }} | {{ objectif.valeur }}
+        <div style="display:inline-block;background:indianred;width:150px;height:225px;">obj:{{ objectif.id }} | val:{{ objectif.valeur }}
         {# affichage des jetons #}
         {% if objectif.id in plateau.jetons.j2 %}
             <div style="position: absolute">Jeton J2</div>
@@ -237,7 +237,7 @@
     {% for objectif in objectifs %}
         <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
             {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">{{ cartes[carte-1].id }} | {{ objectif.id }}</div>
+                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
             {% else %}
                 <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
             {% endfor %}
@@ -247,7 +247,7 @@
     {# affichage des actions de j2 #}
     {% for action in plateau.actions.j2 %}
         {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 2 and plateau.actions.j1.2.cartes is empty and plateau.actions.j2.2.cartes is empty %}
+        {% if partie.tourJoueurId == 2 and plateau.actions.j1.2.cartes is empty and plateau.actions.j1.3.cartes is empty %}
             {% if plateau.tourJoue.j2 == 0 %}
                 <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
                 {% if action.jouee %}
@@ -275,7 +275,7 @@
     {# affichage de la main de j2 #}
     {% for carte in plateau.mainJ2 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            {{ cartes[carte-1].id }} | {{ cartes[carte-1].valeur }}
+            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
             <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
@@ -283,14 +283,14 @@
     <br/><br/>
     {# carte secret #}
     {%  for carte in plateau.actions.j2.0.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
         {# si pas de carte secret #}
     {% endfor %}
 
     {# cartes compromis #}
     {% for carte in plateau.actions.j2.1.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">{{ cartes[carte-1].id }}</div>
+        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
         {# si pas de cartes compromis #}
     {% endfor %}
