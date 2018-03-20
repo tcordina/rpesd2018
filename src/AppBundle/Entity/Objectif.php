@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="objectif")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectifRepository")
+ * @Vich\Uploadable
  */
 class Objectif
 {
@@ -113,6 +114,30 @@ class Objectif
     }
 
     /**
+     * @param File|null $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
@@ -134,29 +159,5 @@ class Objectif
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set posJeton
-     *
-     * @param integer $posJeton
-     *
-     * @return Objectif
-     */
-    public function setPosJeton($posJeton)
-    {
-        $this->posJeton = $posJeton;
-
-        return $this;
-    }
-
-    /**
-     * Get posJeton
-     *
-     * @return integer
-     */
-    public function getPosJeton()
-    {
-        return $this->posJeton;
     }
 }

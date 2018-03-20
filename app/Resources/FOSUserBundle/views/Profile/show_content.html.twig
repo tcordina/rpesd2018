@@ -3,9 +3,14 @@
 <div class="container fos_user_user_show">
     <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    <p>Elo: {{ user.elo }}</p>
+    <p>Rang: {{ user.rank }}</p>
     {% if user.imageName is empty %}
         <img src="{{ gravatar(user.email) }}" />
     {% else %}
         <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" width="150px">
     {% endif %}
+    <br/><br/>
+    <a href="{{ path('fos_user_profile_edit') }}">Editer profil</a>
+    <a href="{{ path('fos_user_change_password') }}">Changer mot de passe</a>
 </div>

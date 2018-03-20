@@ -21,6 +21,8 @@ class ActionController extends PartieController
     /**
      * @Route("/handle/{partie}/{joueur}", name="action_handler")
      * @param Request $request
+     * @param Partie $partie
+     * @param $joueur
      * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function actionHandler(Request $request, Partie $partie, $joueur)
@@ -450,5 +452,4 @@ class ActionController extends PartieController
             ]);
         }
     }
-
 }
