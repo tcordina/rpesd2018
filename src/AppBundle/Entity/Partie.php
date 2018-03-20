@@ -72,13 +72,6 @@ class Partie
      */
     private $jetons;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="CartesJouees", type="json_array", nullable=true)
-     */
-    private $cartesJouees;
-
     /*
      * @var int
      *
@@ -307,20 +300,6 @@ class Partie
     }
 
     /**
-     * Set cartesJouees
-     *
-     * @param array $cartesJouees
-     *
-     * @return Partie
-     */
-    public function setCartesJouees($cartesJouees)
-    {
-        $this->cartesJouees = $cartesJouees;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getManche()
@@ -338,16 +317,6 @@ class Partie
         $this->manche = $manche;
 
         return $this;
-    }
-
-    /**
-     * Get cartesJouees
-     *
-     * @return array
-     */
-    public function getCartesJouees()
-    {
-        return $this->cartesJouees;
     }
 
     /**
