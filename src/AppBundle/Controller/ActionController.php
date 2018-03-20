@@ -370,11 +370,10 @@ class ActionController extends PartieController
                     } else {
                         if (($key = array_search($carte->getId(), $actions->j2[3]->cartes)) !== false) {
                             $actions->j2[3]->choisies['j1'][] = $actions->j2[3]->cartes[$key];
+                            unset($actions->j2[3]->cartes[$key]);
                         }
                     }
                 }
-                unset($actions->j2[3]->cartes[0]);
-                unset($actions->j2[3]->cartes[1]);
                 $actions->j2[3]->cartes = array_values($actions->j2[3]->cartes);
                 $actions->j2[3]->choisies['j2'] = $actions->j2[3]->cartes;
                 unset($actions->j2[3]->cartes[0]);
@@ -410,8 +409,6 @@ class ActionController extends PartieController
                         }
                     }
                 }
-                unset($actions->j1[3]->cartes[0]);
-                unset($actions->j1[3]->cartes[1]);
                 $actions->j1[3]->cartes = array_values($actions->j1[3]->cartes);
                 $actions->j1[3]->choisies['j1'] = $actions->j1[3]->cartes;
                 unset($actions->j1[3]->cartes[0]);

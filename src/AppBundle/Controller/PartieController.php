@@ -8,7 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Zelenin\Elo\Match;
+use Zelenin\Elo\Player;
 
 /**
  * Partie controller.
@@ -145,6 +148,12 @@ class PartieController extends Controller
      */
     public function showAction(Partie $partie)
     {
+        if($partie->getEnded() == true) {
+            return $this->render('partie/ended.html.twig', [
+                'partie' => $partie
+            ]);
+        }
+
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
             $deleteForm = $this->createDeleteForm($partie);
@@ -184,6 +193,11 @@ class PartieController extends Controller
      */
     public function plateauAction(Partie $partie)
     {
+        if($partie->getEnded() == true) {
+            return $this->render('partie/ended.html.twig', [
+                'partie' => $partie
+            ]);
+        }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
             $deleteForm = $this->createDeleteForm($partie);
@@ -254,7 +268,7 @@ class PartieController extends Controller
     public function changerTourAction(Partie $partie)
     {
         if($this->isFullyPlayed($partie)){
-            die(var_dump('manche finie'));
+            //die(var_dump('manche finie'));
             return $this->finMancheAction($partie);
         }
 
@@ -361,31 +375,81 @@ class PartieController extends Controller
         }
         $jetons['neutre'] = array_values($jetons['neutre']);
 
+       // die(var_dump($jetons));
+
         $partie->setTerrainJ1(json_encode($terrainJ1));
         $partie->setTerrainJ2(json_encode($terrainJ2));
         $partie->setJetons(json_encode($jetons));
         $partie->setActions(json_encode($actions));
 
-        if(array_sum($jetons['j1']) >= 11 || count($jetons['j1']) >= 4){
-            die(var_dump('j1'));
-            return $this->winAction($partie, 1);
-        }elseif(array_sum($jetons['j2']) >= 11 || count($jetons['j2']) >= 4){
-            die(var_dump('j2'));
-            return $this->winAction($partie, 2);
-        }else{
-            die(var_dump('nouvelle manche !!!'));
-            return $this->newMancheAction($partie);
+        foreach ($jetons['j1'] as $jeton) {
+            $valeur = $em->getRepository('AppBundle:Objectif')->find($jeton)->getValeur();
+            $valeurs['j1'][] = $valeur;
+        }
+        foreach ($jetons['j2'] as $jeton) {
+            $valeur = $em->getRepository('AppBundle:Objectif')->find($jeton)->getValeur();
+            $valeurs['j2'][] = $valeur;
         }
 
         $em->persist($partie);
         $em->flush();
+
+        if(array_sum($valeurs['j1']) >= 11 || count($jetons['j1']) >= 4){
+            //die(var_dump('j1'));
+            return $this->winAction($partie, 1);
+        }elseif(array_sum($valeurs['j2']) >= 11 || count($jetons['j2']) >= 4){
+            //die(var_dump('j2'));
+            return $this->winAction($partie, 2);
+        }else{
+            //die(var_dump('nouvelle manche !!!'));
+            return $this->newMancheAction($partie);
+        }
 
         //return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
 
     public function winAction(Partie $partie, $joueur)
     {
-        return new Response('Le joueur '.$joueur.' a gagné !');
+        if($joueur == 1) {
+            $partie->setWinner(1);
+            $winner = $partie->getJoueur1();
+            $loser = $partie->getJoueur2();
+            $wElo = new Player($winner->getElo());
+            $lElo = new Player($loser->getElo());
+            $match = new Match($wElo, $lElo);
+            $match->setScore(1,0)->setK(32)->count();
+            $wNewElo = $match->getPlayer1()->getRating();
+            $lNewElo = $match->getPlayer2()->getRating();
+            $winner->setElo($wNewElo);
+            $loser->setElo($lNewElo);
+            $winner->setWins($winner->getWins()+1);
+            $loser->setLosses($winner->getLosses()+1);
+        }else {
+            $partie->setWinner(2);
+            $winner = $partie->getJoueur2();
+            $loser = $partie->getJoueur1();
+            $wElo = new Player($winner->getElo());
+            $lElo = new Player($loser->getElo());
+            $match = new Match($wElo, $lElo);
+            $match->setScore(1,0)->setK(32)->count();
+            $wNewElo = $match->getPlayer1()->getRating();
+            $lNewElo = $match->getPlayer2()->getRating();
+            $winner->setElo($wNewElo);
+            $loser->setElo($lNewElo);
+            $winner->setWins($winner->getWins()+1);
+            $loser->setLosses($winner->getLosses()+1);
+        }
+        $partie->setEnded(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->persist($winner);
+        $em->persist($loser);
+        $em->flush();
+        $session = new Session();
+        $session->getFlashBag()->add('notice', 'Le joueur'.$winner->getUsername().'a gagné');
+        return $this->redirectToRoute('partie_show', [
+            'id' => $partie->getId(),
+        ]);
     }
 
     /**

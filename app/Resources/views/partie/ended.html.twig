@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 style="text-align:center;">Cette partie est terminée</h1>
+    {% if partie.winner == 1 %}
+        <h4 style="text-align:center;">Le joueur {{ partie.joueur1.username }} a gagné</h4>
+    {% else %}
+        <h4 style="text-align:center;">Le joueur {{ partie.joueur2.username }} a gagné</h4>
+    {% endif %}
+{% endblock %}
