@@ -437,7 +437,7 @@ class PartieController extends Controller
             $winner->setElo($wNewElo);
             $loser->setElo($lNewElo);
             $winner->setWins($winner->getWins()+1);
-            $loser->setLosses($winner->getLosses()+1);
+            $loser->setLosses($loser->getLosses()+1);
         }
         $partie->setEnded(true);
         $em = $this->getDoctrine()->getManager();
