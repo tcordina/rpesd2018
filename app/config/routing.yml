@@ -1,3 +1,7 @@
+app_message:
+    resource: "@AppBundle/Controller/MessageController.php"
+    type:     annotation
+
 app_partie:
     resource: "@AppBundle/Controller/PartieController.php"
     type:     annotation

@@ -20,6 +20,7 @@ class ActionController extends PartieController
 {
     /**
      * @Route("/handle/{partie}/{joueur}", name="action_handler")
+     * @method("POST")
      * @param Request $request
      * @param Partie $partie
      * @param $joueur
@@ -33,7 +34,7 @@ class ActionController extends PartieController
         if (!empty($request->request->get('cartes'))) {
             $postCartes = $request->request->get('cartes');
             foreach($postCartes as $carte) {
-                $cartes[] = $cards[$carte-1];
+                $cartes[] = $cards[(int) $carte - 1];
             }
         } else {
             $carte = $request->request->get('carte');

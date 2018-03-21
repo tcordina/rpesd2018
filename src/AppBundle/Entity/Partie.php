@@ -129,7 +129,13 @@ class Partie
      */
     private $ended;
 
-    /**1
+    /**
+     * @var Message
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="partie")
+     */
+    private $messages;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -577,5 +583,39 @@ class Partie
     public function getTerrainJ2()
     {
         return $this->terrainJ2;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \AppBundle\Entity\Message $message
+     *
+     * @return Partie
+     */
+    public function addMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \AppBundle\Entity\Message $message
+     */
+    public function removeMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages->removeElement($message);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

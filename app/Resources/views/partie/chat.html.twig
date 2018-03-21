@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in messages|reverse %}
+    <p style="margin-bottom: 7px;">
+        {% if message.joueur == partie.joueur1.id %}
+            {{ partie.joueur1.username }}
+        {% elseif message.joueur == partie.joueur2.id %}
+            {{ partie.joueur2.username }}
+        {% endif %}
+        ({{ message.createdAt|date("H:i") }}) : {{ message.contenu }}
+    </p>
+    {% endfor %}
+{% endblock %}

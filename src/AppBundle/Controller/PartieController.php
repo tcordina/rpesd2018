@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Message;
 use AppBundle\Entity\Partie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -417,7 +418,7 @@ class PartieController extends Controller
             $wElo = new Player($winner->getElo());
             $lElo = new Player($loser->getElo());
             $match = new Match($wElo, $lElo);
-            $match->setScore(1,0)->setK(32)->count();
+            $match->setScore(1,0)->setK(64)->count();
             $wNewElo = $match->getPlayer1()->getRating();
             $lNewElo = $match->getPlayer2()->getRating();
             $winner->setElo($wNewElo);
@@ -441,12 +442,15 @@ class PartieController extends Controller
         }
         $partie->setEnded(true);
         $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository('AppBundle:Message')->findBy(['partie' => $partie->getId()]);
         $em->persist($partie);
         $em->persist($winner);
         $em->persist($loser);
+        foreach($messages as $message) {
+            $em->remove($message);
+        }
         $em->flush();
-        $session = new Session();
-        $session->getFlashBag()->add('notice', 'Le joueur'.$winner->getUsername().'a gagné');
+
         return $this->redirectToRoute('partie_show', [
             'id' => $partie->getId(),
         ]);
@@ -528,6 +532,49 @@ class PartieController extends Controller
         return $this->redirectToRoute('partie_show', array('id' => $partie->getId()));
     }
 
+    /**
+     * @Route("/message/post/{partie}", name="partie_posterMessage")
+     * @param Request $request
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function posterChatAction(Request $request, Partie $partie)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $content = $request->request->get('message');
+        $user = $this->getUser();
+
+        $message = new Message();
+        $message->setPartie($partie->getId());
+        $message->setJoueur($user->getId());
+        $message->setContenu($content);
+
+        $em->persist($message);
+        $em->flush();
+
+        return $this->redirectToRoute('partie_show', ['id' => $partie->getId()]);
+    }
+
+    /**
+     * @Route("/message/{partie}", name="partie_afficherMessages")
+     * @param Partie $partie
+     * @return Response
+     */
+    public function afficherChatAction(Partie $partie)
+    {
+        $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy(
+            ['partie' => $partie->getId()],
+            ['id' => 'DESC'],
+            10,
+            0
+        );
+
+        return $this->render('partie/chat.html.twig', [
+            'partie' => $partie,
+            'messages' => $messages,
+        ]);
+    }
 
     /**
      * Displays a form to edit an existing partie entity.

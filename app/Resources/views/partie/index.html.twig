@@ -3,24 +3,14 @@
 {% block body %}
     <h1>Parties list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Joueur1</th>
-                <th>Joueur2</th>
-                <th>Mainj1</th>
-                <th>Mainj2</th>
-                <th>Pioche</th>
-                <th>Cartesjouees</th>
-                <th>Objectifs</th>
-                <th>Pointsj1</th>
-                <th>Pointsj2</th>
-                <th>Actionsj1</th>
-                <th>Actionsj2</th>
-                <th>Tourjoueurid</th>
-                <th>Ended</th>
-                <th>Createdat</th>
+                <th>Joueur 1</th>
+                <th>Joueur 2</th>
+                <th>Terminée</th>
+                <th>Created at</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,18 +20,8 @@
                 <td><a href="{{ path('partie_show', { 'id': partie.id }) }}">{{ partie.id }}</a></td>
                 <td>{{ partie.joueur1 }}</td>
                 <td>{{ partie.joueur2 }}</td>
-                <td>{{ partie.mainJ1 }}</td>
-                <td>{{ partie.mainJ2 }}</td>
-                <td>{{ partie.pioche }}</td>
-                <td>{{ partie.cartesJouees }}</td>
-                <td>{{ partie.objectifs }}</td>
-                <td>{{ partie.pointsJ1 }}</td>
-                <td>{{ partie.pointsJ2 }}</td>
-                <td>{{ partie.actionsJ1 }}</td>
-                <td>{{ partie.actionsJ2 }}</td>
-                <td>{{ partie.tourJoueurId }}</td>
                 <td>{% if partie.ended %}Yes{% else %}No{% endif %}</td>
-                <td>{% if partie.createdAt %}{{ partie.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ partie.createdAt|date('d/m/Y H:i') }}</td>
                 <td>
                     <ul>
                         <li>

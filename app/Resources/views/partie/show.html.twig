@@ -12,6 +12,12 @@
         }
     </style>
     <div id="plateau"></div>
+    <div id="chat"></div>
+    <form id="postermessage" method="post" action="{{ path('partie_posterMessage', {partie: partie.id}) }}">
+        <input type="text" id="message" name="message" placeholder="Votre message...">
+        <button type="submit">Envoyer</button>
+    </form>
+    <br/><br/>
     <ul>
         <li>
             <a href="{{ path('partie_index') }}">Back to the list</a>
@@ -25,6 +31,25 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+    <script>
+        $(document).ready(function () {
+            $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
+            setInterval(function () {
+                $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
+                var elem = document.getElementById('chat');
+                elem.scrollTop = elem.scrollHeight;
+            }, 1500);
+            $('#postermessage').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: $(this).serialize(),
+                });
+                $("#message").val('');
+            });
+        });
+    </script>
     {% if (joueur == 1) %}
         <script>
             $(document).ready(function() {

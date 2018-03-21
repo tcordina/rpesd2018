@@ -101,32 +101,32 @@
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j1 #}
-    {% for action in plateau.actions.j1 %}
-        {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 1 and plateau.actions.j2.2.cartes is empty and plateau.actions.j2.3.cartes is empty %}
-            {% if plateau.tourJoue.j1 == 0 %}
-                <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-                {% if action.jouee %}
-                    <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-                {% else %}
-                    <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
-                {% endif %}
+    {# si c'est au joueur 1 de jouer #}
+    {% if partie.tourJoueurId == 1 and plateau.tourJoue.j1 == 0 and plateau.actions.j2.2.cartes is empty and plateau.actions.j2.3.cartes is empty %}
+        <form id="action_form" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
+        {% for action in plateau.actions.j1 %}
+            {% if action.jouee %}
+                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
-                {% if action.jouee %}
-                    <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-                {% else %}
-                    <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-                {% endif %}
+                <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
             {% endif %}
-        {# si ce n'est pas au joueur 1 de jouer #}
+            {# si ce n'est pas au joueur 2 de jouer #}
         {% else %}
             {% if action.jouee %}
                 <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
                 <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        {% for action in plateau.actions.j1 %}
+            {% if action.jouee %}
+                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
+            {% else %}
+                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <br/><br/>
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
@@ -156,9 +156,9 @@
     {% if plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length == 3 %}
         <div style="border: 2px solid #333">
             <form id="cadeau_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
+                <input type="hidden" name="action" value="cadeau_choix">
             {% for carte in plateau.actions.j1.2.cartes %}
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-                    <input type="hidden" name="action" value="cadeau_choix">
                 <br/>
                     <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
                 <br/>
@@ -172,8 +172,8 @@
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
                 <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-                    <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                     <input type="hidden" name="action" value="concurrence_choix">
+                    <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                     <button class="btn btn-info" type="submit">Choisir</button>
@@ -245,32 +245,32 @@
     {% endfor %}
     <br/><br/>
     {# affichage des actions de j2 #}
-    {% for action in plateau.actions.j2 %}
-        {# si c'est au joueur 1 de jouer #}
-        {% if partie.tourJoueurId == 2 and plateau.actions.j1.2.cartes is empty and plateau.actions.j1.3.cartes is empty %}
-            {% if plateau.tourJoue.j2 == 0 %}
-                <form action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-                {% if action.jouee %}
-                    <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-                {% else %}
-                    <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
-                {% endif %}
+    {# si c'est au joueur 2 de jouer #}
+    {% if partie.tourJoueurId == 2 and plateau.tourJoue.j2 == 0 and plateau.actions.j1.2.cartes is empty and plateau.actions.j1.3.cartes is empty %}
+        <form id="action_form" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
+        {% for action in plateau.actions.j2 %}
+            {% if action.jouee %}
+                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
-                {% if action.jouee %}
-                    <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-                {% else %}
-                    <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-                {% endif %}
+                <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
             {% endif %}
-            {# si ce n'est pas au joueur 2 de jouer #}
+        {# si ce n'est pas au joueur 2 de jouer #}
         {% else %}
             {% if action.jouee %}
                 <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
                 <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        {% for action in plateau.actions.j2 %}
+            {% if action.jouee %}
+                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
+            {% else %}
+                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <br/><br/>
     {# affichage de la main de j2 #}
     {% for carte in plateau.mainJ2 %}
@@ -296,5 +296,45 @@
     {% endfor %}
 {% endif %}
 </div>
+<!--<script>
+    $(document).ready(function () {
+        $('#cadeau_choix').on('submit', function (e) {
+            e.preventDefault();
+            console.log($(this).serialize());
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        });
+        $('#concurrence_choix').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+            });
+        });
+        $('#action_form').on('submit', function (e) {
+            var cartes = [];
+            $("input:checked").each(function() {
+                cartes.push($(this).val());
+            });
+            console.log($(this).serialize());
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this),
+                success: function (res) {
+                    console.log('pd');
+                }
+            });
+        });
+    });
+</script>-->
 
 {% endblock %}
