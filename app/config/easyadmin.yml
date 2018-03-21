@@ -38,6 +38,7 @@ easy_admin:
             form:
                 fields: ['joueur1', 'joueur2', 'manche', 'winner']
                 sort: ['id', 'ASC']
+            disabled_actions: ['new']
     design:
         menu:
             - { label: 'Accueil', route: 'homepage', icon: 'home' }
