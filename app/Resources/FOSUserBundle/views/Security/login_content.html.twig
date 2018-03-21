@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+<body>
+    <div class="logo"></div>
+    <div id="dropform" class="formulaire">
+        <div class="glitch border-top"></div>
+        <div class="glitch border-right"></div>
+        <div class="glitch border-bottom"></div>
+        <div class="glitch border-left"></div>
+
+        <div class="container">
+            <div class="back-head"></div>
+            {% if app.request.pathinfo == '/login' %}
+            <div class="connexion">
+            {% else %}
+            <div class="connexion toleft">
+            {% endif %}
+                <h2>Connexion</h2>
+                <div class="form-container">
+                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                        {% if csrf_token %}
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        {% endif %}
+
+                        <input type="text" id="username" name="_username" placeholder="pseudo" value="{{ last_username }}" required="required" />
+                        <input type="password" id="password" name="_password" required="required" placeholder="mot de passe"/>
+                        {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>-->#}
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" style="display:inline-table"/><br/>
+
+                        <button type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}">Jouer !</button>
+                    </form>
+                </div>
+                <p id="goright"><i>S'inscrire ?</i></p>
+            </div>
+            {% if app.request.pathinfo == '/login' %}
+            <div class="inscription">
+            {% else %}
+                <div class="inscription toleft">
+            {% endif %}
+                <h2>Inscription</h2>
+                <div class="form-container">
+                    {{ render(controller('FOSUserBundle:Registration:register')) }}
+                </div>
+                <p id="goleft"><i>Vous avez un compte ? Se connecter.</i></p>
+            </div>
+            <div class="back-foot"></div>
+        </div>
+            <div class="back-foot"></div>
+        </div>
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="http://89.234.183.131/promo/" target="_blank">Le site promo</a></li>
+                <li><a href="">Règles</a></li>
+            </ul>
+        </nav>
+    </footer>
+    </body>
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#goright").click(function () {
+                $(".inscription").addClass("toleft");
+                $(".connexion").addClass("toleft");
+            });
+            $("#goleft").click(function () {
+                $(".inscription").removeClass("toleft");
+                $(".connexion").removeClass("toleft");
+            });
+
+            const neon = document.querySelector('.glitch');
+            const neon5 = document.querySelector('#dropform');
+            function setProperty(duration) {
+                neon.style.setProperty('--animation-time', duration + 's');
+                neon5.style.setProperty('--animation-time', duration + 's');
+            }
+
+            function changeAnimationTime() {
+                const animationDuration = Math.random();
+                setProperty(animationDuration);
+            }
+
+            setInterval(changeAnimationTime, 500);
+        });
+    </script>
+
+    <script type="text/javascript">
+        let mavue = new Vue({
+            el: "#vuejs",
+            data: {
+                mdp1: "",
+                mdp2: "",
+                toleft: false,
+                url: window.location.pathname,
+            },
+            computed:{
+                mdpsame : function () {
+                    return this.mdp1==this.mdp2 && this.mdp2
+                },
+                isLogin: function() {
+                    let t = this.url.split("/")
+                    let part = t[t.length-1]
+                    console.log(part)
+                    if(part == 'login') {
+                        return true
+                    }else {
+                        return false
+                    }
+                },
+            }
+        });
+    </script>
+{% endblock %}

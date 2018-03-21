@@ -1,0 +1,19 @@
+<form id="vuejs" action="{{ path('fos_user_registration_register_submit') }}" method="POST" >
+    {{ form_errors(form) }}
+
+    {{ form_widget(form.email, {'attr': {'placeholder': 'email', 'required': 'required'} }) }}
+    {{ form_errors(form.email) }}
+
+    {{ form_widget(form.username, {'attr': {'placeholder': 'pseudo', 'required': 'required'} }) }}
+    {{ form_errors(form.username) }}
+
+    {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'mot de passe', 'v-model': 'mdp1', 'required': 'required'} }) }}<i v-if="mdpsame" id="check1" class="fas fa-check"></i>
+    {{ form_errors(form.plainPassword.first) }}
+
+    {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'confirmer le mot de passe', 'v-model': 'mdp2', 'required': 'required'} }) }}<i v-if="mdpsame" id="check2" class="fas fa-check"></i>
+    {{ form_errors(form.plainPassword.second) }}
+
+    {{ form_rest(form)}}
+
+    <button type="submit" class="btn btn-info" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}">S'inscrire</button>
+</form>
