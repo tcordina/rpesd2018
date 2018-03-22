@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new UserBundle\UserBundle(),
+            new \JMS\AopBundle\JMSAopBundle(),
+            new \JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

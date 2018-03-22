@@ -14,6 +14,8 @@ class ProfileType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'required' => false
             ])
+            ->remove('plainPassword')
+            ->remove('username')
         ;
     }
 
