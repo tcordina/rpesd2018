@@ -1,5 +1,5 @@
 <form id="vuejs" action="{{ path('fos_user_registration_register_submit') }}" method="POST" >
-    <fieldset class="clear" style="width: 100%;" disabled="disabled">
+    <fieldset id="fieldset" class="clear" style="width: 100%;" disabled="disabled">
     {{ form_errors(form) }}
 
     {{ form_widget(form.email, {'attr': {'placeholder': 'email', 'required': 'required'} }) }}

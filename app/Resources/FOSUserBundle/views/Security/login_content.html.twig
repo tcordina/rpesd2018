@@ -76,34 +76,27 @@
         $("#goright").click(function () {
             $(".inscription").addClass("toleft")
             $(".connexion").addClass("toleft")
-            checkLeft()
-        });
+            $("#fieldset").attr("disabled", false)
+        })
         $("#goleft").click(function () {
             $(".inscription").removeClass("toleft")
             $(".connexion").removeClass("toleft")
-            checkLeft()
-        });
-        function checkLeft() {
-            if ($(".connection").attr("class", "toleft")) {
-                $("#fieldset").removeAttr("disabled");
-            } else {
-                $("#fieldset").attr("disabled", true);
-            }
-        }
+            $("#fieldset").attr("disabled", true)
+        })
 
-        const neon = document.querySelector('.glitch');
-        const neon5 = document.querySelector('#dropform');
+        const neon = document.querySelector('.glitch')
+        const neon5 = document.querySelector('#dropform')
         function setProperty(duration) {
-            neon.style.setProperty('--animation-time', duration + 's');
-            neon5.style.setProperty('--animation-time', duration + 's');
+            neon.style.setProperty('--animation-time', duration + 's')
+            neon5.style.setProperty('--animation-time', duration + 's')
         }
 
         function changeAnimationTime() {
-            const animationDuration = Math.random();
-            setProperty(animationDuration);
+            const animationDuration = Math.random()
+            setProperty(animationDuration)
         }
 
-        setInterval(changeAnimationTime, 500);
+        setInterval(changeAnimationTime, 500)
     });
     </script>
 
