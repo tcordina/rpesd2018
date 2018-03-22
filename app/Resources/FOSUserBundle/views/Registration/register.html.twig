@@ -1,5 +1,9 @@
 <form id="vuejs" action="{{ path('fos_user_registration_register_submit') }}" method="POST" >
+    {% if app.request.pathinfo == '/login' %}
     <fieldset id="fieldset" class="clear" style="width: 100%;" disabled="disabled">
+    {% else %}
+    <fieldset id="fieldset" class="clear" style="width: 100%;">
+    {% endif %}
     {{ form_errors(form) }}
 
     {{ form_widget(form.email, {'attr': {'placeholder': 'email', 'required': 'required'} }) }}

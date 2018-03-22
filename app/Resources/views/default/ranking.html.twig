@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div align="center"  style="font-family:sans-serif;">
+        <h1>Classement</h1>
+        <table style="width:50%; border-collapse: collapse;" border="1">
+            <tr>
+                <th>#</th>
+                <th>Pseudo</th>
+                <th>Rang</th>
+                <th>Elo</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a style="color: dodgerblue" href="{{ path('fos_user_profile_other', {'username': user.username}) }}">{{ user.username }}</a></td>
+                <td>{{ user.rank }}</td>
+                <td>{{ user.elo }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

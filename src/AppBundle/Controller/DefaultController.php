@@ -17,4 +17,22 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @Route("/classement", name="classement")
+     */
+    public function rankingAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
+            array(),
+            array('id' => 'desc'),
+            50,
+            0
+        );
+
+        return $this->render('default/ranking.html.twig', [
+            'users' => $users
+        ]);
+    }
+
 }
