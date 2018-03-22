@@ -44,7 +44,7 @@
             {% if app.request.pathinfo == '/login' %}
             <div class="inscription">
             {% else %}
-                <div class="inscription toleft">
+            <div class="inscription toleft">
             {% endif %}
                 <h2>Inscription</h2>
                 <div class="form-container">
@@ -64,14 +64,14 @@
             </ul>
         </nav>
     </footer>
-    </body>
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
+</body>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
+    <script defer type="text/javascript">
     $(document).ready(function() {
         $("#goright").click(function () {
             $(".inscription").addClass("toleft")
@@ -84,7 +84,7 @@
             checkLeft()
         });
         function checkLeft() {
-            if ($(".connection").attr("class","toleft")) {
+            if ($(".connection").attr("class", "toleft")) {
                 $("#fieldset").removeAttr("disabled");
             } else {
                 $("#fieldset").attr("disabled", true);
