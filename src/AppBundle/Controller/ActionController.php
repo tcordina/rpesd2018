@@ -40,6 +40,8 @@ class ActionController extends PartieController
             $carte = $request->request->get('carte');
             $cartes = $cards[$carte-1];
         }
+        //return new Response('cartes:'.json_encode($cartes));
+        //return new Response($request->request->get('action'));
 
         switch ($action) {
             case 'secret':

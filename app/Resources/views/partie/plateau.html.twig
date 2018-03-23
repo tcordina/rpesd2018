@@ -16,7 +16,7 @@
             {% for carte in plateau.actions.j2.2.cartes %}
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 <input type="hidden" name="action" value="cadeau_choix">
-                <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
+                <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
             {% endfor %}
             </form>
         </div>
@@ -26,7 +26,7 @@
             {% for carte in plateau.actions.j2.3.cartes %}
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
-                <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
+                <form class="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                     <input type="hidden" name="action" value="concurrence_choix">
                 {% else %}
@@ -108,7 +108,7 @@
             {% if action.jouee %}
                 <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
-                <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
+                <button class="action_form_btn" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">{{ action.nom }}</button>
             {% endif %}
             {# si ce n'est pas au joueur 2 de jouer #}
         {% else %}
@@ -126,13 +126,14 @@
                 <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
             {% endif %}
         {% endfor %}
+        </form>
     {% endif %}
     <br/><br/>
     {# affichage de la main de j1 #}
     {% for carte in plateau.mainJ1 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
             obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
     </form>
@@ -160,7 +161,7 @@
             {% for carte in plateau.actions.j1.2.cartes %}
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 <br/>
-                    <button class="btn btn-info" name="carte" type="submit" value="{{ cartes[carte-1].id }}">Choisir</button>
+                    <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
                 <br/>
             {% endfor %}
             </form>
@@ -171,12 +172,12 @@
             {% for carte in plateau.actions.j1.3.cartes %}
                 <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
-                <form id="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
+                <form class="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
                     <input type="hidden" name="action" value="concurrence_choix">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button class="btn btn-info" type="submit">Choisir</button>
+                    <button id="concurrence_choix_btn" class="btn btn-info">Choisir</button>
                 </form>
                 {% endif %}
             {% endfor %}
@@ -252,7 +253,7 @@
             {% if action.jouee %}
                 <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
             {% else %}
-                <input type="submit" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">
+                <button class="action_form_btn" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">{{ action.nom }}</button>
             {% endif %}
         {# si ce n'est pas au joueur 2 de jouer #}
         {% else %}
@@ -262,6 +263,7 @@
                 <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
             {% endif %}
         {% endfor %}
+        </form>
     {% else %}
         {% for action in plateau.actions.j2 %}
             {% if action.jouee %}
@@ -276,10 +278,9 @@
     {% for carte in plateau.mainJ2 %}
         <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
             obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
         </div>
     {% endfor %}
-        </form>
     <br/><br/>
     {# carte secret #}
     {%  for carte in plateau.actions.j2.0.cartes %}
@@ -296,45 +297,51 @@
     {% endfor %}
 {% endif %}
 </div>
-<!--<script>
-    $(document).ready(function () {
-        $('#cadeau_choix').on('submit', function (e) {
-            e.preventDefault();
-            console.log($(this).serialize());
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function (res) {
-                    console.log(res);
-                }
+    <script>
+        $(document).ready(function() {
+            $('.action_form_btn').on('click', function () {
+                var cartes = [];
+                $("input:checked").each(function() {
+                    cartes.push($(this).val());
+                });
+                var action = $(this).val();
+                $('#action_form').submit(function(e) {
+                    console.log(cartes, action);
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: {
+                            cartes: cartes,
+                            action: action
+                        },
+                        success: function (res) {
+                            //allo
+                        }
+                    });
+                });
+            });
+            $('.cadeau_choix_btn').on('click', function () {
+                var carte = $(this).val();
+                $('#cadeau_choix').submit(function(e) {
+                    console.log($(this).serialize());
+                    action = $(this).serialize().split('=')[1];
+                    action = action.split('&')[0];
+                    console.log(action)
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: {
+                            action: action,
+                            carte: carte
+                        },
+                        success: function (res) {
+                            $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                        }
+                    });
+                });
             });
         });
-        $('#concurrence_choix').on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: $(this).serialize(),
-            });
-        });
-        $('#action_form').on('submit', function (e) {
-            var cartes = [];
-            $("input:checked").each(function() {
-                cartes.push($(this).val());
-            });
-            console.log($(this).serialize());
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: $(this),
-                success: function (res) {
-                    console.log('pd');
-                }
-            });
-        });
-    });
-</script>-->
-
+    </script>
 {% endblock %}
