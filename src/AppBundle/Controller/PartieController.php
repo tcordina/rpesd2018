@@ -231,6 +231,49 @@ class PartieController extends Controller
     }
 
     /**
+     * Charge le deck via appel AJAX
+     * @Route("/deck/{id}", name="partie_deck")
+     * @param Partie $partie
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deckAction(Partie $partie)
+    {
+        if($partie->getEnded() == true) {
+            return $this->render('partie/ended.html.twig', [
+                'partie' => $partie
+            ]);
+        }
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
+            $deleteForm = $this->createDeleteForm($partie);
+            $em = $this->getDoctrine()->getManager();
+            $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
+            $cartes = $em->getRepository('AppBundle:Carte')->findAll();
+            $plateau = [
+                'mainJ1' => json_decode($partie->getMainJ1()),
+                'mainJ2' => json_decode($partie->getMainJ2()),
+                'terrainJ1' => json_decode($partie->getTerrainJ1(), true),
+                'terrainJ2' => json_decode($partie->getTerrainJ2(), true),
+                'pioche' => json_decode($partie->getPioche(), true),
+                'actions' => json_decode($partie->getActions(), true),
+                'jetons' => json_decode($partie->getJetons(), true),
+                'tourJoue' => json_decode($partie->getTourActions(), true)
+            ];
+            $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
+
+            return $this->render('partie/deck.html.twig', array(
+                'partie' => $partie,
+                'objectifs' => $objectifs,
+                'cartes' => $cartes,
+                'plateau' => $plateau,
+                'joueur' => $joueur,
+            ));
+        }else {
+            throw new NotFoundHttpException('Page introuvable');
+        }
+    }
+
+    /**
      * Piocher une carte
      * @param Partie $partie
      * @param int $joueur

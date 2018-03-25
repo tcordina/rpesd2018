@@ -82,6 +82,7 @@ fos_user:
         form:
             type: AppBundle\Form\ProfileType
 
+# Uploader Bundle Configuration
 vich_uploader:
     db_driver: orm
     mappings:
@@ -89,6 +90,7 @@ vich_uploader:
             uri_prefix: '%app.path.profile_images%'
             upload_destination: '%kernel.root_dir%/../web/uploads/images/profile'
 
+# Gravatar Bundle Configuration
 ornicar_gravatar:
     rating: g
     size: 150

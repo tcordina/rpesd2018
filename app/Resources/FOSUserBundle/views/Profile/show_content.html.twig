@@ -1,16 +1,108 @@
 {% trans_default_domain 'FOSUserBundle' %}
+{% extends 'base.html.twig' %}
 
-<div class="container fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <p>Elo: {{ user.elo }}</p>
-    <p>Rang: {{ user.rank }}</p>
-    {% if user.imageName is empty %}
-        <img src="{{ gravatar(user.email) }}" />
-    {% else %}
-        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" width="150px">
-    {% endif %}
-    <br/><br/>
-    <a href="{{ path('fos_user_profile_edit') }}">Editer profil</a>
-    <a href="{{ path('fos_user_change_password') }}">Changer mot de passe</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+<div class="logo"></div>
+
+<div id="dropform" class="profil">
+    <div class="glitch border-top"></div>
+    <div class="glitch border-right"></div>
+    <div class="glitch border-bottom"></div>
+    <div class="glitch border-left"></div>
+
+    <div class="container">
+        <div class="back-head"></div>
+
+        <h1 class="name">{{ user.username }}</h1>
+        <span class="email">{{ user.email }}</span>
+        {% if user.imageName is empty %}
+            <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
+        {% else %}
+            <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
+        {% endif %}
+        <ul class="info-joueur">
+            <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100"></li>
+            <li>{{ user.rank }}</li>
+            <li>Elo : {{ user.elo }}</li>
+        </ul>
+        <p>
+            <a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a>
+            <a href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a>
+        </p>
+
+        <div class="back-foot"></div>
+    </div>
+
 </div>
+<div id="dropform2" class="jouer">
+    <div class="glitch border-top2"></div>
+    <div class="glitch border-right2"></div>
+    <div class="glitch border-bottom2"></div>
+    <div class="glitch border-left2"></div>
+    <a href="{{ path('partie_new') }}" class="">
+        <h1>Jouer en ligne</h1>
+    </a>
+</div>
+
+<footer>
+    <nav>
+        <ul>
+            <li><a href="">Se déconnecter</a></li>
+            <li><a href="http://89.234.183.131/promo/">Le site promo</a></li>
+            <li><a href="">Règles</a></li>
+        </ul>
+    </nav>
+</footer>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    $("#goright").click(function () {
+        $(".inscription").addClass("toleft");
+        $(".connexion").addClass("toleft");
+    });
+    $("#goleft").click(function () {
+        $(".inscription").removeClass("toleft");
+        $(".connexion").removeClass("toleft");
+    });
+    if($('.connection').hasClass('toleft')) {
+        $("fieldset").removeAttr("disabled");
+    }else {
+        $("fieldset").attr("disabled", true);
+    }
+</script>
+<script type="text/javascript">
+    const neon = document.querySelector('.glitch');
+    const neon5 = document.querySelector('#dropform');
+    const neon6 = document.querySelector('#dropform2');
+    function setProperty(duration) {
+        neon.style.setProperty('--animation-time', duration +'s');
+        neon5.style.setProperty('--animation-time', duration +'s');
+        neon6.style.setProperty('--animation-time', duration +'s');
+    }
+    function changeAnimationTime() {
+        const animationDuration = Math.random();
+        setProperty(animationDuration);
+    }
+    setInterval(changeAnimationTime, 500);
+</script>
+
+
+<script type="text/javascript">
+    let mavue = new Vue({
+        el: "#vuejs",
+        data: {
+            mdp1: "",
+            mdp2: "",
+        },
+        computed:{
+            mdpsame : function () {
+                return this.mdp1==this.mdp2 && this.mdp2
+            }
+        }
+    });
+</script>
+{% endblock %}

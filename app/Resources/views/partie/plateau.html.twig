@@ -31,7 +31,7 @@
                     <input type="hidden" name="action" value="concurrence_choix">
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button class="btn btn-info" type="submit">Choisir</button>
+                    <button class="concurrence_choix_info">Choisir</button>
                 </form>
                 {% endif %}
             {% endfor %}
@@ -129,28 +129,7 @@
         </form>
     {% endif %}
     <br/><br/>
-    {# affichage de la main de j1 #}
-    {% for carte in plateau.mainJ1 %}
-        <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
-        </div>
-    {% endfor %}
-    </form>
-    <br/><br/>
-    {# carte secret #}
-    {%  for carte in plateau.actions.j1.0.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de carte secret #}
-    {% endfor %}
-
-    {# cartes compromis #}
-    {% for carte in plateau.actions.j1.1.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de cartes compromis #}
-    {% endfor %}
+    {# include deck #}
 
 {% elseif joueur == 2 %}
     {# affichage des cartes des actions de j1 #}
@@ -274,27 +253,7 @@
         {% endfor %}
     {% endif %}
     <br/><br/>
-    {# affichage de la main de j2 #}
-    {% for carte in plateau.mainJ2 %}
-        <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
-        </div>
-    {% endfor %}
-    <br/><br/>
-    {# carte secret #}
-    {%  for carte in plateau.actions.j2.0.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de carte secret #}
-    {% endfor %}
-
-    {# cartes compromis #}
-    {% for carte in plateau.actions.j2.1.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de cartes compromis #}
-    {% endfor %}
+    {# include deck #}
 {% endif %}
 </div>
     <script>
@@ -306,18 +265,14 @@
                 });
                 var action = $(this).val();
                 $('#action_form').submit(function(e) {
-                    console.log(cartes, action);
                     e.preventDefault();
                     $.ajax({
                         url: $(this).attr('action'),
                         type: 'POST',
                         data: {
-                            cartes: cartes,
+                            cartes: JSON.stringify(cartes),
                             action: action
                         },
-                        success: function (res) {
-                            //allo
-                        }
                     });
                 });
             });
@@ -340,6 +295,27 @@
                             $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
                         }
                     });
+                });
+            });
+            $('.concurrence_choix_btn').on('click', function () {
+                $(this).closest('form').submit(function(e) {
+                    console.log($(this).serialize());
+                    req = $(this).serialize().split('] ');
+                    action = action.split('&')[0];
+                    console.log(req)
+                    e.preventDefault();
+                    {#$.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: {
+                            action: action,
+                            cartes: cartes
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                        }
+                    });#}
                 });
             });
         });

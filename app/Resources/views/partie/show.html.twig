@@ -12,6 +12,7 @@
         }
     </style>
     <div id="plateau"></div>
+    <div id="deck"></div>
     <div id="chat"></div>
     <form id="postermessage" method="post" action="{{ path('partie_posterMessage', {partie: partie.id}) }}">
         <input type="text" id="message" name="message" placeholder="Votre message...">
@@ -41,7 +42,7 @@
     {% block javascripts %}
     {{ parent() }}
     <script>
-        $(document).ready(function () {
+        {#$(document).ready(function () {
             $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
             setInterval(function () {
                 $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
@@ -57,45 +58,73 @@
                 });
                 $("#message").val('');
             });
-        });
+        });#}
     </script>
-    {% if (joueur == 1) %}
-        <script>
-            $(document).ready(function() {
+    <script>
+        $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+        $(document).ready(function(){
+            setInterval(function() {
                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-                var cetakiInt = setInterval(function() {
+            }, 2000)
+
+            $('.action_form_btn').on('click', function () {
+                var cartes = [];
+                $("input:checked").each(function() {
+                    cartes.push($(this).val());
+                });
+                var action = $(this).val();
+                $('#action_form').submit(function(e) {
+                    e.preventDefault();
                     $.ajax({
-                        type: "GET",
-                        url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
-                        success: function (res) {
-                            console.log(res);
-                            if(res == '2') {
-                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
-                            }
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: {
+                            cartes: JSON.stringify(cartes),
+                            action: action
                         }
                     })
-                }, 3000);
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+                })
             })
-        </script>
-    {% elseif (joueur == 2) %}
-        <script>
-            $(document).ready(function() {
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-                var cetakiInt = setInterval(function() {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
-                        success: function (res) {
-                            console.log(res);
-                            if (res == '1') {
-                                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+        })
+    </script>
+        {% if (joueur == 1) %}
+            <script>
+                $(document).ready(function() {
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    var cetakiInt = setInterval(function() {
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
+                            success: function (res) {
+                                console.log(res);
+                                if(res == '2') {
+                                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
+                                }
                             }
-                        }
-                    })
-                }, 3000);
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
-            })
-        </script>
-    {% endif %}
+                        })
+                    }, 3000);
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                })
+            </script>
+        {% elseif (joueur == 2) %}
+            <script>
+                $(document).ready(function() {
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    var cetakiInt = setInterval(function() {
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
+                            success: function (res) {
+                                console.log(res);
+                                if (res == '1') {
+                                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
+                                }
+                            }
+                        })
+                    }, 3000);
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                })
+            </script>
+        {% endif %}
+
 {% endblock %}

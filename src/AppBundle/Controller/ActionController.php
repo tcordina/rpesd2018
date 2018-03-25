@@ -32,7 +32,11 @@ class ActionController extends PartieController
         $cards = $em->getRepository('AppBundle:Carte')->findAll();
         $action = $request->request->get('action');
         if (!empty($request->request->get('cartes'))) {
-            $postCartes = $request->request->get('cartes');
+            if(is_array($request->request->get('cartes'))) {
+                $postCartes = $request->request->get('cartes');
+            }else{
+                $postCartes = json_decode($request->request->get('cartes'));
+            }
             foreach($postCartes as $carte) {
                 $cartes[] = $cards[(int) $carte - 1];
             }
@@ -41,7 +45,7 @@ class ActionController extends PartieController
             $cartes = $cards[$carte-1];
         }
         //return new Response('cartes:'.json_encode($cartes));
-        //return new Response($request->request->get('action'));
+        //return new Response($request->request->get('cartes'));
 
         switch ($action) {
             case 'secret':
