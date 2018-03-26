@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div align="center">
+    <h1>HISTORIQUE</h1>
+    <table border="1px" style="width:50%;border-collapse:collapse">
+        <tr>
+            <th>#</th>
+            <th>Adversaire</th>
+            <th>Résultat</th>
+            <th>Manches</th>
+        </tr>
+        {% for partie in parties %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            {% if app.user.id == partie.joueur1.id %}
+                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur2.username}) }}">{{ partie.joueur2.username }}</a></td>
+                {% if partie.winner == 1 %}
+                    <td>Victoire</td>
+                {% elseif partie.winner == 2 %}
+                    <td>Défaite</td>
+                {% else %}
+                    <td>Inconnu</td>
+                {% endif %}
+            {% elseif app.user.id == partie.joueur2.id %}
+                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur1.username}) }}">{{ partie.joueur1.username }}</a></td>
+                {% if partie.winner == 2 %}
+                    <td>Victoire</td>
+                {% elseif partie.winner == 1 %}
+                    <td>Défaite</td>
+                {% else %}
+                    <td>Inconnu</td>
+                {% endif %}
+            {% endif %}
+            <td>{{ partie.manche }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

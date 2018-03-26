@@ -16,4 +16,8 @@
         <default key="_controller">FOSUserBundle:Profile:edit</default>
     </route>
 
+    <route id="fos_user_history" path="/historique" methods="GET">
+        <default key="_controller">FOSUserBundle:Profile:history</default>
+    </route>
+
 </routes>

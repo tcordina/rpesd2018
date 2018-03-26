@@ -8,10 +8,10 @@ easy_admin:
         UserAdmin:
             class: AppBundle\Entity\UserAdmin
             list:
-                fields: ['id', 'username', 'email', 'enabled', 'last_login', 'roles','elo', 'imageName', 'updatedAt']
+                fields: ['id', 'username', 'email', 'enabled', 'lastLogin', 'roles','elo', 'imageName', 'updatedAt']
                 sort: ['id', 'ASC']
             form:
-                fields: ['username', 'email', 'roles', { property: 'imageFile', type: 'vich_image' }]
+                fields: ['username', 'email', 'roles', 'elo', 'rank', { property: 'imageFile', type: 'vich_image' }]
                 sort: ['id', 'ASC']
             disabled_actions: ['new']
         Carte:
@@ -33,7 +33,7 @@ easy_admin:
         Partie:
             class: AppBundle\Entity\Partie
             list:
-                fields: ['id', 'joueur1', 'joueur2', 'manche', 'winner']
+                fields: ['id', {property: 'joueur1.username', label: 'Joueur 1'}, {property: 'joueur2.username', label: 'Joueur 2'}, 'manche', 'winner']
                 sort: ['id', 'ASC']
             form:
                 fields: ['joueur1', 'joueur2', 'manche', 'winner']
@@ -45,5 +45,5 @@ easy_admin:
             - { entity: 'UserAdmin', label: 'Utilisateurs', icon: 'user' }
             - { entity: 'Carte', label: 'Cartes', icon: 'th-large' }
             - { entity: 'Objectif', label: 'Objectif', icon: 'th-large' }
-            - { entity: 'Partie', label: 'Partie', icon: 'th-large' }
+            - { entity: 'Partie', label: 'Parties', icon: 'th-large' }
         brand_color: '#333333'

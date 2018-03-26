@@ -12,9 +12,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => null
-        ));
+        return $this->render('default/index.html.twig');
     }
 
     /**
@@ -25,7 +23,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
             array(),
-            array('id' => 'desc'),
+            array('elo' => 'desc'),
             50,
             0
         );

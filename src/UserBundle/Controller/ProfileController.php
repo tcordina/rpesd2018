@@ -20,4 +20,19 @@ class ProfileController extends BaseController
             'user' => $user,
         ));
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function historyAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+
+        $parties = $em->getRepository('AppBundle:Partie')->getHistory($user);
+
+        return $this->render('@FOSUser/Profile/history.html.twig', [
+            'parties' => $parties
+        ]);
+    }
 }
