@@ -21,6 +21,7 @@ class PartieRepository extends EntityRepository
             ->select('p')
             ->from('AppBundle:Partie', 'p')
             ->where('p.joueur1 = ?1 OR p.joueur2 = ?1')
+            ->andWhere('p.ended = 1')
             ->orderBy('p.id', 'DESC')
             ->setMaxResults(10)
             ->setParameter(1, $user)
