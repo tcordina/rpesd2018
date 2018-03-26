@@ -42,13 +42,13 @@
     {% block javascripts %}
     {{ parent() }}
     <script>
-        {#$(document).ready(function () {
+        $(document).ready(function () {
             $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
             setInterval(function () {
                 $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
                 var elem = document.getElementById('chat');
                 elem.scrollTop = elem.scrollHeight;
-            }, 1500);
+            }, 3000);
             $('#postermessage').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -58,7 +58,7 @@
                 });
                 $("#message").val('');
             });
-        });#}
+        });
     </script>
     <script>
         $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");

@@ -31,7 +31,7 @@
                     <input type="hidden" name="action" value="concurrence_choix">
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button class="concurrence_choix_info">Choisir</button>
+                    <button class="concurrence_choix_btn">Choisir</button>
                 </form>
                 {% endif %}
             {% endfor %}
@@ -156,7 +156,7 @@
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button id="concurrence_choix_btn" class="btn btn-info">Choisir</button>
+                    <button class="concurrence_choix_btn">Choisir</button>
                 </form>
                 {% endif %}
             {% endfor %}
@@ -279,11 +279,11 @@
             $('.cadeau_choix_btn').on('click', function () {
                 var carte = $(this).val();
                 $('#cadeau_choix').submit(function(e) {
+                    e.preventDefault();
                     console.log($(this).serialize());
                     action = $(this).serialize().split('=')[1];
                     action = action.split('&')[0];
                     console.log(action)
-                    e.preventDefault();
                     $.ajax({
                         url: $(this).attr('action'),
                         type: 'POST',
@@ -299,23 +299,19 @@
             });
             $('.concurrence_choix_btn').on('click', function () {
                 $(this).closest('form').submit(function(e) {
-                    console.log($(this).serialize());
-                    req = $(this).serialize().split('] ');
-                    action = action.split('&')[0];
-                    console.log(req)
                     e.preventDefault();
-                    {#$.ajax({
+                    //console.log($(this).serialize());
+                    req = $(this).serialize().split('] ');
+                    //action = action.split('&')[0];
+                    console.log(req)
+                    $.ajax({
                         url: $(this).attr('action'),
                         type: 'POST',
-                        data: {
-                            action: action,
-                            cartes: cartes
-                        },
+                        data: $(this).serialize(),
                         success: function (res) {
-                            console.log(res)
                             $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
                         }
-                    });#}
+                    });
                 });
             });
         });
