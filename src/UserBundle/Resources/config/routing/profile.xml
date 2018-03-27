@@ -20,4 +20,8 @@
         <default key="_controller">FOSUserBundle:Profile:history</default>
     </route>
 
+    <route id="fos_user_encours" path="/encours" methods="GET">
+        <default key="_controller">FOSUserBundle:Profile:currentGames</default>
+    </route>
+
 </routes>

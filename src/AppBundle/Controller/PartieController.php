@@ -54,7 +54,12 @@ class PartieController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $user = $this->getUser();
+            if($partie->getJoueur2() == $user) {
+                $session = new Session();
+                $session->getFlashBag()->add('notice', 'Vous ne pouvez pas jouer contre vous même !');
+                return $this->redirectToRoute('partie_new');
+            }
             $partie->setJoueur1($user);
             $em = $this->getDoctrine()->getManager();
             $cartes = $em->getRepository('AppBundle:Carte')->findAll();
@@ -129,6 +134,23 @@ class PartieController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
             $em->flush();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Invitation à une partie !')
+                ->setFrom('noreply@rpesd2018.thibaudcordina.fr')
+                ->setTo($partie->getJoueur2()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'mail/partie/invited.html.twig',
+                        array(
+                            'joueur1' => $partie->getJoueur1()->getUsername(),
+                            'joueur2' => $partie->getJoueur2()->getUsername(),
+                            'partie' => $partie
+                        )
+                    ),
+                    'text/html'
+                );
+            $this->get('mailer')->send($message);
 
             return $this->redirectToRoute('partie_show', array('id' => $partie->getId()));
         }

@@ -29,4 +29,21 @@ class PartieRepository extends EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getCurrentGames($user)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb
+            ->select('p')
+            ->from('AppBundle:Partie', 'p')
+            ->where('p.joueur1 = ?1 OR p.joueur2 = ?1')
+            ->andWhere('p.ended = 0')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter(1, $user)
+        ;
+
+        return $query->getQuery()->getResult();
+    }
 }

@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use FOS\UserBundle\Controller\ProfileController as BaseController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends BaseController
 {
@@ -16,6 +17,9 @@ class ProfileController extends BaseController
         $user = $em->getRepository('AppBundle:UserAdmin')->findOneBy([
             'username' => $username
         ]);
+        if(null === $user) {
+            throw new NotFoundHttpException('L\'utilisateur '.$username.' n\'éxiste pas.');
+        }
         return $this->render('@FOSUser/Profile/other.html.twig', array(
             'user' => $user,
         ));
@@ -32,6 +36,21 @@ class ProfileController extends BaseController
         $parties = $em->getRepository('AppBundle:Partie')->getHistory($user);
 
         return $this->render('@FOSUser/Profile/history.html.twig', [
+            'parties' => $parties
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function currentGamesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+
+        $parties = $em->getRepository('AppBundle:Partie')->getCurrentGames($user);
+
+        return $this->render('@FOSUser/Profile/encours.html.twig', [
             'parties' => $parties
         ]);
     }

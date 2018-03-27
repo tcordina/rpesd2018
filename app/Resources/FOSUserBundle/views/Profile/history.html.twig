@@ -34,6 +34,9 @@
             {% endif %}
             <td>{{ partie.manche }}</td>
         </tr>
+        {% else %}
+            <p>Vous n'avez pas encore joué de partie.</p>
+            <a href="{{ path('partie_new') }}">Y remédier</a>
         {% endfor %}
     </table>
 </div>

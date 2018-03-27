@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        {{ message }}
+    {% endfor %}
     <h1>Partie creation</h1>
 
     {{ form_start(form) }}

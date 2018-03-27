@@ -67,11 +67,8 @@ class UserAdmin extends BaseUser
     private $imageName;
 
     /**
-     * @Assert\File(
-     *     maxSize="1M",
-     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
-     * )
-     * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")
+     * @Assert\File(maxSize="1M", mimeTypes={"image/png", "image/jpeg", "image/pjpeg"})
+     * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName", dimensions="[150,150]")
      * @var File
      */
     private $imageFile;
