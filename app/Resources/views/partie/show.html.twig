@@ -43,38 +43,38 @@
     {{ parent() }}
     <script>
         $(document).ready(function () {
-            $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
+            $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}")
             setInterval(function () {
-                $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}");
-                var elem = document.getElementById('chat');
-                elem.scrollTop = elem.scrollHeight;
+                $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}")
+                var elem = document.getElementById('chat')
+                elem.scrollTop = elem.scrollHeight
             }, 3000);
             $('#postermessage').on('submit', function (e) {
-                e.preventDefault();
+                e.preventDefault()
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
                     data: $(this).serialize(),
-                });
-                $("#message").val('');
-            });
-        });
+                })
+                $("#message").val('')
+            })
+        })
     </script>
     <script>
-        $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+        $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
         $(document).ready(function(){
             setInterval(function() {
-                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}");
+                $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
             }, 2000)
 
             $('.action_form_btn').on('click', function () {
-                var cartes = [];
+                var cartes = []
                 $("input:checked").each(function() {
-                    cartes.push($(this).val());
-                });
-                var action = $(this).val();
+                    cartes.push($(this).val())
+                })
+                var action = $(this).val()
                 $('#action_form').submit(function(e) {
-                    e.preventDefault();
+                    e.preventDefault()
                     $.ajax({
                         url: $(this).attr('action'),
                         type: 'POST',
@@ -90,39 +90,39 @@
         {% if (joueur == 1) %}
             <script>
                 $(document).ready(function() {
-                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                     var cetakiInt = setInterval(function() {
                         $.ajax({
                             type: "GET",
                             url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
                             success: function (res) {
-                                console.log(res);
+                                console.log(res)
                                 if(res == '2') {
                                     $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                                 }
                             }
                         })
-                    }, 3000);
-                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    }, 10000)
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                 })
             </script>
         {% elseif (joueur == 2) %}
             <script>
                 $(document).ready(function() {
-                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                     var cetakiInt = setInterval(function() {
                         $.ajax({
                             type: "GET",
                             url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
                             success: function (res) {
-                                console.log(res);
+                                console.log(res)
                                 if (res == '1') {
                                     $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                                 }
                             }
                         })
-                    }, 3000);
-                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}");
+                    }, 10000)
+                    $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
                 })
             </script>
         {% endif %}
