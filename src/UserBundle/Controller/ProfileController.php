@@ -33,25 +33,13 @@ class ProfileController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser()->getId();
 
-        $parties = $em->getRepository('AppBundle:Partie')->getHistory($user);
+        $history = $em->getRepository('AppBundle:Partie')->getHistory($user);
+        $enCours = $em->getRepository('AppBundle:Partie')->getCurrentGames($user);
 
         return $this->render('@FOSUser/Profile/history.html.twig', [
-            'parties' => $parties
+            'partiesHistorique' => $history,
+            'partiesEnCours' => $enCours
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function currentGamesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser()->getId();
-
-        $parties = $em->getRepository('AppBundle:Partie')->getCurrentGames($user);
-
-        return $this->render('@FOSUser/Profile/encours.html.twig', [
-            'parties' => $parties
-        ]);
-    }
 }

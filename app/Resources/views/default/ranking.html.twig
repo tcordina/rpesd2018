@@ -1,23 +1,73 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
 {% block body %}
-    <div align="center"  style="font-family:sans-serif;">
-        <h1>Classement</h1>
-        <table style="width:50%; border-collapse: collapse;" border="1">
-            <tr>
-                <th>#</th>
-                <th>Pseudo</th>
-                <th>Rang</th>
-                <th>Elo</th>
-            </tr>
-            {% for user in users %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td><a style="color: dodgerblue" href="{{ path('fos_user_profile_other', {'username': user.username}) }}">{{ user.username }}</a></td>
-                <td>{{ user.rank }}</td>
-                <td>{{ user.elo }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="logo"></div>
+
+    <div id="dropform2" class="classement">
+        <div class="glitch border-top2"></div>
+        <div class="glitch border-right2"></div>
+        <div class="glitch border-bottom2"></div>
+        <div class="glitch border-left2"></div>
+        <div class="container">
+            <div class="back-head"></div>
+            <div class="up">
+                <h1 class="name">Classement</h1>
+            </div>
+            <div class="container-table">
+                <div class="container-table-scroll">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pseudo</th>
+                            <th>Grade</th>
+                            <th>Elo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td><a class="ranking-profile" href="{{ path('fos_user_profile_other', {'username': user.username}) }}">{{ user.username }}</a></td>
+                                <td>{{ user.rank }}</td>
+                                <td>{{ user.elo }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    <footer>
+        <nav>
+            <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin') }}">Administration</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
+                <li><a href="">Règles</a></li>
+            </ul>
+        </nav>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        const neon = document.querySelector('.glitch');
+        const neon6 = document.querySelector('#dropform2');
+        function setProperty(duration) {
+            neon.style.setProperty('--animation-time', duration +'s');
+            neon6.style.setProperty('--animation-time', duration +'s');
+        }
+        function changeAnimationTime() {
+            const animationDuration = Math.random();
+            setProperty(animationDuration);
+        }
+        setInterval(changeAnimationTime, 500);
+    </script>
 {% endblock %}

@@ -1,43 +1,92 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+
 {% block body %}
-<div align="center">
-    <h1>HISTORIQUE</h1>
-    <table border="1px" style="width:50%;border-collapse:collapse">
-        <tr>
-            <th>#</th>
-            <th>Adversaire</th>
-            <th>Résultat</th>
-            <th>Manches</th>
-        </tr>
-        {% for partie in parties %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            {% if app.user.id == partie.joueur1.id %}
-                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur2.username}) }}">{{ partie.joueur2.username }}</a></td>
-                {% if partie.winner == 1 %}
-                    <td>Victoire</td>
-                {% elseif partie.winner == 2 %}
-                    <td>Défaite</td>
-                {% else %}
-                    <td>Inconnu</td>
+    <div class="logo"></div>
+
+    <div id="dropform2" class="classement">
+        <div class="glitch border-top2"></div>
+        <div class="glitch border-right2"></div>
+        <div class="glitch border-bottom2"></div>
+        <div class="glitch border-left2"></div>
+        <div class="container">
+            <div class="back-head"></div>
+            <div class="up">
+                <h1 class="name">Parties terminées</h1>
+            </div>
+            <div class="container-table">
+                <div class="container-table-scroll">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Adversaire</th>
+                            <th>Résultat</th>
+                            <th>Manches</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for partie in partiesHistorique %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            {% if app.user.id == partie.joueur1.id %}
+                                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur2.username}) }}">{{ partie.joueur2.username }}</a></td>
+                                {% if partie.winner == 1 %}
+                                    <td>Victoire</td>
+                                {% elseif partie.winner == 2 %}
+                                    <td>Défaite</td>
+                                {% else %}
+                                    <td>Inconnu</td>
+                                {% endif %}
+                            {% elseif app.user.id == partie.joueur2.id %}
+                                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur1.username}) }}">{{ partie.joueur1.username }}</a></td>
+                                {% if partie.winner == 2 %}
+                                    <td>Victoire</td>
+                                {% elseif partie.winner == 1 %}
+                                    <td>Défaite</td>
+                                {% else %}
+                                    <td>Inconnu</td>
+                                {% endif %}
+                            {% endif %}
+                            <td>{{ partie.manche }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <nav>
+            <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin') }}">Administration</a></li>
                 {% endif %}
-            {% elseif app.user.id == partie.joueur2.id %}
-                <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur1.username}) }}">{{ partie.joueur1.username }}</a></td>
-                {% if partie.winner == 2 %}
-                    <td>Victoire</td>
-                {% elseif partie.winner == 1 %}
-                    <td>Défaite</td>
-                {% else %}
-                    <td>Inconnu</td>
-                {% endif %}
-            {% endif %}
-            <td>{{ partie.manche }}</td>
-        </tr>
-        {% else %}
-            <p>Vous n'avez pas encore joué de partie.</p>
-            <a href="{{ path('partie_new') }}">Y remédier</a>
-        {% endfor %}
-    </table>
-</div>
+                <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
+                <li><a href="">Règles</a></li>
+            </ul>
+        </nav>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const neon = document.querySelector('.glitch');
+        const neon6 = document.querySelector('#dropform2');
+        function setProperty(duration) {
+            neon.style.setProperty('--animation-time', duration +'s');
+            neon6.style.setProperty('--animation-time', duration +'s');
+        }
+        function changeAnimationTime() {
+            const animationDuration = Math.random();
+            setProperty(animationDuration);
+        }
+        setInterval(changeAnimationTime, 500);
+    </script>
 {% endblock %}

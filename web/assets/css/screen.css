@@ -2,6 +2,80 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 2, ../sass/_neon.scss */
+.border, .border-top, .border-top2, .border-right, .border-right2, .border-bottom, .border-bottom2, .border-left, .border-left2 {
+  position: absolute;
+  background-color: #fed3ff;
+  border-radius: 20px;
+  z-index: 99;
+}
+
+/* line 8, ../sass/_neon.scss */
+.border-top, .border-top2 {
+  top: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 2px 20px #ff5ef7;
+  border-bottom: 3px solid #ffb0fa;
+}
+
+/* line 16, ../sass/_neon.scss */
+.border-top2 {
+  background-color: #d7eeeb;
+  box-shadow: 0 2px 20px #00b3ee;
+  border-bottom: 3px solid #92f5fe;
+}
+
+/* line 22, ../sass/_neon.scss */
+.border-right, .border-right2 {
+  top: 0;
+  right: -1px;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
+}
+
+/* line 31, ../sass/_neon.scss */
+.border-right2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
+/* line 37, ../sass/_neon.scss */
+.border-bottom, .border-bottom2 {
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 -2px 20px #ff5ef7;
+  border-top: 3px solid #ffbaf4;
+}
+
+/* line 45, ../sass/_neon.scss */
+.border-bottom2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-top: 3px solid #92f5fe;
+}
+
+/* line 51, ../sass/_neon.scss */
+.border-left, .border-left2 {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
+}
+
+/* line 60, ../sass/_neon.scss */
+.border-left2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
 @keyframes flicker {
   0% {
     opacity: 0.8;
@@ -18,165 +92,185 @@
     box-shadow: 0 0 1000px rgba(130, 35, 120, 0.5), 0 0 1300px rgba(0, 0, 0, 0.7);
   }
 }
-@keyframes drop1 {
+@keyframes drop2 {
   0% {
-    box-shadow: 0 0 1000px rgba(45, 120, 150, 0.4), 0 0 1300px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.2);
   }
   100% {
-    box-shadow: 0 0 1000px rgba(45, 120, 150, 0.5), 0 0 1300px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.3);
   }
 }
-/* line 35, ../sass/screen.scss */
+/* line 91, ../sass/_neon.scss */
 .glitch {
   animation: flicker var(--animation-time) ease alternate infinite;
 }
 
-/* line 38, ../sass/screen.scss */
+/* line 94, ../sass/_neon.scss */
 #dropform {
   animation: drop var(--animation-time) ease alternate infinite;
 }
 
-/* line 41, ../sass/screen.scss */
+/* line 97, ../sass/_neon.scss */
 #dropform2 {
   animation: drop2 var(--animation-time) ease alternate infinite;
 }
 
-/* line 46, ../sass/screen.scss */
-.border, .border-top, .border-top2, .border-right, .border-right2, .border-bottom, .border-bottom2, .border-left, .border-left2 {
+/* line 2, ../sass/_switchbox.scss */
+.input-check {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin: 10px 0;
+  padding-left: 8%;
+  font-family: monospace;
+  color: #aaa;
+  letter-spacing: initial;
+  word-spacing: -3px;
+}
+
+/* line 13, ../sass/_switchbox.scss */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* line 20, ../sass/_switchbox.scss */
+.switch input {
+  display: none;
+}
+
+/* line 21, ../sass/_switchbox.scss */
+.slider {
   position: absolute;
-  background-color: #fed3ff;
-  border-radius: 20px;
-  z-index: 99;
-}
-
-/* line 53, ../sass/screen.scss */
-.clear {
-  all: unset;
-}
-
-/* line 56, ../sass/screen.scss */
-.border-top, .border-top2 {
-  top: -2px;
-  width: 100%;
-  height: 2px;
-  box-shadow: 0 2px 20px #ff5ef7;
-  border-bottom: 3px solid #ffb0fa;
-}
-
-/* line 64, ../sass/screen.scss */
-.border-top2 {
-  background-color: #d7eeeb;
-  box-shadow: 0 2px 20px #00b3ee;
-  border-bottom: 3px solid #92f5fe;
-}
-
-/* line 70, ../sass/screen.scss */
-.border-right, .border-right2 {
-  top: 0;
-  right: -1px;
-  width: 2px;
-  height: 100%;
-  box-shadow: 2px 0 20px #ff5ef7;
-  border-left: 3px solid #ffbaf4;
-}
-
-/* line 79, ../sass/screen.scss */
-.border-right2 {
-  background-color: #d7eeeb;
-  box-shadow: 2px 0 20px #00b3ee;
-  border-left: 3px solid #92f5fe;
-}
-
-/* line 85, ../sass/screen.scss */
-.border-bottom, .border-bottom2 {
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  box-shadow: 0 -2px 20px #ff5ef7;
-  border-top: 3px solid #ffbaf4;
-}
-
-/* line 93, ../sass/screen.scss */
-.border-bottom2 {
-  background-color: #d7eeeb;
-  box-shadow: 2px 0 20px #00b3ee;
-  border-top: 3px solid #92f5fe;
-}
-
-/* line 99, ../sass/screen.scss */
-.border-left, .border-left2 {
+  cursor: pointer;
   top: 0;
   left: 0;
-  width: 2px;
-  height: 100%;
-  box-shadow: 2px 0 20px #ff5ef7;
-  border-left: 3px solid #ffbaf4;
+  right: 0;
+  bottom: 0;
+  border: solid 1px #ff5ef7;
+  border-radius: 2px;
+  background-color: rgba(50, 50, 50, 0.5);
+  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+  transition: 0.2s;
 }
 
-/* line 108, ../sass/screen.scss */
-.border-left2 {
-  background-color: #d7eeeb;
-  box-shadow: 2px 0 20px #00b3ee;
-  border-left: 3px solid #92f5fe;
+/* line 34, ../sass/_switchbox.scss */
+.slider:before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  height: 11px;
+  width: 11px;
+  border: solid 1px #ff5ef7;
+  border-radius: 2px;
+  background-color: rgba(200, 200, 200, 0.3);
+  transition: 0.2s;
 }
 
-/* line 115, ../sass/screen.scss */
+/* line 46, ../sass/_switchbox.scss */
+input:checked + .slider {
+  border-color: #0f0;
+  box-shadow: 0 0 8px rgba(10, 255, 10, 0.8), 0 0 4px #0aff0a inset;
+}
+/* line 49, ../sass/_switchbox.scss */
+input:checked + .slider:before {
+  transform: translateX(110%);
+  border-color: #0f0;
+  background-color: #0f0;
+  box-shadow: 0 0 20px rgba(10, 255, 10, 0.8), 0 0 10px #0aff0a inset;
+}
+
+/* line 1, ../sass/_scrollbar.scss */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+/* Handle */
+/* line 10, ../sass/_scrollbar.scss */
+::-webkit-scrollbar-thumb {
+  border-radius: 50% 0 0 50%;
+  background: rgba(230, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+/* line 15, ../sass/_scrollbar.scss */
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 255, 255, 0.4);
+}
+
+/* line 2, ../sass/_index.scss */
 body {
+  width: 100%;
+  height: 100vh;
   padding: 0;
   margin: 0;
-  background-color: #111;
-  color: white;
   font-family: "Bungee Inline", cursive;
   letter-spacing: 1px;
+  color: white;
+  background-color: #111;
   background-image: url("../images/back.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  width: 100%;
-  height: 100vh;
 }
 
-/* line 128, ../sass/screen.scss */
+/* line 16, ../sass/_index.scss */
+.clear {
+  all: unset;
+}
+
+/* line 17, ../sass/_index.scss */
+a, .edit-form button {
+  text-decoration: none;
+}
+
+/* line 20, ../sass/_index.scss */
 .logo {
   position: absolute;
   top: 40px;
   left: 100px;
   width: 520px;
-  height: 150px;
+  height: 130px;
   background-image: url("../images/titre.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-/* line 138, ../sass/screen.scss */
-.formulaire, .profil, .jouer {
+/* line 32, ../sass/_index.scss */
+.formulaire, .profil, .edit, .passchange, .classement, .jouer {
   position: absolute;
   top: 52%;
   left: 100px;
-  transform: translate(0, -50%);
   width: 520px;
   height: 400px;
+  transform: translate(0, -50%);
   border-radius: 5px;
-  background-color: #111;
+  background-color: rgba(5, 5, 5, 0.8);
   z-index: 50;
+  color: white;
   text-align: center;
 }
-/* line 149, ../sass/screen.scss */
-.formulaire p, .profil p, .jouer p {
+/* line 47, ../sass/_index.scss */
+.formulaire p, .profil p, .edit p, .passchange p, .classement p, .jouer p {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
-  color: white;
+  opacity: 0.8;
+  z-index: 90;
+  padding-bottom: 10px;
+  font-family: monospace;
   font-size: 0.9em;
   text-decoration: none;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  opacity: 0.8;
-  z-index: 150;
 }
-/* line 161, ../sass/screen.scss */
-.formulaire .container, .profil .container, .jouer .container {
+/* line 60, ../sass/_index.scss */
+.formulaire .container, .profil .container, .edit .container, .passchange .container, .classement .container, .jouer .container {
   position: absolute;
   top: 0;
   left: 0;
@@ -184,8 +278,8 @@ body {
   height: 100%;
   overflow: hidden;
 }
-/* line 169, ../sass/screen.scss */
-.formulaire .back-head, .profil .back-head, .jouer .back-head, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot {
+/* line 68, ../sass/_index.scss */
+.formulaire .back-head, .profil .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .jouer .back-head, .formulaire .back-foot, .profil .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .jouer .back-foot {
   position: absolute;
   top: -20px;
   left: 0;
@@ -195,48 +289,191 @@ body {
   background-color: rgba(50, 50, 50, 0.2);
   z-index: 50;
 }
-/* line 179, ../sass/screen.scss */
-.formulaire .back-foot, .profil .back-foot, .jouer .back-foot {
+/* line 78, ../sass/_index.scss */
+.formulaire .back-foot, .profil .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .jouer .back-foot {
   top: initial;
   bottom: -50px;
 }
-/* line 184, ../sass/screen.scss */
-.formulaire h2, .profil h2, .jouer h2 {
+/* line 83, ../sass/_index.scss */
+.formulaire h2, .profil h2, .edit h2, .passchange h2, .classement h2, .jouer h2 {
   font-size: 1.8em;
   text-shadow: 0 0 20px white;
   margin: 15px;
 }
 
-/* line 190, ../sass/screen.scss */
-.profil {
+/* line 91, ../sass/_index.scss */
+.connexion, .inscription {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.3s;
+  z-index: 60;
+}
+
+/* line 100, ../sass/_index.scss */
+.inscription {
+  left: 100%;
+}
+/* line 103, ../sass/_index.scss */
+.inscription input {
+  margin: 5px 0;
+}
+
+/* line 109, ../sass/_index.scss */
+.toleft {
+  transform: translate(-100%, 0);
+}
+
+/* line 114, ../sass/_index.scss */
+.form-container {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 290px;
+}
+/* line 122, ../sass/_index.scss */
+.form-container #check1, .form-container #check2 {
+  position: absolute;
+  bottom: 110px;
+  right: 50px;
+  color: #34ce57;
+  text-shadow: 0 0 10px rgba(10, 255, 10, 0.5);
+}
+/* line 129, ../sass/_index.scss */
+.form-container #check2 {
+  bottom: 60px;
+}
+
+/* line 134, ../sass/_index.scss */
+form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+/* line 140, ../sass/_index.scss */
+form input {
+  width: 80%;
+  margin: 15px 0;
+  padding: 10px;
+  border: solid 1px #ff5ef7;
+  border-radius: 2px;
+  background-color: rgba(50, 50, 50, 0.4);
+  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+  transition: 0.3s;
+  font-family: monospace;
+  color: white;
+  font-size: 1.2em;
+  text-shadow: 0 0 10px white;
+}
+/* line 153, ../sass/_index.scss */
+w
+form input:-webkit-autofill {
+  background-color: rgba(50, 50, 50, 0.4) !important;
+}
+/* line 158, ../sass/_index.scss */
+form button {
+  padding: 5px 15px;
+  margin-top: 10px;
+  color: #ff5ef7;
+  font-size: 1em;
+  border: solid 1px #ff5ef7;
+  border-radius: 1000px;
+  background-color: black;
+  box-shadow: 0 0 20px rgba(130, 35, 120, 0.3), 0 0 10px rgba(130, 35, 120, 0.6) inset;
+  transition: 0.1s;
+}
+/* line 168, ../sass/_index.scss */
+form button:hover {
+  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+}
+/* line 171, ../sass/_index.scss */
+form button:active {
+  opacity: 0.7;
+}
+
+/* line 177, ../sass/_index.scss */
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  padding: 0 100px;
+  box-sizing: border-box;
+  font-size: 0.8em;
+}
+/* line 185, ../sass/_index.scss */
+footer ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+/* line 191, ../sass/_index.scss */
+footer ul li {
+  display: inline-block;
+}
+/* line 193, ../sass/_index.scss */
+footer ul li a, footer ul li .edit-form button, .edit-form footer ul li button {
+  color: white;
+  border-radius: 2px;
+  border: solid 2px white;
+  margin-right: 30px;
+  padding: 0 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.6) inset;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* line 1, ../sass/_profil.scss */
+.profil, .edit, .passchange, .classement {
   text-align: left;
 }
-/* line 193, ../sass/screen.scss */
-.profil .container {
-  padding: 20px 30px;
+/* line 4, ../sass/_profil.scss */
+.profil .container, .edit .container, .passchange .container, .classement .container {
   box-sizing: border-box;
 }
-/* line 197, ../sass/screen.scss */
-.profil .back-head, .profil .back-foot {
+/* line 8, ../sass/_profil.scss */
+.profil .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .profil .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot {
   height: 140px;
 }
-/* line 200, ../sass/screen.scss */
-.profil .back-foot {
+/* line 11, ../sass/_profil.scss */
+.profil .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot {
   bottom: -70px;
 }
-/* line 203, ../sass/screen.scss */
-.profil .name {
-  margin: 0;
+/* line 14, ../sass/_profil.scss */
+.profil .up, .edit .up, .passchange .up, .classement .up {
+  position: relative;
+  z-index: 70;
+  padding: 20px 30px;
+}
+/* line 19, ../sass/_profil.scss */
+.profil .name, .edit .name, .passchange .name, .classement .name {
+  margin: 5px 0;
   width: 70%;
   line-height: 1.2em;
+  z-index: 60;
 }
-/* line 208, ../sass/screen.scss */
-.profil .email {
+/* line 25, ../sass/_profil.scss */
+.profil .email, .edit .email, .passchange .email, .classement .email, .profil .password, .edit .password, .passchange .password, .classement .password {
+  display: block;
   font-family: monospace;
   opacity: 0.5;
+  font-weight: bold;
+  padding: 5px 10px 5px 0;
 }
-/* line 212, ../sass/screen.scss */
-.profil .profil-img {
+/* line 34, ../sass/_profil.scss */
+.profil .password a, .edit .password a, .passchange .password a, .classement .password a, .profil .password .edit-form button, .edit-form .profil .password button, .edit .password .edit-form button, .edit-form .edit .password button, .passchange .password .edit-form button, .edit-form .passchange .password button, .classement .password .edit-form button, .edit-form .classement .password button {
+  color: white;
+  padding: 2px 0;
+}
+/* line 39, ../sass/_profil.scss */
+.profil .profil-img, .edit .profil-img, .passchange .profil-img, .classement .profil-img {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -245,29 +482,37 @@ body {
   border-radius: 50%;
   border: solid 1px #ff5ef7;
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+  z-index: 60;
 }
-/* line 222, ../sass/screen.scss */
-.profil .info-joueur {
-  margin-top: 45px;
+/* line 50, ../sass/_profil.scss */
+.profil .info-joueur, .edit .info-joueur, .passchange .info-joueur, .classement .info-joueur {
+  margin-top: 50%;
+  transform: translate(0, -100%);
   list-style: none;
   text-align: center;
   padding: 0;
+  z-index: 60;
 }
-/* line 229, ../sass/screen.scss */
-.profil p a {
+/* line 58, ../sass/_profil.scss */
+.profil a, .edit a, .passchange a, .classement a, .profil .edit-form button, .edit-form .profil button, .edit .edit-form button, .edit-form .edit button, .passchange .edit-form button, .edit-form .passchange button, .classement .edit-form button, .edit-form .classement button {
   font-family: monospace;
   color: white;
-  text-decoration: none;
   border: solid 1px white;
   padding: 5px 10px;
   letter-spacing: initial;
-}
-/* line 236, ../sass/screen.scss */
-.profil p a:last-child {
-  margin-left: 10px;
+  margin-left: 30px;
 }
 
-/* line 242, ../sass/screen.scss */
+.ranking-profile {
+  font-family: monospace;
+  color: white;
+  border: none !important;
+  padding: auto;
+  letter-spacing: initial;
+  margin-left: auto !important;
+}
+
+/* line 67, ../sass/_profil.scss */
 .jouer {
   left: 660px;
   background-image: url("../images/game.jpg");
@@ -275,9 +520,8 @@ body {
   background-position: center;
   background-size: cover;
 }
-/* line 248, ../sass/screen.scss */
-.jouer a {
-  text-decoration: none;
+/* line 73, ../sass/_profil.scss */
+.jouer a, .jouer .edit-form button, .edit-form .jouer button {
   position: absolute;
   top: 0;
   left: 0;
@@ -287,7 +531,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-/* line 259, ../sass/screen.scss */
+/* line 83, ../sass/_profil.scss */
 .jouer h1 {
   font-family: 'Rock Salt', cursive;
   width: 70%;
@@ -297,199 +541,145 @@ body {
   text-shadow: 0 0 10px #00b3ee, 0 0 30px #00ccff;
 }
 
-/* line 270, ../sass/screen.scss */
-.connexion, .inscription {
+/* line 5, ../sass/_edit.scss */
+.edit .drop-password, .passchange .drop-password {
   position: absolute;
   top: 0;
-  height: 100%;
   left: 0;
   width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding-top: 105px;
+  z-index: 91;
+  transform: translate(0, -100%);
   transition: 0.3s;
-  z-index: 60;
+  box-sizing: border-box;
 }
-
-/* line 279, ../sass/screen.scss */
-.inscription {
-  left: 100%;
-}
-/* line 282, ../sass/screen.scss */
-.inscription input {
-  margin: 5px 0;
-}
-
-/* line 286, ../sass/screen.scss */
-.toleft {
-  transform: translate(-100%, 0);
-}
-
-/* line 291, ../sass/screen.scss */
-.form-container {
+/* line 17, ../sass/_edit.scss */
+.edit .drop-password .fa-times, .passchange .drop-password .fa-times {
   position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  height: 290px;
+  top: 15px;
+  right: 15px;
+  color: #ff5ef7;
+  text-shadow: 0 0 10px #DC1ABF;
+  padding: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
 }
-/* line 299, ../sass/screen.scss */
-.form-container #check1, .form-container #check2 {
+/* line 28, ../sass/_edit.scss */
+.edit .drop-password-dropped, .passchange .drop-password-dropped {
+  transform: translate(0, 0);
+}
+
+/* line 33, ../sass/_edit.scss */
+.edit-form {
+  padding-top: 100px;
+}
+/* line 35, ../sass/_edit.scss */
+.edit-form input {
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 5px;
+  margin: 0 0 10px -5px;
+  width: 320px;
+}
+/* line 40, ../sass/_edit.scss */
+.edit-form input:first-child {
+  margin-top: -5px;
+}
+/* line 44, ../sass/_edit.scss */
+.edit-form .email, .edit-form .profil .password, .profil .edit-form .password, .edit-form .edit .password, .edit .edit-form .password, .edit-form .passchange .password, .passchange .edit-form .password, .edit-form .classement .password, .classement .edit-form .password {
+  opacity: 1;
+}
+/* line 47, ../sass/_edit.scss */
+.edit-form a, .edit-form button {
+  margin-left: 0px;
+}
+/* line 50, ../sass/_edit.scss */
+.edit-form button {
+  cursor: pointer;
+  color: #ff5ef7 !important;
+  border-color: #ff5ef7 !important;
+  background-color: rgba(50, 50, 50, 0.4);
+}
+/* line 57, ../sass/_edit.scss */
+.edit-form #check1, .edit-form #check2 {
   position: absolute;
-  bottom: 110px;
-  right: 50px;
+  bottom: 83px;
+  right: 145px;
   color: #34ce57;
   text-shadow: 0 0 10px rgba(10, 255, 10, 0.5);
 }
-/* line 306, ../sass/screen.scss */
-.form-container #check2 {
-  bottom: 60px;
+/* line 64, ../sass/_edit.scss */
+.edit-form #check2 {
+  bottom: 41px;
 }
 
-/* line 311, ../sass/screen.scss */
-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
+/* line 3, ../sass/_passchange.scss */
+.passchange .up br {
+  margin: 12px 0;
 }
-/* line 317, ../sass/screen.scss */
-form input {
-  color: white;
+
+/* line 1, ../sass/_classement.scss */
+.classement {
+  width: 700px;
+  transition: 0.8s;
+}
+/* line 6, ../sass/_classement.scss */
+.classement .container .back-head, .classement .container .back-foot {
+  transform: skewY(1deg);
+  top: -65px;
+  background-color: rgba(20, 20, 20, 0.3);
+  backdrop-filter: blur(5px);
+}
+/* line 13, ../sass/_classement.scss */
+.classement .container-table {
   font-family: monospace;
-  text-shadow: 0 0 10px white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   font-size: 1.2em;
-  width: 80%;
-  margin: 15px 0;
-  padding: 10px;
-  border-radius: 2px;
-  background-color: rgba(50, 50, 50, 0.4);
-  border: solid 1px #ff5ef7;
-  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
-  transition: 0.3s;
-}
-/* line 330, ../sass/screen.scss */
-form input:-webkit-autofill {
-  background-color: rgba(50, 50, 50, 0.4) !important;
-}
-/* line 334, ../sass/screen.scss */
-form button {
-  border-radius: 1000px;
-  background-color: black;
-  border: solid 1px #ff5ef7;
-  color: #ff5ef7;
-  font-size: 1em;
-  padding: 5px 15px;
-  margin-top: 10px;
-  box-shadow: 0 0 20px rgba(130, 35, 120, 0.3), 0 0 10px rgba(130, 35, 120, 0.6) inset;
-  transition: 0.1s;
-}
-/* line 344, ../sass/screen.scss */
-form button:hover {
-  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
-}
-/* line 347, ../sass/screen.scss */
-form button:active {
-  opacity: 0.7;
-}
-
-/* line 353, ../sass/screen.scss */
-footer {
   position: absolute;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  padding: 0 100px;
-  box-sizing: border-box;
-}
-/* line 360, ../sass/screen.scss */
-footer ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-}
-/* line 366, ../sass/screen.scss */
-footer ul li {
-  display: inline-block;
-}
-/* line 368, ../sass/screen.scss */
-footer ul li a {
-  color: white;
-  text-decoration: none;
-  border-radius: 2px;
-  border: solid 2px white;
-  margin-right: 30px;
-  padding: 0 20px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.6) inset;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* line 387, ../sass/screen.scss */
-.input-check {
-  text-align: left;
-  padding-left: 8%;
-  font-family: monospace;
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  color: #aaa;
-  letter-spacing: initial;
-  word-spacing: -3px;
-}
-
-/* line 398, ../sass/screen.scss */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 35px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-/* line 405, ../sass/screen.scss */
-.switch input {
-  display: none;
-}
-
-/* line 406, ../sass/screen.scss */
-.slider {
-  position: absolute;
-  cursor: pointer;
   top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
-  background-color: rgba(50, 50, 50, 0.5);
-  transition: 0.2s;
-  border: solid 1px #ff5ef7;
-  border-radius: 2px;
-  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+  right: -5px;
 }
-
-/* line 419, ../sass/screen.scss */
-.slider:before {
+/* line 22, ../sass/_classement.scss */
+.classement .container-table::before {
+  content: '';
   position: absolute;
-  content: "";
-  height: 11px;
-  width: 11px;
-  left: 3px;
-  bottom: 3px;
-  background-color: rgba(200, 200, 200, 0.3);
-  border: solid 1px #ff5ef7;
-  border-radius: 2px;
-  transition: 0.2s;
+  top: -2px;
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(#111 40%, rgba(255, 255, 255, 0.001));
+  pointer-events: none;
 }
-
-/* line 431, ../sass/screen.scss */
-input:checked + .slider {
-  border-color: #0f0;
-  box-shadow: 0 0 8px rgba(10, 255, 10, 0.8), 0 0 4px #0aff0a inset;
+/* line 31, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll {
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
 }
-/* line 434, ../sass/screen.scss */
-input:checked + .slider:before {
-  transform: translateX(110%);
-  border-color: #0f0;
-  background-color: #0f0;
-  box-shadow: 0 0 20px rgba(10, 255, 10, 0.8), 0 0 10px #0aff0a inset;
+/* line 35, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll table {
+  margin-top: 80px;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+/* line 41, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll table tbody:hover tr:not(:hover), .classement .container-table .container-table-scroll table tbody:hover tr:not(:hover) a{
+  color: #888 !important;
+  transition: .1s;
+}
+/* line 45, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll table tr, .classement .container-table .container-table-scroll table tbody:hover tr:not(:hover) a {
+  border-bottom: solid 1px #222;
+  transition: .1s;
+}
+/* line 48, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll table tr td, .classement .container-table .container-table-scroll table tr th {
+  padding: 10px;
+}
+/* line 50, ../sass/_classement.scss */
+.classement .container-table .container-table-scroll table tr td:nth-child(1), .classement .container-table .container-table-scroll table tr th:nth-child(1) {
+  padding-left: 10px;
 }

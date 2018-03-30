@@ -56,14 +56,17 @@
         </div>
             <div class="back-foot"></div>
         </div>
-    <footer>
-        <nav>
-            <ul>
-                <li><a href="http://89.234.183.131/promo/" target="_blank">Le site promo</a></li>
-                <li><a href="">Règles</a></li>
-            </ul>
-        </nav>
-    </footer>
+            <footer>
+                <nav>
+                    <ul>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('admin') }}">Administration</a></li>
+                        {% endif %}
+                        <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
+                        <li><a href="">Règles</a></li>
+                    </ul>
+                </nav>
+            </footer>
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}

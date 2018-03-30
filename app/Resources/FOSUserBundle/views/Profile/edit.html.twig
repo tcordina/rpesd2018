@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+    <div class="logo"></div>
+
+    <div id="dropform" class="edit">
+        <div class="glitch border-top"></div>
+        <div class="glitch border-right"></div>
+        <div class="glitch border-bottom"></div>
+        <div class="glitch border-left"></div>
+
+        <div class="container">
+            <div class="back-head"></div>
+                {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit clear edit-form' } }) }}
+                <div class="up">
+
+                    <label for="fos_user_profile_form_imageFile_file" style="cursor:pointer;">
+                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img">
+                    </label>
+                    {{ form_widget(form.imageFile.file, {'attr': {'style':'display:none;'} }) }}
+                    {{ form_errors(form.imageFile.file) }}
+                    {% if form.imageFile.delete is defined %}
+                        {{ form_widget(form.imageFile.delete, {'attr': {'style':'display:none;'} }) }}
+                        {{ form_errors(form.imageFile.delete) }}
+                    {% endif %}
+                    <h1 class="name">{{ user.username }}</h1>
+                    <span class="email">
+                        {{ form_widget(form.email, {'attr': {'placeholder': 'email', 'value': user.email, 'class': 'clear'}}) }}
+                        {{ form_errors(form.email) }}
+                    </span>
+                    {{ form_rest(form)}}
+                    <a href="#" id="open-pass-form">Changer mon mot de passe</a>
+
+                </div>
+                <p>
+                    <button type="submit" class="clear">Enregistrer les modifications</button>
+                    {{ form_end(form) }}
+                </p>
+            </form>
+            <div class="drop-password" id="vuejs">
+                {{ render(controller('FOSUserBundle:ChangePassword:changePassword')) }}
+            </div>
+            <div class="back-foot"></div>
+        </div>
+    </div>
+
+    <footer>
+        <nav>
+            <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin') }}">Administration</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
+                <li><a href="">Règles</a></li>
+            </ul>
+        </nav>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        let mavue = new Vue({
+            el: "#vuejs",
+            data: {
+                mdp1: "",
+                mdp2: "",
+            },
+            computed:{
+                mdpsame : function () {
+                    return this.mdp1==this.mdp2 && this.mdp2
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        const neon = document.querySelector('.glitch');
+        const neon5 = document.querySelector('#dropform');
+        function setProperty(duration) {
+            neon.style.setProperty('--animation-time', duration +'s');
+            neon5.style.setProperty('--animation-time', duration +'s');
+        }
+        function changeAnimationTime() {
+            const animationDuration = Math.random();
+            setProperty(animationDuration);
+        }
+        setInterval(changeAnimationTime, 500);
+    </script>
+    <script type="text/javascript">
+        $("#open-pass-form").click(function() {
+            $(".drop-password").addClass("drop-password-dropped");
+        });
+        $("#close-pass-form").click(function() {
+            $(".drop-password").removeClass("drop-password-dropped");
+        });
+    </script>
+{% endblock %}

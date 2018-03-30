@@ -43,7 +43,7 @@ easy_admin:
         menu:
             - { label: 'Accueil', route: 'homepage', icon: 'home' }
             - { entity: 'UserAdmin', label: 'Utilisateurs', icon: 'user' }
+            - { entity: 'Partie', label: 'Parties', icon: 'th-large' }
             - { entity: 'Carte', label: 'Cartes', icon: 'th-large' }
             - { entity: 'Objectif', label: 'Objectif', icon: 'th-large' }
-            - { entity: 'Partie', label: 'Parties', icon: 'th-large' }
         brand_color: '#333333'
