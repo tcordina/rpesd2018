@@ -6,61 +6,63 @@
     <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
-<div class="logo"></div>
+    <div class="logo"></div>
 
-<div id="dropform" class="profil">
-    <div class="glitch border-top"></div>
-    <div class="glitch border-right"></div>
-    <div class="glitch border-bottom"></div>
-    <div class="glitch border-left"></div>
+    <div id="dropform" class="profil">
+        <div class="glitch border-top"></div>
+        <div class="glitch border-right"></div>
+        <div class="glitch border-bottom"></div>
+        <div class="glitch border-left"></div>
 
-    <div class="container">
-        <div class="back-head"></div>
-        <div class="up">
-            {% if user.imageName is empty %}
-                <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
-            {% else %}
-                <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
-            {% endif %}
-            <h1 class="name">{{ user.username }}</h1>
-            <span class="email">{{ user.email }}</span>
-            <ul class="info-joueur">
-                <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100"></li>
-                <li>{{ user.rank }}</li>
-                <li>Elo : {{ user.elo }}</li>
-            </ul>
+        <div class="container">
+            <div class="back-head"></div>
+            <div class="up">
+                {% if user.imageName is empty %}
+                    <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
+                {% else %}
+                    <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
+                {% endif %}
+                <h1 class="name">{{ user.username }}</h1>
+                <span class="email">{{ user.email }}</span>
+                <ul class="info-joueur">
+                    <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100"></li>
+                    <li>{{ user.rank }}</li>
+                    <li>Elo : {{ user.elo }}</li>
+                </ul>
+            </div>
+            <p>
+                <a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a>
+                <a href="{{ path('fos_user_history') }}">Mes parties</a>
+            </p>
+
+            <div class="back-foot"></div>
         </div>
-        <p>
-            <a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a>
-            <a href="{{ path('fos_user_history') }}">Mes parties</a>
-        </p>
 
-        <div class="back-foot"></div>
+    </div>
+    <div id="dropform2" class="jouer">
+        <div class="glitch border-top2"></div>
+        <div class="glitch border-right2"></div>
+        <div class="glitch border-bottom2"></div>
+        <div class="glitch border-left2"></div>
+        <a href="{{ path('partie_new') }}" class="">
+            <h1>Jouer en ligne</h1>
+        </a>
     </div>
 
-</div>
-<div id="dropform2" class="jouer">
-    <div class="glitch border-top2"></div>
-    <div class="glitch border-right2"></div>
-    <div class="glitch border-bottom2"></div>
-    <div class="glitch border-left2"></div>
-    <a href="{{ path('partie_new') }}" class="">
-        <h1>Jouer en ligne</h1>
-    </a>
-</div>
-
-<footer>
-    <nav>
-        <ul>
-            {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('admin') }}">Administration</a></li>
-            {% endif %}
-            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-            <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
-            <li><a href="">Règles</a></li>
-        </ul>
-    </nav>
-</footer>
+    <footer>
+        <nav>
+            <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin') }}">Administration</a></li>
+                {% endif %}
+                {% if app.user %}
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                {% endif %}
+                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
+                <li><a href="">Règles</a></li>
+            </ul>
+        </nav>
+    </footer>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

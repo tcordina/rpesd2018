@@ -20,6 +20,9 @@ class ProfileController extends BaseController
         if(null === $user) {
             throw new NotFoundHttpException('L\'utilisateur '.$username.' n\'éxiste pas.');
         }
+        if($user == $this->getUser()){
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
         return $this->render('@FOSUser/Profile/other.html.twig', array(
             'user' => $user,
         ));

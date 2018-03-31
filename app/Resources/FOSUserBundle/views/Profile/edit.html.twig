@@ -19,9 +19,9 @@
                 <div class="up">
 
                     <label for="fos_user_profile_form_imageFile_file" style="cursor:pointer;">
-                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img">
+                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img" id="profil-img">
                     </label>
-                    {{ form_widget(form.imageFile.file, {'attr': {'style':'display:none;'} }) }}
+                    {{ form_widget(form.imageFile.file, {'attr': {'style':'display:none;', 'onchange':'readURL(this)'} }) }}
                     {{ form_errors(form.imageFile.file) }}
                     {% if form.imageFile.delete is defined %}
                         {{ form_widget(form.imageFile.delete, {'attr': {'style':'display:none;'} }) }}
@@ -54,7 +54,9 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <li><a href="{{ path('admin') }}">Administration</a></li>
                 {% endif %}
-                <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                {% endif %}
                 <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
                 <li><a href="">Règles</a></li>
             </ul>
@@ -97,5 +99,18 @@
         $("#close-pass-form").click(function() {
             $(".drop-password").removeClass("drop-password-dropped");
         });
+    </script>
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#profil-img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 {% endblock %}

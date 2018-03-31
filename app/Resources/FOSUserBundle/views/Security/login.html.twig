@@ -62,6 +62,9 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin') }}">Administration</a></li>
                         {% endif %}
+                        {% if app.user %}
+                            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                        {% endif %}
                         <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
                         <li><a href="">Règles</a></li>
                     </ul>
