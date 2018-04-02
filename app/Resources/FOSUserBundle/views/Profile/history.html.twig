@@ -8,9 +8,11 @@
 {% block body %}
     <div class="logo"></div>
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="admin"><a href="" style="margin-left: 85px">Administration</a></div>
+        <div class="admin"><a href="{{ path('admin') }}">Administration</a></div>
     {% endif %}
-
+    <div class="backto-profil">
+        <a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-chevron-left"></i>&nbsp; Profil</a>
+    </div>
     <div id="dropform2" class="historique">
         <div class="glitch border-top2"></div>
         <div class="glitch border-right2"></div>
@@ -96,7 +98,7 @@
             </div>
         </div>
     </div>
-    {% include 'default/footer.html.twig' %}
+    {% include 'default/footer_tab.html.twig' %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

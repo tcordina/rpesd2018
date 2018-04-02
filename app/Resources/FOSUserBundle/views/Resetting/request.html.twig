@@ -6,7 +6,9 @@
 {% endblock %}
 {% block body %}
     <div class="logo"></div>
-
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin"><a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a></div>
+    {% endif %}
     <div id="dropform" class="edit">
         <div class="glitch border-top"></div>
         <div class="glitch border-right"></div>
@@ -17,7 +19,7 @@
             <div class="back-head"></div>
             <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request clear edit-form">
                 <div class="sub-container">
-                    <h2>Réinitiliser mot de passe</h2>
+                    <h1>Réinitiliser mot de passe</h1>
                     <br/>
                     <h4>Entrez votre email</h4>
                     <span class="email">
@@ -25,6 +27,9 @@
                     </span>
                     <div class="foot">
                         <button type="submit">Envoyer l'email</button>
+                        <a href="{{ path('fos_user_profile_show') }}">
+                            Annuler&nbsp;&nbsp;<i class="fas fa-undo" style="position: relative;top:1px;"></i>
+                        </a>
                     </div>
                 </div>
             </form>

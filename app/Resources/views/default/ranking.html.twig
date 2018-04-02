@@ -6,7 +6,12 @@
 {% endblock %}
 {% block body %}
     <div class="logo"></div>
-
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin"><a href="{{ path('admin') }}">Administration</a></div>
+    {% endif %}
+    <div class="backto-profil">
+        <a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-chevron-left"></i>&nbsp; Profil</a>
+    </div>
     <div id="dropform2" class="classement">
         <div class="glitch border-top2"></div>
         <div class="glitch border-right2"></div>
@@ -14,8 +19,8 @@
         <div class="glitch border-left2"></div>
         <div class="container">
             <div class="back-head"></div>
-            <div class="up">
-                <h1 class="name">Classement</h1>
+            <div class="sub-container">
+                <h1>Classement</h1>
             </div>
             <div class="container-table">
                 <div class="container-table-scroll">
@@ -43,7 +48,7 @@
             </div>
         </div>
     </div>
-    {% include 'default/footer.html.twig' %}
+    {% include 'default/footer_tab.html.twig' %}
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
