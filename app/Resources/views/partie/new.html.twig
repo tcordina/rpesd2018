@@ -1,19 +1,12 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    {% for message in app.flashes('notice') %}
-        {{ message }}
-    {% endfor %}
-    <h1>Partie creation</h1>
-
-    {{ form_start(form) }}
+<div class="form-container">
+    <h1>Choisir un adversaire</h1>
+    <br>
+    {{ form_start(form, {'action': path('partie_new'), 'method':'post'} ) }}
+    <div class="styled-select">
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <i class="select-arrow fas fa-sort-down"></i>
+    </div>
+    <br>
+    <button type="submit">Jouer !</button>
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('partie_index') }}">Back to the list</a>
-        </li>
-    </ul>
-{% endblock %}
+</div>

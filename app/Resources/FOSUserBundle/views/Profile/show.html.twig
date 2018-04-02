@@ -7,6 +7,15 @@
 {% endblock %}
 {% block body %}
     <div class="logo"></div>
+    {% for message in app.flashes('notice') %}
+        <span class="alert" style="position:absolute;width:100vw;background-color:darkred;text-align:center;padding:15px 0;">
+            {{ message }}
+            <i class="fas fa-times" style="cursor:pointer;position:absolute;right:2px;top:2px;" onclick="hideAlert()"></i>
+        </span>
+    {% endfor %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin"><a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a></div>
+    {% endif %}
 
     <div id="dropform" class="profil">
         <div class="glitch border-top"></div>
@@ -16,56 +25,53 @@
 
         <div class="container">
             <div class="back-head"></div>
-            <div class="up">
-                {% if user.imageName is empty %}
-                    <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
-                {% else %}
-                    <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
-                {% endif %}
-                <h1 class="name">{{ user.username }}</h1>
+            <div class="sub-container">
+                <div class="profil-img">
+                    {% if user.imageName is empty %}
+                        <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
+                    {% else %}
+                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
+                    {% endif %}
+                </div>
+                <h1>{{ user.username }}</h1>
+                <br>
                 <span class="email">{{ user.email }}</span>
-                <ul class="info-joueur">
-                    <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100"></li>
-                    <li>{{ user.rank }}</li>
-                    <li>Elo : {{ user.elo }}</li>
+                <ul class="info-joueur tooltip-mouse">
+                    <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100" /></li>
+                    <li><a href="{{ path('classement') }}" class="clear">{{ user.rank }}&nbsp; | &nbsp;Elo : {{ user.elo }}</a></li>
+                    <div class="tooltip-bottom">Accéder au classement</div>
                 </ul>
+                <div class="foot">
+                    <a href="{{ path('fos_user_history') }}">Mes parties</a>
+                    <a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a>
+                </div>
             </div>
-            <p>
-                <a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a>
-                <a href="{{ path('fos_user_history') }}">Mes parties</a>
-            </p>
-
             <div class="back-foot"></div>
         </div>
-
     </div>
+
     <div id="dropform2" class="jouer">
         <div class="glitch border-top2"></div>
         <div class="glitch border-right2"></div>
         <div class="glitch border-bottom2"></div>
         <div class="glitch border-left2"></div>
-        <a href="{{ path('partie_new') }}" class="">
-            <h1>Jouer en ligne</h1>
-        </a>
+        <div class="container">
+            <a id="play-link">
+                <h1 class="title-jouer">Jouer en ligne</h1>
+            </a>
+            <div class="sub-container drop-password">
+                <i id="close-pass-form" class="fas fa-times"></i>
+                {{ render(controller('AppBundle:Partie:new')) }}
+            </div>
+        </div>
     </div>
 
-    <footer>
-        <nav>
-            <ul>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('admin') }}">Administration</a></li>
-                {% endif %}
-                {% if app.user %}
-                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-                {% endif %}
-                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
-                <li><a href="">Règles</a></li>
-            </ul>
-        </nav>
-    </footer>
+    {% include 'default/footer.html.twig' %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('assets/js/tooltip.js') }}"></script>
+    <!-- FLICKER EFFECT -->
     <script type="text/javascript">
         const neon = document.querySelector('.glitch');
         const neon5 = document.querySelector('#dropform');
@@ -80,5 +86,19 @@
             setProperty(animationDuration);
         }
         setInterval(changeAnimationTime, 500);
+    </script>
+
+    <script type="text/javascript">
+        $("#play-link").click(function() {
+            $(".drop-password").addClass("drop-password-dropped");
+        });
+        $("#close-pass-form").click(function() {
+            $(".drop-password").removeClass("drop-password-dropped");
+        });
+    </script>
+    <script type="text/javascript">
+        function hideAlert() {
+            $('.alert').fadeOut()
+        }
     </script>
 {% endblock %}

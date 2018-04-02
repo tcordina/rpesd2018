@@ -1,3 +1,4 @@
+{% trans_default_domain 'FOSUserBundle' %}
 <form id="vuejs" action="{{ path('fos_user_registration_register_submit') }}" method="POST" >
     {% if app.request.pathinfo == '/login' %}
     <fieldset id="fieldset" class="clear" style="width: 100%;" disabled="disabled">
@@ -20,6 +21,6 @@
 
     {{ form_rest(form)}}
 
-    <button type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}">S'inscrire</button>
+    <button type="submit">S'inscrire</button>
     </fieldset>
 </form>

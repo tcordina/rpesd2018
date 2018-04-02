@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+    <div class="logo"></div>
+
+    <div id="dropform" class="edit">
+        <div class="glitch border-top"></div>
+        <div class="glitch border-right"></div>
+        <div class="glitch border-bottom"></div>
+        <div class="glitch border-left"></div>
+
+        <div class="container">
+            <div class="back-head"></div>
+                <div class="up">
+                    <h3 class="name">Inscription</h3>
+                    <br/>
+                    {% block fos_user_content %}
+                        <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+                    {% endblock fos_user_content %}
+                </div>
+            <div class="back-foot"></div>
+        </div>
+    </div>
+
+    {% include 'default/footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const neon = document.querySelector('.glitch');
+        const neon5 = document.querySelector('#dropform');
+        function setProperty(duration) {
+            neon.style.setProperty('--animation-time', duration +'s');
+            neon5.style.setProperty('--animation-time', duration +'s');
+        }
+        function changeAnimationTime() {
+            const animationDuration = Math.random();
+            setProperty(animationDuration);
+        }
+        setInterval(changeAnimationTime, 500);
+    </script>
+    <script type="text/javascript">
+        $("#open-pass-form").click(function() {
+            $(".drop-password").addClass("drop-password-dropped");
+        });
+        $("#close-pass-form").click(function() {
+            $(".drop-password").removeClass("drop-password-dropped");
+        });
+    </script>
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#profil-img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+{% endblock %}

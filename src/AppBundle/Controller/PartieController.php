@@ -58,7 +58,7 @@ class PartieController extends Controller
             if($partie->getJoueur2() == $user) {
                 $session = new Session();
                 $session->getFlashBag()->add('notice', 'Vous ne pouvez pas jouer contre vous même !');
-                return $this->redirectToRoute('partie_new');
+                return $this->redirectToRoute('fos_user_profile_show');
             }
             $partie->setJoueur1($user);
             $em = $this->getDoctrine()->getManager();

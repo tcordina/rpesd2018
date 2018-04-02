@@ -16,7 +16,8 @@ class PartieType extends AbstractType
     {
         $builder->add('joueur2', EntityType::class, [
             'class' => 'AppBundle\Entity\UserAdmin',
-            'choice_label' => 'username'
+            'choice_label' => 'username',
+            'label' => false
         ]);
     }/**
      * {@inheritdoc}

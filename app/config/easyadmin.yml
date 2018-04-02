@@ -33,7 +33,7 @@ easy_admin:
         Partie:
             class: AppBundle\Entity\Partie
             list:
-                fields: ['id', {property: 'joueur1.username', label: 'Joueur 1'}, {property: 'joueur2.username', label: 'Joueur 2'}, 'manche', 'winner']
+                fields: ['id', {property: 'joueur1.username', label: 'Joueur 1'}, {property: 'joueur2.username', label: 'Joueur 2'}, 'manche', 'winner', 'ended']
                 sort: ['id', 'ASC']
             form:
                 fields: ['joueur1', 'joueur2', 'manche', 'winner']

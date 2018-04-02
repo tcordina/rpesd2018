@@ -6,6 +6,13 @@
 {% endblock %}
 {% block body %}
     <div class="logo"></div>
+    {% for message in app.flashes('notice') %}
+        <span class="alert" style="position:absolute;width:100vw;background-color:darkred;text-align:center;padding:15px 0;">
+            {{ message }}
+            <i class="fas fa-times" style="cursor:pointer;position:absolute;right:2px;top:2px;" onclick="hideAlert()"></i>
+        </span>
+    {% endfor %}
+    <div class="admin"><a href="" style="margin-left: 85px">Administration</a></div>
 
     <div id="dropform" class="edit">
         <div class="glitch border-top"></div>
@@ -16,31 +23,36 @@
         <div class="container">
             <div class="back-head"></div>
                 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit clear edit-form' } }) }}
-                <div class="up">
-
+                <div class="sub-container">
                     <label for="fos_user_profile_form_imageFile_file" style="cursor:pointer;">
-                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img" id="profil-img">
+                        <div class="profil-img">
+                            <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img" id="profil-img">
+                            <div class="edit-img"><i class="fas fa-pen-square"></i></div>
+                        </div>
                     </label>
+                    <h1>{{ user.username }}</h1>
+                    <br/>
                     {{ form_widget(form.imageFile.file, {'attr': {'style':'display:none;', 'onchange':'readURL(this)'} }) }}
                     {{ form_errors(form.imageFile.file) }}
                     {% if form.imageFile.delete is defined %}
                         {{ form_widget(form.imageFile.delete, {'attr': {'style':'display:none;'} }) }}
                         {{ form_errors(form.imageFile.delete) }}
                     {% endif %}
-                    <h1 class="name">{{ user.username }}</h1>
                     <span class="email">
-                        {{ form_widget(form.email, {'attr': {'placeholder': 'email', 'value': user.email, 'class': 'clear'}}) }}
+                        {{ form_widget(form.email, {'attr': {'placeholder': 'changer mon email', 'value': user.email, 'class': 'clear', 'required': 'required'}}) }}
                         {{ form_errors(form.email) }}
                     </span>
+                    <br/><br/>
                     {{ form_rest(form)}}
                     <a href="#" id="open-pass-form">Changer mon mot de passe</a>
-
+                    <div class="foot">
+                        <button type="submit">Enregistrer les modifications</button>
+                        <button href="{{ path('fos_user_profile_show') }}">
+                            Annuler&nbsp;<i class="fas fa-undo" style="position: relative;top:1px;"></i>
+                        </button>
+                    </div>
                 </div>
-                <p>
-                    <button type="submit" class="clear">Enregistrer les modifications</button>
-                    {{ form_end(form) }}
-                </p>
-            </form>
+            {{ form_end(form) }}
             <div class="drop-password" id="vuejs">
                 {{ render(controller('FOSUserBundle:ChangePassword:changePassword')) }}
             </div>
@@ -48,20 +60,7 @@
         </div>
     </div>
 
-    <footer>
-        <nav>
-            <ul>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('admin') }}">Administration</a></li>
-                {% endif %}
-                {% if app.user %}
-                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-                {% endif %}
-                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
-                <li><a href="">Règles</a></li>
-            </ul>
-        </nav>
-    </footer>
+    {% include 'default/footer.html.twig' %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -111,6 +110,11 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+    </script>
+    <script type="text/javascript">
+        function hideAlert() {
+            $('.alert').fadeOut()
         }
     </script>
 {% endblock %}

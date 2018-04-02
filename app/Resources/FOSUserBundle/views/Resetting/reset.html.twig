@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+    <div class="logo"></div>
+    <div id="dropform" class="edit">
+        <div class="glitch border-top"></div>
+        <div class="glitch border-right"></div>
+        <div class="glitch border-bottom"></div>
+        <div class="glitch border-left"></div>
+        <div class="container">
+            <div class="back-head"></div>
+            <div class="sub-container">
+                <h2>Réinitialiser le mot de passe</h2>
+                <br/><br/>
+                {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset clear edit-form' } }) }}
+                    {{ form_widget(form.plainPassword.first, {'attr': { 'placeholder':'Nouveau mot de passe','required': 'required'} }) }}
+                    <br/><br/>
+                    {{ form_widget(form.plainPassword.second, {'attr': { 'placeholder':'Répéter nouveau mot de passe', 'required': 'required'} }) }}
+                    {{ form_rest(form) }}
+                    <div class="foot">
+                        <button type="submit">Modifier le mot de passe</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="back-foot"></div>
+        </div>
+    </div>
+
+    {% include 'default/footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        let mavue = new Vue({
+            el: "#vuejs",
+            data: {
+                mdp1: "",
+                mdp2: "",
+            },
+            computed:{
+                mdpsame : function () {
+                    return this.mdp1==this.mdp2 && this.mdp2
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        const neon = document.querySelector('.glitch');
+        const neon5 = document.querySelector('#dropform');
+        function setProperty(duration) {
+            neon.style.setProperty('--animation-time', duration +'s');
+            neon5.style.setProperty('--animation-time', duration +'s');
+        }
+        function changeAnimationTime() {
+            const animationDuration = Math.random();
+            setProperty(animationDuration);
+        }
+        setInterval(changeAnimationTime, 500);
+    </script>
+    <script type="text/javascript">
+        $("#open-pass-form").click(function() {
+            $(".drop-password").addClass("drop-password-dropped");
+        });
+        $("#close-pass-form").click(function() {
+            $(".drop-password").removeClass("drop-password-dropped");
+        });
+    </script>
+{% endblock %}

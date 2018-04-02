@@ -15,61 +15,49 @@
 
         <div class="container">
             <div class="back-head"></div>
+            <div class="sub-container">
             {% if app.request.pathinfo == '/login' %}
             <div class="connexion">
             {% else %}
             <div class="connexion toleft">
             {% endif %}
-                <h2>Connexion</h2>
+                <h1>Connexion</h1>
                 <div class="form-container">
                     <form action="{{ path("fos_user_security_check") }}" method="post">
-                        {% if csrf_token %}
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                        {% endif %}
-
                         <input type="text" id="username" name="_username" placeholder="pseudo" value="{{ last_username }}" required="required" />
                         <input type="password" id="password" name="_password" required="required" placeholder="mot de passe"/>
-                        <div class="input-check">
-                            <label class="switch">
-                                <input type="checkbox" name="_remember_me" value="on"/>
-                                <span class="slider"></span>
-                            </label>
-                            Se souvenir de moi
+                        <div class="connexion-options">
+                            <div class="input-check">
+                                <label class="switch">
+                                    <input type="checkbox" name="_remember_me" value="on"/>
+                                    <span class="slider"></span>
+                                </label>
+                                Se souvenir de moi
+                            </div>
+                            <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a>
                         </div>
                         <button type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}">Jouer !</button>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                     </form>
                 </div>
-                <p id="goright"><i>S'inscrire ?</i></p>
+                <div class="foot" id="goright" style="cursor: pointer;">S'inscrire ?</div>
             </div>
             {% if app.request.pathinfo == '/login' %}
             <div class="inscription">
             {% else %}
             <div class="inscription toleft">
             {% endif %}
-                <h2>Inscription</h2>
+                <h1>Inscription</h1>
                 <div class="form-container">
                     {{ render(controller('FOSUserBundle:Registration:register')) }}
                 </div>
-                <p id="goleft"><i>Vous avez un compte ? Se connecter.</i></p>
+                <div class="foot" id="goleft" style="cursor: pointer;">Vous avez un compte ? Se connecter.</div>
             </div>
-            <div class="back-foot"></div>
         </div>
-            <div class="back-foot"></div>
+        <div class="back-foot"></div>
         </div>
-            <footer>
-                <nav>
-                    <ul>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin') }}">Administration</a></li>
-                        {% endif %}
-                        {% if app.user %}
-                            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-                        {% endif %}
-                        <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
-                        <li><a href="">Règles</a></li>
-                    </ul>
-                </nav>
-            </footer>
+        </div>
+        {% include 'default/footer.html.twig' %}
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}

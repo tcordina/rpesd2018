@@ -7,19 +7,26 @@
 
 {% block body %}
     <div class="logo"></div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin"><a href="" style="margin-left: 85px">Administration</a></div>
+    {% endif %}
 
-    <div id="dropform2" class="classement">
+    <div id="dropform2" class="historique">
         <div class="glitch border-top2"></div>
         <div class="glitch border-right2"></div>
         <div class="glitch border-bottom2"></div>
         <div class="glitch border-left2"></div>
         <div class="container">
             <div class="back-head"></div>
-            <div class="up">
-                <h1 class="name">Parties terminées</h1>
+            <div class="sub-container">
+                <h1>Mes parties&nbsp;</h1>
+                <h1>
+                    <p class="goright">en cours&nbsp;<i class="fas fa-chevron-right"></i></p>
+                    <p class="goleft"><i class="fas fa-chevron-left"></i>&nbsp;terminées</p>
+                </h1>
             </div>
             <div class="container-table">
-                <div class="container-table-scroll">
+                <div class="container-table-scroll" id="table-hist-left">
                     <table>
                         <thead>
                         <tr>
@@ -58,26 +65,57 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="container-table-scroll" id="table-hist-right">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Adversaire</th>
+                            <th>Manches</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for partie in partiesEnCours %}
+                            <tr>
+                                <td><a href="{{ path('partie_show', {'id': partie.id}) }}">{{ loop.index }}</a></td>
+                                {% if app.user.id == partie.joueur1.id %}
+                                    <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur2.username}) }}">{{ partie.joueur2.username }}</a></td>
+                                {% elseif app.user.id == partie.joueur2.id %}
+                                    <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur1.username}) }}">{{ partie.joueur1.username }}</a></td>
+                                {% endif %}
+                                <td>{{ partie.manche }}</td>
+                            </tr>
+                        {% else %}
+                            <p>Vous n'avez pas de partie en cours</p>
+                            <a href="{{ path('partie_new') }}">Y remédier</a>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <footer>
-        <nav>
-            <ul>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('admin') }}">Administration</a></li>
-                {% endif %}
-                {% if app.user %}
-                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-                {% endif %}
-                <li><a href="http://rpesd2018.thibaudcordina.fr/promo/">Le site promo</a></li>
-                <li><a href="">Règles</a></li>
-            </ul>
-        </nav>
-    </footer>
+    {% include 'default/footer.html.twig' %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <!-- BUTTON GOLEFT/GORIGHT -->
+    <script type="text/javascript">
+        $(".goright").click(function () {
+            $("#table-hist-left").addClass("toleft")
+            $("#table-hist-right").addClass("toleft")
+            $(".goright").addClass("toleft")
+            $(".goleft").addClass("toleft")
+        });
+        $(".goleft").click(function () {
+            $("#table-hist-right").removeClass("toleft")
+            $("#table-hist-left").removeClass("toleft")
+            $(".goright").removeClass("toleft")
+            $(".goleft").removeClass("toleft")
+        });
+    </script>
+    <!-- FLICKER EFFECT -->
     <script type="text/javascript">
         const neon = document.querySelector('.glitch');
         const neon6 = document.querySelector('#dropform2');
