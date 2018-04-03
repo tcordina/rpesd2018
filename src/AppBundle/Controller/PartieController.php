@@ -179,7 +179,6 @@ class PartieController extends Controller
 
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
-            $deleteForm = $this->createDeleteForm($partie);
             $em = $this->getDoctrine()->getManager();
             $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
             $cartes = $em->getRepository('AppBundle:Carte')->findAll();
@@ -201,7 +200,6 @@ class PartieController extends Controller
                 'cartes' => $cartes,
                 'plateau' => $plateau,
                 'joueur' => $joueur,
-                'delete_form' => $deleteForm->createView(),
             ));
         }else {
             throw new NotFoundHttpException('Page introuvable');
@@ -223,7 +221,6 @@ class PartieController extends Controller
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
-            $deleteForm = $this->createDeleteForm($partie);
             $em = $this->getDoctrine()->getManager();
             $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
             $cartes = $em->getRepository('AppBundle:Carte')->findAll();
@@ -245,7 +242,6 @@ class PartieController extends Controller
                 'cartes' => $cartes,
                 'plateau' => $plateau,
                 'joueur' => $joueur,
-                'delete_form' => $deleteForm->createView(),
             ));
         }else {
             throw new NotFoundHttpException('Page introuvable');
@@ -267,7 +263,6 @@ class PartieController extends Controller
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
-            $deleteForm = $this->createDeleteForm($partie);
             $em = $this->getDoctrine()->getManager();
             $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
             $cartes = $em->getRepository('AppBundle:Carte')->findAll();

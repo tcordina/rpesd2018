@@ -8,7 +8,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-    app.path.profile_images: /uploads/images/profile
+    app.path.profile_images: ./uploads/images/profile
 
 framework:
     #esi: ~
