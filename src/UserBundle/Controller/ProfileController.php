@@ -34,7 +34,11 @@ class ProfileController extends BaseController
     public function historyAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser()->getId();
+        if($this->getUser()) {
+            $user = $this->getUser()->getId();
+        }else{
+            return $this->redirectToRoute('fos_user_security_login');
+        }
 
         $history = $em->getRepository('AppBundle:Partie')->getHistory($user);
         $enCours = $em->getRepository('AppBundle:Partie')->getCurrentGames($user);

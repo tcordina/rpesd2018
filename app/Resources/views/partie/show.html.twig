@@ -19,19 +19,6 @@
         <button type="submit">Envoyer</button>
     </form>
     <br/><br/>
-    <ul>
-        <li>
-            <a href="{{ path('partie_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('partie_edit', { 'id': partie.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 
     {#{{ dump(partie) }}
     {{ dump(plateau) }}

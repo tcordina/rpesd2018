@@ -20,6 +20,9 @@ class DefaultController extends Controller
      */
     public function rankingAction()
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('fos_user_security_login');
+        }
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
             array(),

@@ -42,7 +42,7 @@ class PartieController extends Controller
      * Creates a new partie entity.
      *
      * @Route("/new", name="partie_new")
-     * @Method({"GET", "POST"})
+     * @Method("POST")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -641,70 +641,4 @@ class PartieController extends Controller
         ]);
     }
 
-    /**
-     * Displays a form to edit an existing partie entity.
-     *
-     * @Route("/{id}/edit", name="partie_edit")
-     * @Method({"GET", "POST"})
-     * @param Request $request
-     * @param Partie $partie
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editAction(Request $request, Partie $partie)
-    {
-        $deleteForm = $this->createDeleteForm($partie);
-        $editForm = $this->createForm('AppBundle\Form\PartieType', $partie);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('partie_edit', array('id' => $partie->getId()));
-        }
-
-        return $this->render('partie/edit.html.twig', array(
-            'partie' => $partie,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a partie entity.
-     *
-     * @Route("/{id}", name="partie_delete")
-     * @Method("DELETE")
-     * @param Request $request
-     * @param Partie $partie
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request, Partie $partie)
-    {
-        $form = $this->createDeleteForm($partie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($partie);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('partie_index');
-    }
-
-    /**
-     * Creates a form to delete a partie entity.
-     *
-     * @param Partie $partie The partie entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Partie $partie)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('partie_delete', array('id' => $partie->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

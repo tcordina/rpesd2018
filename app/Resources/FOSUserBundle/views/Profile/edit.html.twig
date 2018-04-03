@@ -27,9 +27,16 @@
                 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit clear edit-form' } }) }}
                 <div class="sub-container">
                     <label for="fos_user_profile_form_imageFile_file" style="cursor:pointer;">
-                        <div class="profil-img">
-                            <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="" class="profil-img" id="profil-img">
-                            <div class="edit-img"><i class="fas fa-pen-square"></i></div>
+                        <div class="profil-img tooltip-mouse">
+                            <div class="profil-img-container">
+                                {% if user.imageName is empty %}
+                                    <img src="{{ gravatar(user.email) }}" alt=""/>
+                                {% else %}
+                                    <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" width="150px">
+                                {% endif %}
+                                <div class="edit-img"><i class="fas fa-pen-square"></i></div>
+                            </div>
+                            <span class="tooltip-left">le fichier ne doit pas dépasser 1Mo</span>
                         </div>
                     </label>
                     <h1>{{ user.username }}</h1>
@@ -119,4 +126,5 @@
             $('.alert').fadeOut()
         }
     </script>
+    <script src="{{ asset('assets/js/tooltip.js') }}"></script>
 {% endblock %}
