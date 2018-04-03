@@ -88,17 +88,39 @@
         });
     </script>
     <script type="text/javascript">
-        const neon = document.querySelector('.glitch');
-        const neon5 = document.querySelector('#dropform');
-        function setProperty(duration) {
-            neon.style.setProperty('--animation-time', duration +'s');
-            neon5.style.setProperty('--animation-time', duration +'s');
-        }
-        function changeAnimationTime() {
-            const animationDuration = Math.random();
-            setProperty(animationDuration);
-        }
-        setInterval(changeAnimationTime, 500);
+        $(document).ready(function() {
+            const neon = document.querySelector('.glitch');
+            const neon5 = document.querySelector('#dropform');
+
+            function setProperty(duration) {
+                neon.style.setProperty('--animation-time', duration + 's');
+                neon5.style.setProperty('--animation-time', duration + 's');
+            }
+
+            function changeAnimationTime() {
+                const animationDuration = Math.random();
+                setProperty(animationDuration);
+            }
+
+            var intervalFlicker = setInterval(changeAnimationTime, 500)
+
+            // CHECKED
+            $('#check_animation').on('click', function () {
+                if ($(this).prop('checked')) {
+                    console.log('checked');
+                    var intervalFlicker = setInterval(changeAnimationTime, 500);
+                    $("[class*='border-']").addClass('glitch');
+                    $(".dropform").attr("id", "dropform");
+                    $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
+                } else {
+                    console.log('unckecked');
+                    clearInterval(intervalFlicker);
+                    $("[class*='border-']").removeClass('glitch');
+                    $(".dropform").removeAttr("id");
+                    $("body").css('background-image', 'url("{{ asset('assets/images/background.jpg') }}")');
+                }
+            })
+        })
     </script>
     <script type="text/javascript">
         $("#open-pass-form").click(function() {

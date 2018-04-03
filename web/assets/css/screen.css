@@ -116,7 +116,7 @@
 }
 
 /* line 2, ../sass/_switchbox.scss */
-.input-check {
+.input-check, footer .input-check-2 {
   display: inline-flex;
   float: left;
   text-align: left;
@@ -324,7 +324,7 @@ footer {
   box-sizing: border-box;
   font-size: 0.8em;
 }
-/* line 11, ../sass/_footer.scss */
+/* line 10, ../sass/_footer.scss */
 footer ul {
   padding: 2px;
   margin: 0;
@@ -332,11 +332,11 @@ footer ul {
   list-style: none;
   overflow: hidden;
 }
-/* line 17, ../sass/_footer.scss */
+/* line 16, ../sass/_footer.scss */
 footer ul li {
   display: inline-block;
 }
-/* line 19, ../sass/_footer.scss */
+/* line 18, ../sass/_footer.scss */
 footer ul li a {
   color: white;
   border-radius: 2px;
@@ -346,25 +346,48 @@ footer ul li a {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.6) inset;
   background-color: rgba(0, 0, 0, 0.5);
 }
-/* line 29, ../sass/_footer.scss */
+/* line 28, ../sass/_footer.scss */
 footer ul .deco {
   float: right;
 }
-/* line 31, ../sass/_footer.scss */
+/* line 30, ../sass/_footer.scss */
 footer ul .deco a {
   margin: 0;
   color: red;
   border-color: red;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.6) inset;
 }
+/* line 39, ../sass/_footer.scss */
+footer .input-check-2 {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 50px;
+  font-size: 1.4em;
+}
+/* line 46, ../sass/_footer.scss */
+footer .input-check-2::before {
+  content: 'Animations';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  letter-spacing: 2px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+/* line 56, ../sass/_footer.scss */
+footer .input-check-2 .switch {
+  margin: 0 10px;
+}
 
-/* line 41, ../sass/_footer.scss */
+/* line 62, ../sass/_footer.scss */
 .admin, .backto-profil {
   position: absolute;
   top: 30px;
   right: 0px;
 }
-/* line 45, ../sass/_footer.scss */
+/* line 66, ../sass/_footer.scss */
 .admin a, .backto-profil a {
   font-size: 0.8em;
   font-family: "Bungee Inline", cursive;
@@ -377,7 +400,7 @@ footer ul .deco a {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* line 57, ../sass/_footer.scss */
+/* line 78, ../sass/_footer.scss */
 .backto-profil {
   top: 22%;
   left: 100px;
@@ -393,29 +416,30 @@ body {
   letter-spacing: 1px;
   color: white;
   background-color: #111;
-  background-image: url("../images/back.jpg");
+  background-image: url("../images/back.gif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  box-shadow: 0 0 5000px black inset;
 }
 
-/* line 15, ../sass/_index.scss */
+/* line 16, ../sass/_index.scss */
 .clear {
   all: unset;
 }
 
-/* line 18, ../sass/_index.scss */
+/* line 19, ../sass/_index.scss */
 a {
   text-decoration: none;
   cursor: pointer !important;
   opacity: 0.8;
 }
-/* line 22, ../sass/_index.scss */
+/* line 23, ../sass/_index.scss */
 a:hover {
   opacity: 1;
 }
 
-/* line 28, ../sass/_index.scss */
+/* line 29, ../sass/_index.scss */
 .logo {
   position: absolute;
   top: 40px;
@@ -428,7 +452,7 @@ a:hover {
   background-position: center;
 }
 
-/* line 38, ../sass/_index.scss */
+/* line 39, ../sass/_index.scss */
 .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique {
   position: absolute;
   top: 52%;
@@ -440,14 +464,14 @@ a:hover {
   color: white;
   z-index: 50;
 }
-/* line 52, ../sass/_index.scss */
+/* line 53, ../sass/_index.scss */
 .case h1, .formulaire h1, .profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1 {
   font-size: 1.8em;
   text-shadow: 0 0 20px white;
   margin: 15px;
   font-family: "Bungee Inline", cursive;
 }
-/* line 58, ../sass/_index.scss */
+/* line 59, ../sass/_index.scss */
 .case .container, .formulaire .container, .profil .container, .jouer .container, .edit .container, .passchange .container, .classement .container, .historique .container {
   position: absolute;
   top: 0;
@@ -458,7 +482,7 @@ a:hover {
   z-index: 52;
   box-sizing: border-box;
 }
-/* line 68, ../sass/_index.scss */
+/* line 69, ../sass/_index.scss */
 .case .sub-container, .formulaire .sub-container, .profil .sub-container, .jouer .sub-container, .edit .sub-container, .passchange .sub-container, .classement .sub-container, .historique .sub-container {
   position: relative;
   width: 100%;
@@ -468,7 +492,7 @@ a:hover {
   z-index: 53;
   box-sizing: border-box;
 }
-/* line 76, ../sass/_index.scss */
+/* line 77, ../sass/_index.scss */
 .case .sub-container .foot, .formulaire .sub-container .foot, .profil .sub-container .foot, .jouer .sub-container .foot, .edit .sub-container .foot, .passchange .sub-container .foot, .classement .sub-container .foot, .historique .sub-container .foot {
   position: absolute;
   bottom: 0;
@@ -478,7 +502,7 @@ a:hover {
   font-size: 0.9em;
   box-sizing: border-box;
 }
-/* line 85, ../sass/_index.scss */
+/* line 86, ../sass/_index.scss */
 .case .sub-container a, .formulaire .sub-container a, .profil .sub-container a, .jouer .sub-container a, .edit .sub-container a, .passchange .sub-container a, .classement .sub-container a, .historique .sub-container a {
   font-family: monospace;
   color: white;
@@ -486,7 +510,7 @@ a:hover {
   padding: 6px 13px;
   letter-spacing: initial;
 }
-/* line 95, ../sass/_index.scss */
+/* line 96, ../sass/_index.scss */
 .case .back-head, .formulaire .back-head, .profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
   position: absolute;
   top: -20px;
@@ -498,24 +522,24 @@ a:hover {
   z-index: 51;
   pointer-events: none;
 }
-/* line 106, ../sass/_index.scss */
+/* line 107, ../sass/_index.scss */
 .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
   top: initial;
   bottom: -50px;
 }
 
-/* line 113, ../sass/_index.scss */
+/* line 114, ../sass/_index.scss */
 .formulaire {
   text-align: center;
 }
-/* line 117, ../sass/_index.scss */
+/* line 118, ../sass/_index.scss */
 .formulaire .foot {
   opacity: 0.8;
   padding: 20px 0;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* line 125, ../sass/_index.scss */
+/* line 126, ../sass/_index.scss */
 .connexion, .inscription {
   position: absolute;
   top: 0;
@@ -525,7 +549,7 @@ a:hover {
   transition: 0.3s;
   z-index: 60;
 }
-/* line 134, ../sass/_index.scss */
+/* line 135, ../sass/_index.scss */
 .connexion .form-container .connexion-options, .inscription .form-container .connexion-options {
   display: flex;
   align-items: center;
@@ -533,22 +557,22 @@ a:hover {
   padding: 0 6% 0 8%;
   box-sizing: border-box;
 }
-/* line 141, ../sass/_index.scss */
+/* line 142, ../sass/_index.scss */
 .connexion .form-container a, .inscription .form-container a {
   float: left;
   border: none;
 }
 
-/* line 147, ../sass/_index.scss */
+/* line 148, ../sass/_index.scss */
 .inscription {
   left: 100%;
 }
-/* line 150, ../sass/_index.scss */
+/* line 151, ../sass/_index.scss */
 .inscription input {
   margin: 5px 0;
 }
 
-/* line 154, ../sass/_index.scss */
+/* line 155, ../sass/_index.scss */
 .form-container {
   position: absolute;
   top: 54%;
@@ -557,7 +581,7 @@ a:hover {
   width: 90%;
   height: 75%;
 }
-/* line 161, ../sass/_index.scss */
+/* line 162, ../sass/_index.scss */
 .form-container #check1, .form-container #check2, .form-container .edit .edit-form #check2, .edit .edit-form .form-container #check2, .form-container .passchange .edit-form #check2, .passchange .edit-form .form-container #check2 {
   position: absolute;
   bottom: 108px;
@@ -565,17 +589,17 @@ a:hover {
   color: #34ce57;
   text-shadow: 0 0 10px rgba(10, 255, 10, 0.5);
 }
-/* line 168, ../sass/_index.scss */
+/* line 169, ../sass/_index.scss */
 .form-container #check2 {
   bottom: 57px;
 }
 
-/* line 173, ../sass/_index.scss */
+/* line 174, ../sass/_index.scss */
 .toleft {
   transform: translate(-100%, 0) !important;
 }
 
-/* line 178, ../sass/_index.scss */
+/* line 179, ../sass/_index.scss */
 form {
   position: absolute;
   top: 50%;
@@ -583,7 +607,7 @@ form {
   transform: translate(-50%, -50%);
   width: 100%;
 }
-/* line 184, ../sass/_index.scss */
+/* line 185, ../sass/_index.scss */
 form input {
   width: 80%;
   margin: 15px 0;
@@ -598,11 +622,11 @@ form input {
   font-size: 1.2em;
   text-shadow: 0 0 10px white;
 }
-/* line 198, ../sass/_index.scss */
+/* line 199, ../sass/_index.scss */
 form input:-webkit-autofill {
   background-color: rgba(50, 50, 50, 0.4) !important;
 }
-/* line 202, ../sass/_index.scss */
+/* line 203, ../sass/_index.scss */
 form button {
   padding: 6px 13px;
   margin-top: 10px;
@@ -615,11 +639,11 @@ form button {
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.3), 0 0 10px rgba(130, 35, 120, 0.6) inset;
   transition: 0.1s;
 }
-/* line 213, ../sass/_index.scss */
+/* line 214, ../sass/_index.scss */
 form button:hover {
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
 }
-/* line 216, ../sass/_index.scss */
+/* line 217, ../sass/_index.scss */
 form button:active {
   opacity: 0.7;
 }
@@ -673,7 +697,7 @@ form button:active {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-/* line 46, ../sass/_profil.scss */
+/* line 45, ../sass/_profil.scss */
 .profil .info-joueur, .jouer .info-joueur, .edit .info-joueur, .passchange .info-joueur, .classement .info-joueur, .historique .info-joueur {
   position: absolute;
   top: 53%;
@@ -685,12 +709,12 @@ form button:active {
   z-index: 60;
   font-family: "Bungee Inline", cursive;
 }
-/* line 56, ../sass/_profil.scss */
+/* line 55, ../sass/_profil.scss */
 .profil .info-joueur a, .jouer .info-joueur a, .edit .info-joueur a, .passchange .info-joueur a, .classement .info-joueur a, .historique .info-joueur a {
   font-family: "Bungee Inline", cursive;
   border: none;
 }
-/* line 61, ../sass/_profil.scss */
+/* line 60, ../sass/_profil.scss */
 .profil .foot, .jouer .foot, .edit .foot, .passchange .foot, .classement .foot, .historique .foot {
   padding: 25px 30px;
   display: flex;
@@ -698,7 +722,7 @@ form button:active {
   align-items: center;
 }
 
-/* line 68, ../sass/_profil.scss */
+/* line 67, ../sass/_profil.scss */
 .jouer {
   position: relative;
   left: 660px;
@@ -708,7 +732,7 @@ form button:active {
   background-position: center;
   background-size: cover;
 }
-/* line 76, ../sass/_profil.scss */
+/* line 75, ../sass/_profil.scss */
 .jouer a {
   position: absolute;
   top: 0;
@@ -720,11 +744,11 @@ form button:active {
   justify-content: center;
   transition: 0.2s;
 }
-/* line 86, ../sass/_profil.scss */
+/* line 85, ../sass/_profil.scss */
 .jouer a:hover .title-jouer {
   font-size: 3.3em;
 }
-/* line 90, ../sass/_profil.scss */
+/* line 89, ../sass/_profil.scss */
 .jouer .title-jouer {
   font-family: 'Rock Salt', cursive;
   width: 70%;
@@ -734,33 +758,33 @@ form button:active {
   text-shadow: 0 0 10px #00b3ee, 0 0 30px #00ccff;
   transition: 0.2s;
 }
-/* line 99, ../sass/_profil.scss */
+/* line 98, ../sass/_profil.scss */
 .jouer .sub-container {
   background-color: rgba(0, 0, 0, 0.9);
 }
-/* line 101, ../sass/_profil.scss */
+/* line 100, ../sass/_profil.scss */
 .jouer .sub-container .fa-times {
   color: #92f5fe;
   text-shadow: 0 0 10px #00ccff;
 }
-/* line 105, ../sass/_profil.scss */
+/* line 104, ../sass/_profil.scss */
 .jouer .sub-container .form-container {
   height: 60%;
   display: flex;
   justify-content: center;
 }
-/* line 109, ../sass/_profil.scss */
+/* line 108, ../sass/_profil.scss */
 .jouer .sub-container .form-container form {
   margin-top: 30px;
 }
-/* line 111, ../sass/_profil.scss */
+/* line 110, ../sass/_profil.scss */
 .jouer .sub-container .form-container form .styled-select {
   position: relative;
   width: 200px;
   height: 40px;
   margin: 0 auto;
 }
-/* line 117, ../sass/_profil.scss */
+/* line 116, ../sass/_profil.scss */
 .jouer .sub-container .form-container form select {
   color: white;
   position: absolute;
@@ -776,7 +800,7 @@ form button:active {
   background-color: rgba(30, 30, 30, 0.9);
   -webkit-appearance: none;
 }
-/* line 132, ../sass/_profil.scss */
+/* line 131, ../sass/_profil.scss */
 .jouer .sub-container .form-container form .select-arrow {
   background-color: #222;
   position: absolute;
@@ -792,7 +816,7 @@ form button:active {
   color: #92f5fe;
   text-shadow: 0 0 10px #92f5fe;
 }
-/* line 147, ../sass/_profil.scss */
+/* line 146, ../sass/_profil.scss */
 .jouer .sub-container .form-container form button {
   color: #92f5fe;
   border-color: #92f5fe;

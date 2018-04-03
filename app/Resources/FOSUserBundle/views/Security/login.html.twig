@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
-<body>
     <div class="logo"></div>
     {% if is_granted('ROLE_ADMIN') %}
         <div class="admin"><a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a></div>
@@ -64,7 +63,6 @@
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
-</body>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -93,10 +91,26 @@
             setProperty(animationDuration)
         }
 
-        setInterval(changeAnimationTime, 500)
+        var intervalFlicker = setInterval(changeAnimationTime, 500)
+
+        // CHECKED
+        $('#check_animation').on('click', function () {
+            if ($(this).prop('checked')) {
+                console.log('checked');
+                var intervalFlicker = setInterval(changeAnimationTime, 500);
+                $("[class*='border-']").addClass('glitch');
+                $(".dropform").attr("id", "dropform");
+                $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
+            } else {
+                console.log('unckecked');
+                clearInterval(intervalFlicker);
+                $("[class*='border-']").removeClass('glitch');
+                $(".dropform").removeAttr("id");
+                $("body").css('background-image', 'url("{{ asset('assets/images/background.jpg') }}")');
+            }
+        })
     });
     </script>
-
     <script type="text/javascript">
         let mavue = new Vue({
             el: "#vuejs",
