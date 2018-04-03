@@ -30,9 +30,9 @@
                         <div class="profil-img tooltip-mouse">
                             <div class="profil-img-container">
                                 {% if user.imageName is empty %}
-                                    <img src="{{ gravatar(user.email) }}" alt=""/>
+                                    <img src="{{ gravatar(user.email) }}" alt="" id="profil-img"/>
                                 {% else %}
-                                    <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" width="150px">
+                                    <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" alt="image de {{ user.username }}" id="profil-img">
                                 {% endif %}
                                 <div class="edit-img"><i class="fas fa-pen-square"></i></div>
                             </div>
@@ -125,6 +125,19 @@
         function hideAlert() {
             $('.alert').fadeOut()
         }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var img = document.getElementById('profil-img')
+            var width = img.clientWidth
+            var height = img.clientHeight
+            console.log(width, height)
+            if(height > width || height === width){
+                $('#profil-img').css('width','101%')
+            }else if(height < width){
+                $('#profil-img').css('height','101%')
+            }
+        })
     </script>
     <script src="{{ asset('assets/js/tooltip.js') }}"></script>
 {% endblock %}
