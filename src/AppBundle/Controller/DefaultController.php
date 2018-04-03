@@ -28,12 +28,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('fos_user_security_login');
         }
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
-            array(),
-            array('elo' => 'desc'),
-            50,
-            0
-        );
+        $users = $em->getRepository('AppBundle:UserAdmin')->getClassement();
 
         return $this->render('default/ranking.html.twig', [
             'users' => $users

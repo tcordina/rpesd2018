@@ -10,4 +10,19 @@ namespace AppBundle\Repository;
  */
 class UserAdminRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getClassement()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $query = $qb
+            ->select('u')
+            ->from('AppBundle:UserAdmin', 'u')
+            ->where('u.wins > 0 OR u.losses > 0')
+            ->orderBy('u.elo', 'DESC')
+            ->setMaxResults(50)
+        ;
+
+        return $query->getQuery()->getResult();
+    }
 }
