@@ -1,0 +1,487 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One&subset=latin-ext");
+/* line 5, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 10, ../sass/_new.scss */
+* {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* line 17, ../sass/_new.scss */
+.clearfloat {
+  clear: both;
+}
+
+/* line 20, ../sass/_new.scss */
+#game {
+  background-color: #1d1d1d;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 7.5% 92.5%;
+  grid-template-rows: 100%;
+  font-family: 'Rubik Mono One', sans-serif;
+}
+
+/*================LEFT================*/
+/* line 33, ../sass/_new.scss */
+aside {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 45% 10% 45%;
+  box-shadow: -4px 0px 8px rgba(115, 243, 254, 0.5) inset, -2px 0px 0px #73f3fe inset;
+}
+/* line 39, ../sass/_new.scss */
+aside .top, aside .bottom {
+  text-align: center;
+}
+/* line 41, ../sass/_new.scss */
+aside .top .name, aside .bottom .name {
+  display: block;
+  width: 100%;
+  height: 10%;
+  padding: 0px 5px;
+}
+/* line 46, ../sass/_new.scss */
+aside .top .name .inside, aside .bottom .name .inside {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #73f3fe;
+  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px rgba(115, 243, 254, 0.5);
+}
+/* line 54, ../sass/_new.scss */
+aside .top .avatar, aside .bottom .avatar {
+  display: block;
+  width: 100%;
+  height: 20%;
+  margin: auto;
+  padding: 5px 5px;
+}
+/* line 60, ../sass/_new.scss */
+aside .top .avatar img, aside .bottom .avatar img {
+  border-radius: 50%;
+  border: 2px solid #73f3fe;
+  box-shadow: 0px 0px 8px rgba(115, 243, 254, 0.5), 0px 0px 16px #73f3fe;
+}
+/* line 67, ../sass/_new.scss */
+aside .top .actions, aside .bottom .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 70%;
+}
+/* line 74, ../sass/_new.scss */
+aside .top .actions .action, aside .bottom .actions .action {
+  width: 40%;
+  height: 15%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* line 81, ../sass/_new.scss */
+aside .top .actions .action img, aside .bottom .actions .action img {
+  border: 1px solid #e351bf;
+  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.25), 0px 0px 16px rgba(227, 81, 191, 0.5), 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
+  transition: 0.25s;
+}
+/* line 88, ../sass/_new.scss */
+aside .top .actions .action img:hover, aside .bottom .actions .action img:hover {
+  transition: 0.25s;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.25), 0px 0px 16px rgba(224, 224, 224, 0.5), 0px 0px 8px rgba(224, 224, 224, 0.25) inset, 0px 0px 16px rgba(224, 224, 224, 0.5) inset;
+}
+/* line 97, ../sass/_new.scss */
+aside .top .actions .action.disabled img, aside .bottom .actions .action.disabled img {
+  border: 1px solid #707070;
+  box-shadow: 0px 0px 8px rgba(112, 112, 112, 0.25), 0px 0px 16px rgba(112, 112, 112, 0.5), 0px 0px 8px rgba(112, 112, 112, 0.25) inset, 0px 0px 16px rgba(112, 112, 112, 0.5) inset;
+}
+/* line 106, ../sass/_new.scss */
+aside .top img, aside .bottom img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*================RIGHT================*/
+/* line 115, ../sass/_new.scss */
+.right {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 15% 40% 45%;
+  /*========TOP========*/
+  /*========MIDDLE========*/
+  /*========BOTTOM========*/
+}
+/* line 122, ../sass/_new.scss */
+.right .top {
+  display: grid;
+  grid-template-columns: 70% 10% 10% 10%;
+  grid-template-rows: 100%;
+  width: 100%;
+  height: 100%;
+}
+/* line 128, ../sass/_new.scss */
+.right .top .cards {
+  font-size: 0;
+  transform: scaleY(-1);
+}
+/* line 131, ../sass/_new.scss */
+.right .top .cards .card {
+  width: 12%;
+  height: 100%;
+  display: inline-block;
+  margin-left: 0.25%;
+  margin-right: 0.25%;
+  transform: translateY(33%);
+}
+/* line 137, ../sass/_new.scss */
+.right .top .cards .card img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+}
+/* line 143, ../sass/_new.scss */
+.right .top .cards .card.hidden img {
+  border: 2px solid #e351bf;
+  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf, 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
+}
+/* line 152, ../sass/_new.scss */
+.right .top .round {
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+/* line 157, ../sass/_new.scss */
+.right .top .round .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #73f3fe;
+  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
+}
+/* line 164, ../sass/_new.scss */
+.right .top .score {
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+/* line 169, ../sass/_new.scss */
+.right .top .score .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #73f3fe;
+  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
+}
+/* line 176, ../sass/_new.scss */
+.right .top .deck {
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+/* line 181, ../sass/_new.scss */
+.right .top .deck .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #73f3fe;
+  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
+}
+/* line 191, ../sass/_new.scss */
+.right .middle {
+  background-color: #111111;
+  font-size: 0;
+  display: grid;
+  grid-template-columns: calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7);
+  grid-template-rows: 100%;
+}
+/* line 197, ../sass/_new.scss */
+.right .middle .cardarea {
+  text-align: center;
+  display: inline-block;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 20% 60% 20%;
+  padding: 2.5%;
+}
+/* line 205, ../sass/_new.scss */
+.right .middle .cardarea .card {
+  width: 100%;
+  height: 100%;
+}
+/* line 208, ../sass/_new.scss */
+.right .middle .cardarea .card img.pirate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* line 211, ../sass/_new.scss */
+.right .middle .cardarea .card .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+}
+/* line 215, ../sass/_new.scss */
+.right .middle .cardarea .card .inside img.cursor {
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0;
+}
+/* line 224, ../sass/_new.scss */
+.right .middle .cardarea .tokenstop, .right .middle .cardarea .tokensbottom {
+  padding: 2.5%;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+/* line 229, ../sass/_new.scss */
+.right .middle .cardarea .tokenstop .token, .right .middle .cardarea .tokensbottom .token {
+  height: 50%;
+  width: 30%;
+  display: inline-block;
+}
+/* line 233, ../sass/_new.scss */
+.right .middle .cardarea .tokenstop .token .inside, .right .middle .cardarea .tokensbottom .token .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #111111;
+  border: 1px solid #73f3fe;
+  box-shadow: 0px 0px 8px rgba(115, 243, 254, 0.5), 0px 0px 16px #73f3fe, 0px 0px 8px rgba(115, 243, 254, 0.25) inset, 0px 0px 16px rgba(115, 243, 254, 0.5) inset;
+}
+/* line 245, ../sass/_new.scss */
+.right .middle .cardarea .tokenstop .token .inside .number, .right .middle .cardarea .tokensbottom .token .inside .number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #73f3fe;
+}
+/* line 252, ../sass/_new.scss */
+.right .middle .cardarea .tokenstop {
+  transform: scaleY(-1) scaleX(-1);
+}
+/* line 259, ../sass/_new.scss */
+.right .bottom {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 100%;
+}
+/* line 263, ../sass/_new.scss */
+.right .bottom .playarea {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 5% 45%;
+}
+/* line 267, ../sass/_new.scss */
+.right .bottom .playarea .acting {
+  width: 100%;
+  height: 100%;
+}
+/* line 270, ../sass/_new.scss */
+.right .bottom .playarea .acting .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 100%;
+  font-size: 0;
+}
+/* line 275, ../sass/_new.scss */
+.right .bottom .playarea .acting .inside .card {
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 2.5%;
+}
+/* line 280, ../sass/_new.scss */
+.right .bottom .playarea .acting .inside .card img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
+  background-color: #181818;
+  transition: 0.25s;
+}
+/* line 287, ../sass/_new.scss */
+.right .bottom .playarea .acting .inside .card img:hover {
+  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0, 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
+  transition: 0.25s;
+}
+/* line 299, ../sass/_new.scss */
+.right .bottom .playarea .cards {
+  font-size: 0;
+}
+/* line 301, ../sass/_new.scss */
+.right .bottom .playarea .cards .card {
+  width: 12%;
+  height: 100%;
+  display: inline-block;
+  margin-left: 0.25%;
+  margin-right: 0.25%;
+  transform: translateY(20%);
+}
+/* line 307, ../sass/_new.scss */
+.right .bottom .playarea .cards .card img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  transition: 0.25s;
+}
+/* line 312, ../sass/_new.scss */
+.right .bottom .playarea .cards .card img:hover {
+  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0;
+  transition: 0.25s;
+}
+/* line 319, ../sass/_new.scss */
+.right .bottom .playarea .cards .card.hidden img {
+  border: 2px solid #e351bf;
+  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf, 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
+}
+/* line 331, ../sass/_new.scss */
+.right .bottom .chatarea .marged {
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  width: 90%;
+  height: 90%;
+  background-color: #111111;
+  border: 2px solid #e351bf;
+  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 7.5% 80% 12.5%;
+  border-radius: 8px 8px 0 0;
+  border-bottom-style: none;
+}
+/* line 346, ../sass/_new.scss */
+.right .bottom .chatarea .marged .top {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* line 349, ../sass/_new.scss */
+.right .bottom .chatarea .marged .top .inside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  color: #e351bf;
+  text-shadow: 0px 0px 8px rgba(227, 81, 191, 0.25), 0px 0px 16px rgba(227, 81, 191, 0.5);
+}
+/* line 358, ../sass/_new.scss */
+.right .bottom .chatarea .marged .middle {
+  background-color: #181818;
+}
+/* line 369, ../sass/_new.scss */
+.right img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*================EXTRA================*/

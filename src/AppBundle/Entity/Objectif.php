@@ -40,7 +40,7 @@ class Objectif
 
     /**
      * @Assert\File(
-     *     maxSize="1M",
+     *     maxSize="2M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
      * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")

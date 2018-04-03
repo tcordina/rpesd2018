@@ -48,7 +48,7 @@ class Carte
 
     /**
      * @Assert\File(
-     *     maxSize="5M",
+     *     maxSize="2M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
      * @Vich\UploadableField(mapping="profile_images", fileNameProperty="imageName")

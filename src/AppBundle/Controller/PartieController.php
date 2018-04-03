@@ -22,23 +22,6 @@ use Zelenin\Elo\Player;
 class PartieController extends Controller
 {
     /**
-     * Lists all partie entities.
-     *
-     * @Route("/", name="partie_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $parties = $em->getRepository('AppBundle:Partie')->findAll();
-
-        return $this->render('partie/index.html.twig', array(
-            'parties' => $parties,
-        ));
-    }
-
-    /**
      * Creates a new partie entity.
      *
      * @Route("/new", name="partie_new")

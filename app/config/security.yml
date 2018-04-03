@@ -30,7 +30,11 @@ security:
                 default_target_path: /profile
                 target_path_parameter: _target_path
                 use_referer: false
-                remember_me: true
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                secure: true
             logout: true
             anonymous: true
 
