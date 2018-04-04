@@ -53,11 +53,17 @@
         <div class="glitch border-left2"></div>
         <div class="container">
             <a id="play-link">
-                <h1 class="title-jouer">Jouer en ligne</h1>
+                <h1 class="title-jouer">Défier ce joueur</h1>
             </a>
             <div class="sub-container drop-password">
                 <i id="close-pass-form" class="fas fa-times"></i>
-                {{ render(controller('AppBundle:Partie:new')) }}
+                <div class="form-container">
+                    <h1>Défier {{ user.username }} ?</h1>
+                    <br>
+                    <form action="{{ path('partie_new_other', {'joueurId':user.id}) }}" method="post">
+                        <button type="submit">Oui !</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

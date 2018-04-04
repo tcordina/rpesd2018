@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Partie;
+use AppBundle\Entity\UserAdmin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,15 +28,19 @@ class PartieController extends Controller
      * @Route("/new", name="partie_new")
      * @Method("POST")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param UserAdmin|null $joueur
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UserAdmin $joueur = null)
     {
         $partie = new Partie();
-
+        die(var_dump($joueur));
         $form = $this->createForm('AppBundle\Form\PartieType', $partie);
         $form->handleRequest($request);
 
+        if($joueur !== null) {
+            $partie->setJoueur2($joueur);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             if($partie->getJoueur2() == $user) {
@@ -142,6 +147,121 @@ class PartieController extends Controller
             'partie' => $partie,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * Creates a new partie entity.
+     *
+     * @Route("/newOther/{joueurId}", name="partie_new_other")
+     * @Method("POST")
+     * @param int $joueurId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function newOtherAction($joueurId)
+    {
+        $partie = new Partie();
+        $joueur = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->find($joueurId);
+        $partie->setJoueur2($joueur);
+
+        $user = $this->getUser();
+        if($partie->getJoueur2() == $user) {
+            $session = new Session();
+            $session->getFlashBag()->add('notice', 'Vous ne pouvez pas jouer contre vous même !');
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
+        $partie->setJoueur1($user);
+        $em = $this->getDoctrine()->getManager();
+        $cartes = $em->getRepository('AppBundle:Carte')->findAll();
+        $objectifs = $em->getRepository('AppBundle:Objectif')->findAll();
+        $actions = $em->getRepository('AppBundle:Action')->findAll();
+        shuffle($cartes);
+        $partie->setCarteEcartee($cartes[0]->getId());
+        unset($cartes[0]);
+        $cartes = array_values($cartes);
+
+        $partie->setTourJoueurId(random_int(1,2));
+
+        $t = array();
+        for($i=0; $i<7; $i++){
+            $t[] = $cartes[$i]->getId();
+        }
+        $partie->getTourJoueurId() == 1 ? $partie->setMainJ1(json_encode($t)) : $partie->setMainJ2(json_encode($t));
+
+        $t = array();
+        for($i=7; $i<13; $i++){
+            $t[] = $cartes[$i]->getId();
+        }
+        $partie->getTourJoueurId() == 1 ? $partie->setMainJ2(json_encode($t)) : $partie->setMainJ1(json_encode($t));
+
+        $t = array();
+        for ($i=13; $i<count($cartes); $i++) {
+            $t[] = $cartes[$i]->getId();
+        }
+        $partie->setPioche(json_encode($t));
+
+        $t = array();
+        foreach($objectifs as $obj) {
+            $t[$obj->getId()] = [];
+        }
+        $partie->setTerrainJ1(json_encode($t));
+        $partie->setTerrainJ2(json_encode($t));
+
+        $t = array(
+            'j1' => [],
+            'j2' => [],
+            'neutre' => []
+        );
+        foreach($objectifs as $obj){
+            $t['neutre'][] = $obj->getId();
+        }
+        $partie->setJetons(json_encode($t));
+
+        $t = array(
+            'j1' => [],
+            'j2' => []
+        );
+        foreach ($actions as $act){
+            $t['j1'][$act->getId()-1]['id'] = $act->getId();
+            $t['j1'][$act->getId()-1]['nom'] = $act->getNom();
+            $t['j1'][$act->getId()-1]['jouee'] = $act->getJouee();
+            $t['j1'][$act->getId()-1]['cartes'] = $act->getCartes();
+            $t['j2'][$act->getId()-1]['id'] = $act->getId();
+            $t['j2'][$act->getId()-1]['nom'] = $act->getNom();
+            $t['j2'][$act->getId()-1]['jouee'] = $act->getJouee();
+            $t['j2'][$act->getId()-1]['cartes'] = $act->getCartes();
+        }
+        $partie->setActions(json_encode($t));
+
+        $t = array(
+            'j1' => false,
+            'j2' => false
+        );
+        $partie->setTourActions(json_encode($t));
+
+        $partie->setManche(1);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partie);
+        $em->flush();
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Invitation à une partie !')
+            ->setFrom('noreply@rpesd2018.thibaudcordina.fr')
+            ->setTo($partie->getJoueur2()->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'mail/partie/invited.html.twig',
+                    array(
+                        'joueur1' => $partie->getJoueur1()->getUsername(),
+                        'joueur2' => $partie->getJoueur2()->getUsername(),
+                        'partie' => $partie
+                    )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+
+        return $this->redirectToRoute('partie_show', array('id' => $partie->getId()));
     }
 
     /**
