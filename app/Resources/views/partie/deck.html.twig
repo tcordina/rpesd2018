@@ -1,47 +1,53 @@
 <div align="center">
 {% if joueur == 1 %}
-{# affichage de la main de j1 #}
-    {% for carte in plateau.mainJ1 %}
-        <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+    <div id="vue2">
+        <div class="marged">
+            <div class="playarea">
+                <div class="acting hidden">
+                    <div class="inside"></div>
+                </div>
+                <div class="spacing"></div>
+                <div class="cards">
+                    {% for carte in plateau.mainJ1 %}
+                        <div class="card"><img src="{{ asset('assets/images/plateau/card_back.jpg') }}">
+                            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dummy"></div>
         </div>
-    {% endfor %}
-<br/><br/>
-{# carte secret #}
+    </div>
+{# cartes secret et compromis
     {%  for carte in plateau.actions.j1.0.cartes %}
         <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
-        {# si pas de carte secret #}
+        si pas de carte secret
     {% endfor %}
 
-    {# cartes compromis #}
     {% for carte in plateau.actions.j1.1.cartes %}
         <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
     {% else %}
-        {# si pas de cartes compromis #}
-    {% endfor %}
+        si pas de cartes compromis
+    {% endfor %} #}
 {% elseif joueur == 2 %}
-    {# affichage de la main de j2 #}
-    {% for carte in plateau.mainJ2 %}
-        <div style="display:inline-block;background:cornflowerblue;width:100px;height:150px;">
-            obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}
-            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+    <div id="vue2">
+        <div class="marged">
+            <div class="playarea">
+                <div class="acting hidden">
+                    <div class="inside"></div>
+                </div>
+                <div class="spacing"></div>
+                <div class="cards">
+                    {% for carte in plateau.mainJ2 %}
+                        <div class="card"><img src="{{ asset('assets/images/plateau/card_back.jpg') }}">
+                            <input form="action_form" type="checkbox" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dummy"></div>
         </div>
-    {% endfor %}
-    <br/><br/>
-    {# carte secret #}
-    {%  for carte in plateau.actions.j2.0.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de carte secret #}
-    {% endfor %}
-
-    {# cartes compromis #}
-    {% for carte in plateau.actions.j2.1.cartes %}
-        <div style="margin-top:25px;display:inline-block;background:cornflowerblue;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% else %}
-        {# si pas de cartes compromis #}
-    {% endfor %}
+    </div>
 {% endif %}
 </div>
