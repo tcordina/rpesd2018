@@ -45,7 +45,9 @@ class DefaultController extends Controller
     public function cookieAnimationAction($checked)
     {
         $response = new Response();
-        $cookie = new Cookie('ANIMATIONS', $checked, '2592000', '/');
+        $expire = time() + 3600*24*7*52;
+        $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
+        $cookie = new Cookie('ANIMATIONS', $checked, $expire, '/', $domain);
         $response->headers->setCookie($cookie);
         return $response->send();
     }

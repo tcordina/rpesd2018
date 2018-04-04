@@ -11,10 +11,14 @@
     <div class="input-check-2">
         off
         <label class="switch">
-            {% if app.request.cookies.get('ANIMATIONS') == 1 %}
-            <input type="checkbox" id="check_animation" checked>
+            {% if app.request.cookies.get('ANIMATIONS') is not null %}
+                {% if app.request.cookies.get('ANIMATIONS') == 1 %}
+                    <input type="checkbox" id="check_animation" checked>
+                {% else %}
+                    <input type="checkbox" id="check_animation">
+                {% endif %}
             {% else %}
-            <input type="checkbox" id="check_animation">
+                <input type="checkbox" id="check_animation" checked>
             {% endif %}
             <span class="slider"></span>
         </label>

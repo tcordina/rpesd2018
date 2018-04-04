@@ -72,13 +72,11 @@
 
             // CHECKED
             if ($('#check_animation').prop('checked')) {
-                console.log('checked');
                 var intervalFlicker = setInterval(changeAnimationTime, 500);
                 $("[class*='border-']").addClass('glitch');
                 $(".dropform").attr("id", "dropform");
                 $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
             } else {
-                console.log('unckecked');
                 clearInterval(intervalFlicker);
                 $("[class*='border-']").removeClass('glitch');
                 $(".dropform").removeAttr("id");
@@ -87,30 +85,25 @@
 
             $('#check_animation').on('click', function () {
                 if ($(this).prop('checked')) {
-                    console.log('checked');
                     var intervalFlicker = setInterval(changeAnimationTime, 500);
                     $("[class*='border-']").addClass('glitch');
                     $(".dropform").attr("id", "dropform");
                     $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
                     $.ajax({
-                        url: '{{ path('cookie_animation', { 'checked':1 }) }}',
-                        success: function() {
-                            console.log('cookie !')
-                        }
+                        type: 'POST',
+                        url: '{{ path('cookie_animation', { 'checked':1 }) }}'
                     })
                 } else {
-                    console.log('unckecked');
                     clearInterval(intervalFlicker);
                     $("[class*='border-']").removeClass('glitch');
                     $(".dropform").removeAttr("id");
                     $("body").css('background-image', 'url("{{ asset('assets/images/background.jpg') }}")');
                     $.ajax({
-                        url: '{{ path('cookie_animation', { 'checked':0 }) }}',
-                        success: function() {
-                            console.log('cookie !')
-                        }
+                        type: 'post',
+                        url: '{{ path('cookie_animation', { 'checked':0 }) }}'
                     })
                 }
+            })
         })
     </script>
     <script type="text/javascript">
