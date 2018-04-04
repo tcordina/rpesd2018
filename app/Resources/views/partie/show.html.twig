@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="plateau"></div>
-    <div id="deck"></div>
-    <div id="chat"></div>
-    <br/><br/>
+    <div id="game">
+        <div id="plateau"></div>
+        <div id="deck"></div>
+        <div id="chat"></div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

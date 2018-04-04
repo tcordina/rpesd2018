@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -33,6 +35,19 @@ class DefaultController extends Controller
         return $this->render('default/ranking.html.twig', [
             'users' => $users
         ]);
+    }
+
+    /**
+     * @Route("/cookie/animation/{checked}", name="cookie_animation")
+     * @param $checked
+     * @return Response
+     */
+    public function cookieAnimationAction($checked)
+    {
+        $response = new Response();
+        $cookie = new Cookie('ANIMATIONS', $checked, '2592000', '/');
+        $response->headers->setCookie($cookie);
+        return $response->send();
     }
 
 }
