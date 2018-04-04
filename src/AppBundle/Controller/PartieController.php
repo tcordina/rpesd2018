@@ -34,7 +34,6 @@ class PartieController extends Controller
     public function newAction(Request $request, UserAdmin $joueur = null)
     {
         $partie = new Partie();
-        die(var_dump($joueur));
         $form = $this->createForm('AppBundle\Form\PartieType', $partie);
         $form->handleRequest($request);
 
