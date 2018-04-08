@@ -95,7 +95,7 @@
 
             // CHECKED
             if ($('#check_animation').prop('checked')) {
-                var intervalFlicker = setInterval(changeAnimationTime, 500);
+                intervalFlicker = setInterval(changeAnimationTime, 500);
                 $("[class*='border-']").addClass('glitch');
                 $(".dropform").attr("id", "dropform");
                 $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
@@ -108,7 +108,7 @@
 
             $('#check_animation').on('click', function () {
                 if ($(this).prop('checked')) {
-                    var intervalFlicker = setInterval(changeAnimationTime, 500);
+                    intervalFlicker = setInterval(changeAnimationTime, 500);
                     $("[class*='border-']").addClass('glitch');
                     $(".dropform").attr("id", "dropform");
                     $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');

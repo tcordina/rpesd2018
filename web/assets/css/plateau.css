@@ -1,620 +1,769 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One&subset=latin-ext");
-/* line 5, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+/* line 1, ../sass/plateau.scss */
+body {
   margin: 0;
   padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #171717;
 }
 
-/* line 22, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html {
-  line-height: 1;
-}
-
-/* line 24, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
-/* line 26, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, ../../../../../Programs/Ruby/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
-/* line 10, ../sass/_new.scss */
+/* line 9, ../sass/plateau.scss */
 * {
-  margin: 0;
-  padding: 0;
-  position: relative;
-  user-select: none;
   box-sizing: border-box;
 }
 
-/* line 17, ../sass/_new.scss */
-.clearfloat {
-  clear: both;
+/* line 2, ../sass/_neon.scss */
+.border, .border-top, .border-top2, .border-right, .border-right2, .border-bottom, .border-bottom2, .border-left, .border-left2 {
+  position: absolute;
+  background-color: #fed3ff;
+  border-radius: 20px;
+  z-index: 120;
 }
 
-/* line 20, ../sass/_new.scss */
-#vue1 {
-  background-color: #1d1d1d;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 7.5% 92.5%;
-  grid-template-rows: 100%;
-  font-family: 'Rubik Mono One', sans-serif;
+/* line 8, ../sass/_neon.scss */
+.border-top, .border-top2 {
+  top: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 2px 20px #ff5ef7;
+  border-bottom: 3px solid #ffb0fa;
 }
 
-/*================LEFT================*/
-/* line 34, ../sass/_new.scss */
-aside {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 45% 10% 45%;
-  box-shadow: -4px 0px 8px rgba(115, 243, 254, 0.5) inset, -2px 0px 0px #73f3fe inset;
-}
-/* line 40, ../sass/_new.scss */
-aside .top, aside .bottom {
-  text-align: center;
-}
-/* line 42, ../sass/_new.scss */
-aside .top .name, aside .bottom .name {
-  display: block;
-  width: 100%;
-  height: 10%;
-  padding: 0px 5px;
-}
-/* line 47, ../sass/_new.scss */
-aside .top .name .inside, aside .bottom .name .inside {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #73f3fe;
-  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px rgba(115, 243, 254, 0.5);
-}
-/* line 55, ../sass/_new.scss */
-aside .top .avatar, aside .bottom .avatar {
-  display: block;
-  width: 100%;
-  height: 20%;
-  margin: auto;
-  padding: 5px 5px;
-}
-/* line 61, ../sass/_new.scss */
-aside .top .avatar img, aside .bottom .avatar img {
-  border-radius: 50%;
-  border: 2px solid #73f3fe;
-  box-shadow: 0px 0px 8px rgba(115, 243, 254, 0.5), 0px 0px 16px #73f3fe;
-}
-/* line 68, ../sass/_new.scss */
-aside .top .actions, aside .bottom .actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  height: 70%;
-}
-/* line 75, ../sass/_new.scss */
-aside .top .actions .action, aside .bottom .actions .action {
-  width: 40%;
-  height: 15%;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* line 82, ../sass/_new.scss */
-aside .top .actions .action img, aside .bottom .actions .action img {
-  border: 1px solid #e351bf;
-  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.25), 0px 0px 16px rgba(227, 81, 191, 0.5), 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
-  transition: 0.25s;
-}
-/* line 89, ../sass/_new.scss */
-aside .top .actions .action img:hover, aside .bottom .actions .action img:hover {
-  transition: 0.25s;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.25), 0px 0px 16px rgba(224, 224, 224, 0.5), 0px 0px 8px rgba(224, 224, 224, 0.25) inset, 0px 0px 16px rgba(224, 224, 224, 0.5) inset;
-}
-/* line 98, ../sass/_new.scss */
-aside .top .actions .action.disabled img, aside .bottom .actions .action.disabled img {
-  border: 1px solid #707070;
-  box-shadow: 0px 0px 8px rgba(112, 112, 112, 0.25), 0px 0px 16px rgba(112, 112, 112, 0.5), 0px 0px 8px rgba(112, 112, 112, 0.25) inset, 0px 0px 16px rgba(112, 112, 112, 0.5) inset;
-}
-/* line 107, ../sass/_new.scss */
-aside .top img, aside .bottom img {
-  max-width: 100%;
-  max-height: 100%;
+/* line 16, ../sass/_neon.scss */
+.border-top2 {
+  background-color: #d7eeeb;
+  box-shadow: 0 2px 20px #00b3ee;
+  border-bottom: 3px solid #92f5fe;
 }
 
-/*================RIGHT================*/
-/* line 116, ../sass/_new.scss */
-.right {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 15% 40% 45%;
-  /*========TOP========*/
-  /*========MIDDLE========*/
-  /*========BOTTOM========*/
-}
-/* line 123, ../sass/_new.scss */
-.right .top {
-  display: grid;
-  grid-template-columns: 70% 10% 10% 10%;
-  grid-template-rows: 100%;
-  width: 100%;
-  height: 100%;
-}
-/* line 129, ../sass/_new.scss */
-.right .top .cards {
-  font-size: 0;
-  transform: scaleY(-1);
-}
-/* line 132, ../sass/_new.scss */
-.right .top .cards .card {
-  width: 12%;
-  height: 100%;
-  display: inline-block;
-  margin-left: 0.25%;
-  margin-right: 0.25%;
-  transform: translateY(33%);
-}
-/* line 138, ../sass/_new.scss */
-.right .top .cards .card img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
-}
-/* line 144, ../sass/_new.scss */
-.right .top .cards .card.hidden img {
-  border: 2px solid #e351bf;
-  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf, 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
-}
-/* line 153, ../sass/_new.scss */
-.right .top .round {
-  padding: 5px;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-/* line 158, ../sass/_new.scss */
-.right .top .round .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #73f3fe;
-  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
-}
-/* line 165, ../sass/_new.scss */
-.right .top .score {
-  padding: 5px;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-/* line 170, ../sass/_new.scss */
-.right .top .score .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #73f3fe;
-  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
-}
-/* line 177, ../sass/_new.scss */
-.right .top .deck {
-  padding: 5px;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-/* line 182, ../sass/_new.scss */
-.right .top .deck .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #73f3fe;
-  text-shadow: 0px 0px 8px rgba(115, 243, 254, 0.25), 0px 0px 16px #73f3fe;
-}
-/* line 192, ../sass/_new.scss */
-.right .middle {
-  background-color: #111111;
-  font-size: 0;
-  display: grid;
-  grid-template-columns: calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7) calc(100% / 7);
-  grid-template-rows: 100%;
-}
-/* line 198, ../sass/_new.scss */
-.right .middle .cardarea {
-  text-align: center;
-  display: inline-block;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 20% 60% 20%;
-  padding: 2.5%;
-}
-/* line 206, ../sass/_new.scss */
-.right .middle .cardarea .card {
-  width: 100%;
-  height: 100%;
-}
-/* line 209, ../sass/_new.scss */
-.right .middle .cardarea .card img.pirate {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-/* line 212, ../sass/_new.scss */
-.right .middle .cardarea .card .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30%;
-  height: 30%;
-}
-/* line 216, ../sass/_new.scss */
-.right .middle .cardarea .card .inside img.cursor {
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #e0e0e0;
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0;
-}
-/* line 225, ../sass/_new.scss */
-.right .middle .cardarea .tokenstop, .right .middle .cardarea .tokensbottom {
-  padding: 2.5%;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-}
-/* line 230, ../sass/_new.scss */
-.right .middle .cardarea .tokenstop .token, .right .middle .cardarea .tokensbottom .token {
-  height: 50%;
-  width: 30%;
-  display: inline-block;
-}
-/* line 234, ../sass/_new.scss */
-.right .middle .cardarea .tokenstop .token .inside, .right .middle .cardarea .tokensbottom .token .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #111111;
-  border: 1px solid #73f3fe;
-  box-shadow: 0px 0px 8px rgba(115, 243, 254, 0.5), 0px 0px 16px #73f3fe, 0px 0px 8px rgba(115, 243, 254, 0.25) inset, 0px 0px 16px rgba(115, 243, 254, 0.5) inset;
-}
-/* line 246, ../sass/_new.scss */
-.right .middle .cardarea .tokenstop .token .inside .number, .right .middle .cardarea .tokensbottom .token .inside .number {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #73f3fe;
-}
-/* line 253, ../sass/_new.scss */
-.right .middle .cardarea .tokenstop {
-  transform: scaleY(-1) scaleX(-1);
-}
-/* line 260, ../sass/_new.scss */
-.right .bottom {
-  display: grid;
-  grid-template-columns: 70% 30%;
-  grid-template-rows: 100%;
-}
-/* line 264, ../sass/_new.scss */
-.right .bottom .playarea {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 50% 5% 45%;
-}
-/* line 268, ../sass/_new.scss */
-.right .bottom .playarea .acting {
-  width: 100%;
-  height: 100%;
-}
-/* line 271, ../sass/_new.scss */
-.right .bottom .playarea .acting .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 100%;
-  font-size: 0;
-}
-/* line 276, ../sass/_new.scss */
-.right .bottom .playarea .acting .inside .card {
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 2.5%;
-}
-/* line 281, ../sass/_new.scss */
-.right .bottom .playarea .acting .inside .card img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
-  background-color: #181818;
-  transition: 0.25s;
-}
-/* line 288, ../sass/_new.scss */
-.right .bottom .playarea .acting .inside .card img:hover {
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0, 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
-  transition: 0.25s;
-}
-/* line 299, ../sass/_new.scss */
-.right .bottom .playarea .acting.hidden * {
-  display: none;
-}
-/* line 301, ../sass/_new.scss */
-.right .bottom .playarea .cards {
-  font-size: 0;
-}
-/* line 302, ../sass/_new.scss */
-.right .bottom .playarea .cards.hidden * {
-  display: none;
-}
-/* line 304, ../sass/_new.scss */
-.right .bottom .playarea .cards .card {
-  width: 12%;
-  height: 100%;
-  display: inline-block;
-  margin-left: 0.25%;
-  margin-right: 0.25%;
-  transform: translateY(20%);
-}
-/* line 310, ../sass/_new.scss */
-.right .bottom .playarea .cards .card img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
-  transition: 0.25s;
-}
-/* line 315, ../sass/_new.scss */
-.right .bottom .playarea .cards .card img:hover {
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0;
-  transition: 0.25s;
-}
-/* line 322, ../sass/_new.scss */
-.right .bottom .playarea .cards .card.hidden img {
-  border: 2px solid #e351bf;
-  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf, 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
-}
-/* line 337, ../sass/_new.scss */
-.right img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-/*================EXTRA================*/
-/* line 346, ../sass/_new.scss */
-#vue3 {
-  position: absolute;
-  width: 27.75vw;
-  height: 45vh;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  font-family: 'Rubik Mono One', sans-serif;
-}
-/* line 354, ../sass/_new.scss */
-#vue3 .chatarea {
-  width: 100%;
-  height: 100%;
-}
-/* line 357, ../sass/_new.scss */
-#vue3 .chatarea .marged {
-  position: absolute;
-  left: 5%;
-  top: 10%;
-  width: 90%;
-  height: 90%;
-  background-color: #111111;
-  border: 2px solid #e351bf;
-  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 7.5% 80% 12.5%;
-  border-radius: 8px 8px 0 0;
-  border-bottom-style: none;
-}
-/* line 372, ../sass/_new.scss */
-#vue3 .chatarea .marged .top {
-  max-width: 100%;
-  max-height: 100%;
-}
-/* line 375, ../sass/_new.scss */
-#vue3 .chatarea .marged .top .inside {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
-  color: #e351bf;
-  text-shadow: 0px 0px 8px rgba(227, 81, 191, 0.25), 0px 0px 16px rgba(227, 81, 191, 0.5);
-}
-/* line 384, ../sass/_new.scss */
-#vue3 .chatarea .marged .middle {
-  background-color: #181818;
-}
-
-/* line 392, ../sass/_new.scss */
-#vue2 {
-  position: absolute;
-  width: 92.5vw;
-  height: 45vh;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  font-family: 'Rubik Mono One', sans-serif;
-}
-/* line 400, ../sass/_new.scss */
-#vue2 .marged {
-  position: absolute;
-  width: 70%;
-  height: 100%;
-  left: 0;
+/* line 22, ../sass/_neon.scss */
+.border-right, .border-right2 {
   top: 0;
+  right: -1px;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
 }
-/* line 406, ../sass/_new.scss */
-#vue2 .marged .playarea {
+
+/* line 31, ../sass/_neon.scss */
+.border-right2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
+/* line 37, ../sass/_neon.scss */
+.border-bottom, .border-bottom2 {
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 -2px 20px #ff5ef7;
+  border-top: 3px solid #ffbaf4;
+}
+
+/* line 45, ../sass/_neon.scss */
+.border-bottom2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-top: 3px solid #92f5fe;
+}
+
+/* line 51, ../sass/_neon.scss */
+.border-left, .border-left2 {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
+}
+
+/* line 60, ../sass/_neon.scss */
+.border-left2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes drop {
+  0% {
+    box-shadow: 0 0 1000px rgba(130, 35, 120, 0.4), 0 0 1300px rgba(0, 0, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 1000px rgba(130, 35, 120, 0.5), 0 0 1300px rgba(0, 0, 0, 0.7);
+  }
+}
+@keyframes drop2 {
+  0% {
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.3);
+  }
+}
+/* line 91, ../sass/_neon.scss */
+.glitch {
+  animation: flicker var(--animation-time) ease alternate infinite;
+}
+
+/* line 94, ../sass/_neon.scss */
+#dropform {
+  animation: drop var(--animation-time) ease alternate infinite;
+}
+
+/* line 97, ../sass/_neon.scss */
+#dropform2 {
+  animation: drop2 var(--animation-time) ease alternate infinite;
+}
+
+/* line 1, ../sass/_aside-plateau.scss */
+aside .section-jr-top, aside .section-jr-bot {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+/* line 5, ../sass/_aside-plateau.scss */
+aside .section-jr-top h2, aside .section-jr-bot h2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 3vw;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  line-height: 1vw;
+  color: #ff5ef7;
+  font-family: "Bungee Inline";
+  text-shadow: 0 0 10px #DC1ABF;
+  font-size: 1vw;
+}
+/* line 22, ../sass/_aside-plateau.scss */
+aside .section-jr-top .profil-img, aside .section-jr-bot .profil-img {
+  position: relative;
+  position: relative;
+  width: 75%;
+  margin: 10px auto;
+  border-radius: 50%;
+  border: solid 1px #ff5ef7;
+  box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
+}
+/* line 15, ../sass/plateau.scss */
+aside .section-jr-top .profil-img::after, aside .section-jr-bot .profil-img::after {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+/* line 30, ../sass/_aside-plateau.scss */
+aside .section-jr-top .profil-img .profil-img-container, aside .section-jr-bot .profil-img .profil-img-container {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 50% 5% 45%;
+  border-radius: 50%;
+  overflow: hidden;
 }
-/* line 412, ../sass/_new.scss */
-#vue2 .marged .playarea .acting {
-  width: 100%;
-  height: 100%;
-}
-/* line 415, ../sass/_new.scss */
-#vue2 .marged .playarea .acting .inside {
+/* line 39, ../sass/_aside-plateau.scss */
+aside .section-jr-top .profil-img img, aside .section-jr-bot .profil-img img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+/* line 46, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions, aside .section-jr-bot .actions {
+  position: relative;
+  max-height: 28vh;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: wrap;
+  flex-direction: column;
+}
+/* line 57, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions li, aside .section-jr-bot .actions li {
+  position: relative;
+  background: #111;
+  width: 2.5vw;
+  height: 2.5vw;
+  color: #ff5ef7;
+  margin: 5px;
+  padding: 0;
+  font-size: 1vw;
+  border-radius: 5%;
+  border: solid 2px #ff5ef7;
+  box-shadow: 0 0 8px #DC1ABF inset, 0 0 10px #DC1ABF;
+}
+/* line 71, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action1 i, aside .section-jr-bot .actions .action1 i, aside .section-jr-top .actions .action2 i, aside .section-jr-bot .actions .action2 i {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* line 81, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action3 i, aside .section-jr-bot .actions .action3 i {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+}
+/* line 86, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action3 i:first-child, aside .section-jr-bot .actions .action3 i:first-child {
+  bottom: 10%;
+  left: 17%;
+}
+/* line 90, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action3 i:nth-child(2), aside .section-jr-bot .actions .action3 i:nth-child(2) {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* line 95, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action3 i:last-child, aside .section-jr-bot .actions .action3 i:last-child {
+  bottom: 10%;
+  right: 17%;
+}
+/* line 101, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action4 i, aside .section-jr-bot .actions .action4 i {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+}
+/* line 106, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action4 i:first-child, aside .section-jr-bot .actions .action4 i:first-child {
+  top: 10%;
+  left: 18%;
+}
+/* line 110, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions .action4 i:last-child, aside .section-jr-bot .actions .action4 i:last-child {
+  bottom: 10%;
+  right: 18%;
+}
+
+/* line 118, ../sass/_aside-plateau.scss */
+aside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 7vw;
+  background: #191919;
+  z-index: 200;
+  box-sizing: initial;
+}
+/* line 127, ../sass/_aside-plateau.scss */
+aside .section-jr-top {
+  top: 0;
+  height: 45%;
+}
+/* line 132, ../sass/_aside-plateau.scss */
+aside .section-jr-bot {
+  bottom: 0;
+  height: 50%;
+  transform: rotate(180deg);
+}
+/* line 137, ../sass/_aside-plateau.scss */
+aside .section-jr-bot h2, aside .section-jr-bot .profil-img, aside .section-jr-bot .actions {
+  transform: rotate(180deg);
+}
+/* line 140, ../sass/_aside-plateau.scss */
+aside .section-jr-bot .actions {
+  max-height: 30vh !important;
+}
+
+/* line 1, ../sass/_persos.scss */
+.persos .cartes .carte .carte-top, .persos .cartes .carte .carte-bot {
+  position: absolute;
+  width: 100%;
+  height: 22%;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 14, ../sass/_persos.scss */
+.persos .cartes .carte .carte-top li, .persos .cartes .carte .carte-bot li {
+  position: relative;
+  width: 2vw;
+  height: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 1000px;
+  font-size: 1.5em;
+  font-family: "Bungee Inline";
+  background: #111;
+  color: #00ccff;
+  border: solid 2px #00ccff;
+  text-shadow: 0 0 5px #00b3ee;
+  box-shadow: 0 0px 10px #00b3ee inset, 0 0 20px #00b3ee, 0 0 30px black;
+}
+
+/* line 34, ../sass/_persos.scss */
+.persos {
+  position: absolute;
+  bottom: 47vh;
+  left: 0;
+  width: 100%;
+  height: 18vw;
+  background-color: #111;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.8) inset;
+}
+/* line 42, ../sass/_persos.scss */
+.persos .cartes {
+  position: absolute;
+  top: 0;
+  left: 12vw;
   width: 80%;
   height: 100%;
-  font-size: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
-/* line 420, ../sass/_new.scss */
-#vue2 .marged .playarea .acting .inside .card {
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 2.5%;
+/* line 51, ../sass/_persos.scss */
+.persos .cartes .carte {
+  position: relative;
+  width: 13%;
+  height: 74%;
+  margin: 1%;
+  z-index: 90;
 }
-/* line 425, ../sass/_new.scss */
-#vue2 .marged .playarea .acting .inside .card img {
+/* line 57, ../sass/_persos.scss */
+.persos .cartes .carte img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
-  background-color: #181818;
-  transition: 0.25s;
-}
-/* line 432, ../sass/_new.scss */
-#vue2 .marged .playarea .acting .inside .card img:hover {
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0, 0px 0px 8px black inset, 0px 0px 16px black inset, 0px 0px 32px black inset;
-  transition: 0.25s;
-}
-/* line 443, ../sass/_new.scss */
-#vue2 .marged .playarea .acting.hidden * {
-  display: none;
-}
-/* line 445, ../sass/_new.scss */
-#vue2 .marged .playarea .cards {
-  font-size: 0;
-}
-/* line 446, ../sass/_new.scss */
-#vue2 .marged .playarea .cards.hidden * {
-  display: none;
-}
-/* line 448, ../sass/_new.scss */
-#vue2 .marged .playarea .cards .card {
-  width: 12%;
   height: 100%;
-  display: inline-block;
-  margin-left: 0.25%;
-  margin-right: 0.25%;
-  transform: translateY(20%);
+  border-radius: 2%;
+  z-index: 90;
 }
-/* line 454, ../sass/_new.scss */
-#vue2 .marged .playarea .cards .card img {
+/* line 66, ../sass/_persos.scss */
+.persos .cartes .carte .jeton {
   position: absolute;
   top: 50%;
+  left: 30%;
+  width: 4vw;
+  height: 4vw;
+  background-color: blue;
+  z-index: 100;
+  border-radius: 1000px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+  background: url("../images/cartes/card_token.jpg") no-repeat center/cover;
+}
+/* line 78, ../sass/_persos.scss */
+.persos .cartes .carte .carte-top {
+  top: -15%;
+}
+/* line 82, ../sass/_persos.scss */
+.persos .cartes .carte .carte-bot {
+  bottom: -15%;
+}
+
+/* line 1, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-left p, .chat .chat-body .chat-messages .bulle-right p {
+  position: relative;
+  border-radius: 4px;
+  min-height: 10px;
+  min-width: 40px;
+  max-width: 75%;
+  display: inline-block;
+  margin: 10px;
+  padding: 7px 10px;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+/* line 13, ../sass/_chat.scss */
+.chat {
+  position: absolute;
+  bottom: 0;
+  right: 3vw;
+  height: 19.5vw;
+  width: 17vw;
+  background: #222;
+  box-shadow: 0 0 100px #731768;
+}
+/* line 21, ../sass/_chat.scss */
+.chat .chat-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: end;
+}
+/* line 31, ../sass/_chat.scss */
+.chat .chat-body .chat-messages {
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  align-items: end;
+  flex-flow: wrap;
+  box-sizing: border-box;
+  padding: 10px;
+}
+/* line 40, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-left {
+  width: 100%;
+  display: block;
+}
+/* line 43, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-left p {
+  background: #444;
+  color: whitesmoke;
+  float: left;
+}
+/* line 48, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-left p::before {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: -3px;
+  height: 0;
+  width: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #444;
+  border-bottom: 7px solid transparent;
+}
+/* line 61, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-right {
+  width: 100%;
+  display: block;
+}
+/* line 64, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-right p {
+  background: #DC1ABF;
+  color: white;
+  float: right;
+}
+/* line 69, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-right p::before {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  right: -4px;
+  height: 0;
+  width: 0;
+  border-top: 7px solid transparent;
+  border-left: 7px solid #DC1ABF;
+  border-bottom: 7px solid transparent;
+}
+/* line 84, ../sass/_chat.scss */
+.chat .chat-foot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+/* line 94, ../sass/_chat.scss */
+.chat .chat-foot form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #444;
+}
+/* line 102, ../sass/_chat.scss */
+.chat .chat-foot form textarea {
+  position: absolute;
+  width: 78%;
+  top: 15%;
+  height: 65%;
+  left: 15px;
+  padding: 8px 10px 0;
+  background-color: rgba(50, 50, 50, 0.3);
+  color: white;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+  z-index: 15;
+  transition: 0.2s;
+  overflow: hidden;
+}
+/* line 117, ../sass/_chat.scss */
+.chat .chat-foot form textarea:focus {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 16px 25px;
+}
+/* line 125, ../sass/_chat.scss */
+.chat .chat-foot form button {
+  font-size: 2em;
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  width: 45px;
+  height: 45px;
+  transform: rotate(45deg);
+  background: url("../images/send.svg");
+  background-size: 50%;
+  background-position: 10px 13px;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 50%;
+  box-sizing: border-box;
+  z-index: 20;
+  transition: 0.1s;
+}
+/* line 142, ../sass/_chat.scss */
+.chat .chat-foot form button:active {
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+/* line 1, ../sass/_deck.scss */
+.echange, .echange-advs {
+  position: absolute;
+  bottom: 10.5vw;
+  left: 23vw;
+}
+/* line 5, ../sass/_deck.scss */
+.echange form, .echange-advs form {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
+}
+/* line 9, ../sass/_deck.scss */
+.echange form input, .echange-advs form input {
+  pointer-events: none;
+  display: none;
+}
+/* line 13, ../sass/_deck.scss */
+.echange form button, .echange-advs form button {
+  position: absolute;
+  right: -0.5vw;
+  top: 50%;
+  transform: translate(100%, -50%);
+  width: auto;
+  padding: 0 20px;
+  height: 3vw;
+  border-radius: 1000px;
+  border: solid 2px #ff5ef7;
+  background: #111;
+  color: #ff5ef7;
+  font-family: "Bungee Inline";
+  font-size: 1.2em;
+  box-shadow: 0 0px 10px #DC1ABF inset, 0 0 20px #DC1ABF, 0 0 30px black;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+/* line 33, ../sass/_deck.scss */
+.echange form button:active, .echange-advs form button:active {
+  opacity: 0.8;
+}
+/* line 40, ../sass/_deck.scss */
+.echange .card-hole, .echange-advs .card-hole {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* line 45, ../sass/_deck.scss */
+.echange .card-hole .destination, .echange-advs .card-hole .destination {
+  position: relative;
+  display: inline-block;
+  width: 7vw;
+  height: 9.5vw;
+  margin-right: 0.5vw;
+  background: #111;
+  border-radius: 5%;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.8) inset;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* line 56, ../sass/_deck.scss */
+.echange .card-hole .destination .card, .echange-advs .card-hole .destination .card {
+  pointer-events: auto !important;
+  position: absolute;
+  width: 93%;
+  height: 93%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
-  transition: 0.25s;
+  top: 50%;
+  transform: translate(-50%, -50%) rotateY(0) rotateX(0) perspective(0) !important;
 }
-/* line 459, ../sass/_new.scss */
-#vue2 .marged .playarea .cards .card img:hover {
-  box-shadow: 0px 0px 8px rgba(224, 224, 224, 0.5), 0px 0px 16px #e0e0e0;
-  transition: 0.25s;
+/* line 64, ../sass/_deck.scss */
+.echange .card-hole .destination .card::before, .echange-advs .card-hole .destination .card::before {
+  display: none;
 }
-/* line 466, ../sass/_new.scss */
-#vue2 .marged .playarea .cards .card.hidden img {
-  border: 2px solid #e351bf;
-  box-shadow: 0px 0px 8px rgba(227, 81, 191, 0.5), 0px 0px 16px #e351bf, 0px 0px 8px rgba(227, 81, 191, 0.25) inset, 0px 0px 16px rgba(227, 81, 191, 0.5) inset;
+/* line 67, ../sass/_deck.scss */
+.echange .card-hole .destination .card::after, .echange-advs .card-hole .destination .card::after {
+  content: 'remettre la carte dans la main';
+  color: white;
+  font-family: monospace;
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateZ(50px);
+  opacity: 0;
+  transition: 0.2s;
 }
-/* line 476, ../sass/_new.scss */
-#vue2 .marged img {
-  max-width: 100%;
-  max-height: 100%;
+/* line 86, ../sass/_deck.scss */
+.echange .card-hole .destination .card:hover::after, .echange-advs .card-hole .destination .card:hover::after {
+  opacity: 1;
+}
+
+/* line 94, ../sass/_deck.scss */
+.deck {
+  position: absolute;
+  bottom: -3vw;
+  left: 12vw;
+  height: 12vw;
+  width: 60vw;
+  display: flex;
+  justify-content: space-evenly;
+  z-index: 100;
+}
+/* line 104, ../sass/_deck.scss */
+.deck .card:hover {
+  top: -40%;
+  z-index: 30;
+}
+/* line 107, ../sass/_deck.scss */
+.deck .card:hover::before {
+  box-shadow: 0 20px 70px -10px rgba(0, 0, 0, 0.3), 0 50px 100px 0 rgba(0, 0, 0, 0.4);
+}
+/* line 110, ../sass/_deck.scss */
+.deck .card:hover .objet {
+  bottom: 1vw;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* line 118, ../sass/_deck.scss */
+.deck .card:active {
+  transform: scale3d(1, 1, 1) !important;
+}
+
+/* line 123, ../sass/_deck.scss */
+.card {
+  position: relative;
+  width: 15%;
+  height: 100%;
+  transform-style: preserve-3d;
+  top: 0;
+  margin-right: -30px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  transition: top 0.2s;
+}
+/* line 135, ../sass/_deck.scss */
+.card:before {
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 5%;
+  height: 90%;
+  width: 90%;
+  border-radius: 5%;
+  box-shadow: 0 20px 70px -10px rgba(0, 0, 0, 0.3), 0 50px 100px 0 rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+/* line 146, ../sass/_deck.scss */
+.card .fond {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 3%;
+  pointer-events: none;
+}
+/* line 154, ../sass/_deck.scss */
+.card .objet {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  height: 90%;
+  transition: 0.2s;
+  transform: translateZ(30px);
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 170, ../sass/_deck.scss */
+.transZ {
+  transform: translateZ(0) !important;
+}
+
+/* line 1, ../sass/_deck-advs.scss */
+.deck-advs {
+  position: absolute;
+  top: 0;
+  left: 18vw;
+  height: 8vw;
+  width: 50vw;
+  display: flex;
+}
+/* line 8, ../sass/_deck-advs.scss */
+.deck-advs .carte-advs {
+  position: relative;
+  margin-right: -20px;
+  width: 16%;
+  height: 137%;
+  bottom: 70%;
+  border-radius: 5px;
+  background: #111 url("../images/cartes/card_back.jpg") no-repeat center/contain;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: rotate(180deg);
+}
+
+/* line 23, ../sass/_deck-advs.scss */
+.echange-advs button {
+  left: 50%;
+  transform: translate(-55%, -50%) !important;
+  width: auto !important;
+  padding: 0 20px !important;
 }

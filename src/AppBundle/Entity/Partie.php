@@ -149,7 +149,10 @@ class Partie
         $this->ended = 0;
     }
 
-
+    public function __toString()
+    {
+        return (string) $this->getId();
+    }
 
     /**
      * Get id

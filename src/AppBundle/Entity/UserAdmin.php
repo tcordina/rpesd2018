@@ -61,6 +61,11 @@ class UserAdmin extends BaseUser
     private $rank;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="joueur")
+     */
+    private $messages;
+
+    /**
      * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
      * @var string
      */
@@ -330,5 +335,53 @@ class UserAdmin extends BaseUser
     private function eloChange($elo)
     {
         // switch break avec les différentes valeurs de $elo puis setRank()
+    }
+
+    /**
+     * Set messages
+     *
+     * @param integer $messages
+     *
+     * @return UserAdmin
+     */
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Get messages
+     *
+     * @return integer
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \AppBundle\Entity\Message $message
+     *
+     * @return UserAdmin
+     */
+    public function addMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \AppBundle\Entity\Message $message
+     */
+    public function removeMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages->removeElement($message);
     }
 }

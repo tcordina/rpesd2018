@@ -1,5 +1,5 @@
 easy_admin:
-    site_name: 'ProjetS4'
+    site_name: 'Administration'
     formats:
         date: 'd/m/Y'
         time: 'H:i'
@@ -14,22 +14,6 @@ easy_admin:
                 fields: ['username', 'email', 'roles', 'elo', 'rank', { property: 'imageFile', type: 'vich_image' }]
                 sort: ['id', 'ASC']
             disabled_actions: ['new']
-        Carte:
-          class: AppBundle\Entity\Carte
-          list:
-              fields: ['id', 'valeur', 'imageName', 'updatedAt']
-              sort: ['id', 'ASC']
-          form:
-              fields: ['valeur', { property: 'imageFile', type: 'vich_image' }]
-              sort: ['id', 'ASC']
-        Objectif:
-            class: AppBundle\Entity\Objectif
-            list:
-                fields: ['id', 'valeur', 'imageName', 'updatedAt']
-                sort: ['id', 'ASC']
-            form:
-                fields: ['valeur', { property: 'imageFile', type: 'vich_image' }]
-                sort: ['id', 'ASC']
         Partie:
             class: AppBundle\Entity\Partie
             list:
@@ -39,11 +23,19 @@ easy_admin:
                 fields: ['joueur1', 'joueur2', 'manche', 'winner']
                 sort: ['id', 'ASC']
             disabled_actions: ['new']
+        Message:
+            class: AppBundle\Entity\Message
+            list:
+                fields: ['id', 'contenu', {property: 'partie', label: 'partie'}, {property: 'joueur.username', label: 'auteur'}, 'createdAt']
+                sort: ['id', 'ASC']
+            form:
+                fields: ['contenu']
+            new:
+                fields: ['contenu', {property: 'partie', label: 'partie'}, {property: 'joueur', label: 'auteur'}]
     design:
         menu:
             - { label: 'Accueil', route: 'homepage', icon: 'home' }
             - { entity: 'UserAdmin', label: 'Utilisateurs', icon: 'user' }
-            - { entity: 'Partie', label: 'Parties', icon: 'th-large' }
-            - { entity: 'Carte', label: 'Cartes', icon: 'th-large' }
-            - { entity: 'Objectif', label: 'Objectif', icon: 'th-large' }
+            - { entity: 'Partie', label: 'Parties', icon: 'gamepad' }
+            - { entity: 'Message', label: 'Messages', icon: 'comment' }
         brand_color: '#333333'

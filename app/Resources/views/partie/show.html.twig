@@ -1,24 +1,51 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/plateau.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+{% endblock %}
 {% block body %}
     <div id="game">
         <div id="plateau"></div>
         <div id="deck"></div>
-        <div id="chat"></div>
+        <section class="chat">
+            <div class="glitch border-top"></div>
+            <div class="glitch border-right"></div>
+            <div class="glitch border-left"></div>
+            <div class="chat-body" id="chat">
+
+            </div>
+            <div class="chat-foot">
+                <form id="postermessage" action="{{ path('partie_posterMessage', {'partie':partie}) }}" method="post">
+                    <textarea id="message" name="message" placeholder="envoyer un message..."></textarea>
+                    <button type="submit"></button>
+                </form>
+            </div>
+        </section>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
         $(document).ready(function () {
-            $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}")
+            $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}", function(){
+                $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
+            })
             setInterval(function () {
-                $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}")
-                var elem = document.getElementById('chat')
-                elem.scrollTop = elem.scrollHeight
-            }, 3000);
+                $("#chat").load("{{ path('partie_afficherMessages', {partie: partie.id}) }}", function(){
+                    if(!$("#chat").is(":hover")) {
+                        $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
+                    }
+                })
+            }, 3000)
+            $('.chat-messages').scroll( function() {
+                sessionStorage.scrollTop = $('.chat-messages').scrollTop;
+            });
             $('#postermessage').on('submit', function (e) {
                 e.preventDefault()
+                if($("#message").val() == '') {
+                    return false
+                }
                 $.ajax({
                     url: $(this).attr('action'),
                     type: $(this).attr('method'),
@@ -33,7 +60,7 @@
         $(document).ready(function(){
             setInterval(function() {
                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
-            }, 2000)
+            }, 3000)
 
             $('.action_form_btn').on('click', function () {
                 var cartes = []
@@ -65,7 +92,6 @@
                         type: "GET",
                         url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
                         success: function (res) {
-                            console.log(res)
                             if(res == '2') {
                                 i = 0
                                 $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
@@ -91,7 +117,6 @@
                         type: "GET",
                         url: "{{ path('partie_cetaki', {partie: partie.id}) }}",
                         success: function (res) {
-                            console.log(res)
                             if (res == '1') {
                                 i = 0
                                 $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")

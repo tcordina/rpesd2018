@@ -587,6 +587,48 @@ class PartieController extends Controller
             $loser->setElo($lNewElo);
             $winner->setWins($winner->getWins()+1);
             $loser->setLosses($loser->getLosses()+1);
+            $w = $winner->getElo();
+            $l = $loser->getElo();
+            switch($w){
+                case($w < 1150):
+                    $winner->setRank('bronze');
+                    break;
+                case($w < 1500):
+                    $winner->setRank('argent');
+                    break;
+                case($w < 1850):
+                    $winner->setRank('or');
+                    break;
+                case($w < 2200):
+                    $winner->setRank('platine');
+                    break;
+                case($w < 2600):
+                    $winner->setRank('diamant');
+                    break;
+                case($w >= 2600):
+                    $winner->setRank('maître');
+                    break;
+            }
+            switch($l){
+                case($l < 1150):
+                    $loser->setRank('bronze');
+                    break;
+                case($l < 1500):
+                    $loser->setRank('argent');
+                    break;
+                case($l < 1850):
+                    $loser->setRank('or');
+                    break;
+                case($l < 2200):
+                    $loser->setRank('platine');
+                    break;
+                case($l < 2600):
+                    $loser->setRank('diamant');
+                    break;
+                case($l >= 2600):
+                    $loser->setRank('maître');
+                    break;
+            }
         }else {
             $partie->setWinner(2);
             $winner = $partie->getJoueur2();
@@ -601,6 +643,48 @@ class PartieController extends Controller
             $loser->setElo($lNewElo);
             $winner->setWins($winner->getWins()+1);
             $loser->setLosses($loser->getLosses()+1);
+            $w = $winner->getElo();
+            $l = $loser->getElo();
+            switch($w){
+                case($w < 1150):
+                    $winner->setRank('bronze');
+                    break;
+                case($w < 1500):
+                    $winner->setRank('argent');
+                    break;
+                case($w < 1850):
+                    $winner->setRank('or');
+                    break;
+                case($w < 2200):
+                    $winner->setRank('platine');
+                    break;
+                case($w < 2600):
+                    $winner->setRank('diamant');
+                    break;
+                case($w >= 2600):
+                    $winner->setRank('maître');
+                    break;
+            }
+            switch($l){
+                case($l < 1150):
+                    $loser->setRank('bronze');
+                    break;
+                case($l < 1500):
+                    $loser->setRank('argent');
+                    break;
+                case($l < 1850):
+                    $loser->setRank('or');
+                    break;
+                case($l < 2200):
+                    $loser->setRank('platine');
+                    break;
+                case($l < 2600):
+                    $loser->setRank('diamant');
+                    break;
+                case($l >= 2600):
+                    $loser->setRank('maître');
+                    break;
+            }
         }
         $partie->setEnded(true);
         $em = $this->getDoctrine()->getManager();
@@ -703,6 +787,7 @@ class PartieController extends Controller
     public function posterChatAction(Request $request, Partie $partie)
     {
         $em = $this->getDoctrine()->getManager();
+        //die(var_dump($partie));
 
         $content = $request->request->get('message');
         $user = $this->getUser();
@@ -727,14 +812,15 @@ class PartieController extends Controller
     {
         $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy(
             ['partie' => $partie->getId()],
-            ['id' => 'DESC'],
-            10,
-            0
+            ['id' => 'DESC']
         );
+        $user = $this->getUser()->getId();
+        $user == $partie->getJoueur1()->getId() ? $joueur = 1 : $joueur = 2;
 
         return $this->render('partie/chat.html.twig', [
             'partie' => $partie,
             'messages' => $messages,
+            'joueur' => $joueur,
         ]);
     }
 

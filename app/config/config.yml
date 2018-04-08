@@ -96,5 +96,5 @@ vich_uploader:
 # Gravatar Bundle Configuration
 ornicar_gravatar:
     rating: g
-    size: 150
+    size: ~
     default: retro

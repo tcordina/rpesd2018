@@ -22,18 +22,14 @@ class Message
     private $id;
 
     /**
-     * @var Partie
-     *
-     * @ORM\Column(name="partie_id", type="string", length=255)
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Partie", inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $partie;
 
     /**
-     * @var UserAdmin
-     *
-     * @ORM\Column(name="joueur_id", type="string", length=255)
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserAdmin", mappedBy="message")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserAdmin", inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $joueur;
 
@@ -55,6 +51,11 @@ class Message
     public function __construct()
     {
         $this->createdAt = new \DateTime("now");
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getJoueur() . ': '.$this->getContenu();
     }
 
     /**

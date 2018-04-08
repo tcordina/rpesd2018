@@ -372,6 +372,7 @@ class ActionController extends PartieController
         $em = $this->getDoctrine()->getManager();
         if(is_array($cartes) && count($cartes) == 2) {
             $actions = json_decode($partie->getActions());
+            //die(var_dump($actions));
             if ($joueur == 'j1') {
                 foreach($cartes as $carte) {
                     if (!in_array($carte->getId(), $actions->j2[3]->cartes)) {

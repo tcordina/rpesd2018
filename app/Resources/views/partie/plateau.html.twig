@@ -1,279 +1,336 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {##}{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/plateau.css') }}">
+{% endblock %}
 {% block body %}
-<div align="center" id="plateau">
+
 {% for message in app.flashes('notice') %}
     {{ message }}
 {% endfor %}
-<p>Manche n° {{ partie.manche }}</p>
-{% if joueur == 1 %}
 
-    {# affichage des cartes des actions de j2 #}
-    {% if plateau.actions.j2.2.cartes is not empty and plateau.actions.j2.2.cartes|length == 3 %}
-        {# si j2 a joué "cadeau" #}
-        <div style="border: 2px solid #333">
-            <form id="cadeau_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-            {% for carte in plateau.actions.j2.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-                <input type="hidden" name="action" value="cadeau_choix">
-                <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-            {% endfor %}
-            </form>
+{% if joueur == 1 %}
+    <aside>
+        <div class="glitch border-right2"></div>
+
+        <div class="section-jr-top">
+            <h2>{{ partie.joueur2.username }}</h2>
+            <div class="profil-img">
+                <div class="profil-img-container">
+                    {% if partie.joueur2.imageName is empty %}
+                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" alt=""/>
+                    {% else %}
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" alt="image de {{ partie.joueur2.username }}">
+                    {% endif %}
+                </div>
+            </div>
+            <ul class="actions">
+                <li class="action1"><i class="fas fa-check"></i></li>
+                <li class="action2"><i class="fas fa-times"></i></li>
+                <li class="action3">
+                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </li>
+                <li class="action4">
+                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
+                </li>
+            </ul>
         </div>
-    {% elseif plateau.actions.j2.3.cartes is not empty %}
+        <div class="section-jr-bot">
+            <h2>{{ partie.joueur1.username }}</h2>
+            <div class="profil-img">
+                <div class="profil-img-container">
+                    {% if partie.joueur1.imageName is empty %}
+                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" alt=""/>
+                    {% else %}
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" alt="image de {{ partie.joueur1.username }}">
+                    {% endif %}
+                </div>
+            </div>
+            <ul class="actions">
+                <li class="action1" id="action1" onclick="add_fields()"><i class="fas fa-check"></i></li>
+                <li class="action2" id="action2"><i class="fas fa-times"></i></li>
+                <li class="action3" id="action3">
+                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </li>
+                <li class="action4" id="action4">
+                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <section class="adversaire">
+        <div class="deck-advs">
+            {# affichage de la main de j2 #}
+            {% for carte in plateau.mainJ2 %}
+                {# Afficher dos de carte #}
+                <div class="carte-advs"></div>
+            {% endfor %}
+        </div>
+        {% if plateau.actions.j2.2.cartes is not empty and plateau.actions.j2.2.cartes|length == 3 %}
+        {# si j2 a joué "cadeau" #}
+        <div class="echange-advs">
+            {% for carte in plateau.actions.j2.2.cartes %}
+            <form class="cadeau_choix" method="post" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}">
+                <label class="card-hole full">
+                    <input type="checkbox" class="mycheck"/>
+                    <span class="destination">
+                        <div data-tilt class="card card-deck">
+                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                        </div>
+                    </span>
+                </label>
+                <input type="hidden" name="action" value="cadeau_choix">
+                <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}" style="cursor: pointer;">Choisir</button>
+            </form>
+            {% endfor %}
+        </div>
+        {% elseif plateau.actions.j2.3.cartes is not empty %}
         {# si j2 a joué "concurrence" #}
-        <div style="border: 2px solid #333">
+            <div class="echange-advs">
             {% for carte in plateau.actions.j2.3.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
                 {% if loop.index0 %2 == 0 %}
                 <form class="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                     <input type="hidden" name="action" value="concurrence_choix">
+                    <label class="card-hole full">
+                        <input type="checkbox" class="mycheck"/>
+                        <span class="destination">
+                            <div data-tilt class="card card-deck" id="1">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                            </div>
+                        </span>
+                    </label>
                 {% else %}
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button class="concurrence_choix_btn">Choisir</button>
-                </form>
+                    <label class="card-hole full">
+                        <input type="checkbox" class="mycheck"/>
+                        <span class="destination">
+                            <div data-tilt class="card card-deck" id="1">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                            </div>
+                        </span>
+                    </label>
+                    <button class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
+                    </form>
                 {% endif %}
             {% endfor %}
-        </div>
-    {% endif %}
-    <br/><br/>
-    {# affichage de la main de j2#}
-    {% for carte in plateau.mainJ2 %}
-        {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des actions de j2 #}
-    {% for action in plateau.actions.j2 %}
-        {% if action.jouee %}
-            <li style="background:darkred; padding: 5px 30px">{{ action.nom }}</li>
-        {% else %}
-            <li style="background:lightgreen; padding: 5px 30px">{{ action.nom }}</li>
+            </div>
         {% endif %}
-    {% endfor %}
-    <br/><br/>
-    {# affichage des cartes objets jouées par j2 #}
-    {% for objectif in objectifs %}
-        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
-            {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-            {% else %}
-                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
-            {% endfor %}
+    </section>
+    <section class="persos">
+        <div class="cartes">
+        {# affichage des cartes objets jouées par j2 #}
+        {% for objectif in objectifs %}
+            <div class="carte">
+                <ul class="carte-top">
+                {% for carte in plateau.terrainJ2[objectif.id] %}
+                    <li>{{ objectif.id }}</li>
+                {% endfor %}
+                </ul>
+                {% if objectif.id in plateau.jetons.j2 %}
+                    <div class="jeton" style="transform:  translateY(-160%);"></div>
+                {% elseif objectif.id in plateau.jetons.neutre %}
+                    <div class="jeton" style="transform:  translateY(-50%);"></div>
+                {% elseif objectif.id in plateau.jetons.j1 %}
+                    <div class="jeton" style="transform:  translateY(65%);"></div>
+                {% endif %}
+                <img src="{{ asset('assets/images/cartes/persos/carte_'~objectif.id~'.jpg') }}" alt="">
+                <ul class="carte-bot">
+                {# affichage des cartes objets jouées par j1 #}
+                {% for carte in plateau.terrainJ1[objectif.id] %}
+                    <li>{{ objectif.id }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des cartes objectifs #}
-    {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">obj:{{ objectif.id }} | val:{{ objectif.valeur }}
-        {# affichage des jetons #}
-        {% if objectif.id in plateau.jetons.j2 %}
-            <div style="position: absolute">Jeton J2</div>
-        {% elseif objectif.id in plateau.jetons.neutre %}
-            <div style="position: absolute">Jeton neutre</div>
-        {% elseif objectif.id in plateau.jetons.j1 %}
-            <div style="position: absolute">Jeton J1</div>
-        {% endif %}
-        </div>
-    {% endfor %}
-
-    {# affichage de la pioche #}
-    {% if plateau.pioche is not empty %}
-    <div style="margin-left: 50px;display:inline-block;">
-        <div style="background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche.0 - 1].valeur }}</div>
-    </div>
-    {% else %}
-        <div style="margin-left: 50px;display:inline-block;">
-            <div style="border:1px solid orange;width:75px;height:112.5px;"></div>
-        </div>
-    {% endif %}
-    <br/><br/>
-    {# affichage des cartes objets jouées par j1 #}
-    {% for objectif in objectifs %}
-        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
-            {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-            {% else %}
-                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
-            {% endfor %}
-        </div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des actions de j1 #}
-    {# si c'est au joueur 1 de jouer #}
+    </section>
     {% if partie.tourJoueurId == 1 and plateau.tourJoue.j1 == 0 and plateau.actions.j2.2.cartes is empty and plateau.actions.j2.3.cartes is empty %}
-        <form id="action_form" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-        {% for action in plateau.actions.j1 %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <button class="action_form_btn" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">{{ action.nom }}</button>
-            {% endif %}
-            {# si ce n'est pas au joueur 2 de jouer #}
-        {% else %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% for action in plateau.actions.j1 %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-            {% endif %}
-        {% endfor %}
-        </form>
-    {% endif %}
-    <br/><br/>
-    {# include deck #}
+    <script defer type="text/javascript">
+        var inputCart = '<label class="card-hole empty"><input type="checkbox" class="mycheck"><span class="destination"></span></label>';
+        var buttonCart = '<button type="submit">Jouer</button>';
+        var inputSecret = '<input type="hidden" name="action" value="secret">';
+        var inputCompromis = '<input type="hidden" name="action" value="compromis">';
+        var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
+        var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
 
+        $('#action1').click(function () {$('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);});
+        $('#action2').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);});
+        $('#action3').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);});
+        $('#action4').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);});
+    </script>
+    {% endif %}
 {% elseif joueur == 2 %}
-    {# affichage des cartes des actions de j1 #}
-    {% if plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length == 3 %}
-        <div style="border: 2px solid #333">
-            <form id="cadeau_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-                <input type="hidden" name="action" value="cadeau_choix">
-            {% for carte in plateau.actions.j1.2.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-                <br/>
-                    <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}">Choisir</button>
-                <br/>
-            {% endfor %}
-            </form>
+    <aside>
+        <div class="glitch border-right2"></div>
+
+        <div class="section-jr-top">
+            <h2>{{ partie.joueur1.username }}</h2>
+            <div class="profil-img">
+                <div class="profil-img-container">
+                    {% if partie.joueur1.imageName is empty %}
+                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" alt=""/>
+                    {% else %}
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" alt="image de {{ partie.joueur1.username }}">
+                    {% endif %}
+                </div>
+            </div>
+            <ul class="actions">
+                <li class="action1"><i class="fas fa-check"></i></li>
+                <li class="action2"><i class="fas fa-times"></i></li>
+                <li class="action3">
+                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </li>
+                <li class="action4">
+                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
+                </li>
+            </ul>
         </div>
-    {% elseif plateau.actions.j1.3.cartes is not empty %}
-        {# si j1 a joué "concurrence" #}
-        <div style="border: 2px solid #333">
-            {% for carte in plateau.actions.j1.3.cartes %}
-                <div style="display:inline-block;background:lightgreen;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-                {% if loop.index0 %2 == 0 %}
-                <form class="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-                    <input type="hidden" name="action" value="concurrence_choix">
-                    <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                {% else %}
-                    <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
-                    <button class="concurrence_choix_btn">Choisir</button>
-                </form>
-                {% endif %}
+        <div class="section-jr-bot">
+            <h2>{{ partie.joueur2.username }}</h2>
+            <div class="profil-img">
+                <div class="profil-img-container">
+                    {% if partie.joueur2.imageName is empty %}
+                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" alt=""/>
+                    {% else %}
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" alt="image de {{ partie.joueur2.username }}">
+                    {% endif %}
+                </div>
+            </div>
+            <ul class="actions">
+                <li class="action1" id="action1" onclick="add_fields()"><i class="fas fa-check"></i></li>
+                <li class="action2" id="action2"><i class="fas fa-times"></i></li>
+                <li class="action3" id="action3">
+                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
+                </li>
+                <li class="action4" id="action4">
+                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <section class="adversaire">
+        <div class="deck-advs">
+            {# affichage de la main de j1 #}
+            {% for carte in plateau.mainJ1 %}
+                {# Afficher dos de carte #}
+                <div class="carte-advs"></div>
             {% endfor %}
         </div>
-    {% endif %}
-    <br/><br/>
-    {# affichage de la main de j1 #}
-    {% for carte in plateau.mainJ1 %}
-        {# Afficher dos de carte #}
-        <div style="display:inline-block;background:lightgreen;width:100px;height:150px;">{{ cartes[carte-1].valeur }}</div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des actions de j1 #}
-    {% for action in plateau.actions.j1 %}
-        {% if action.jouee %}
-            <li style="background:darkred; padding: 5px 30px">{{ action.nom }}</li>
-        {% else %}
-            <li style="background:lightgreen; padding: 5px 30px">{{ action.nom }}</li>
+        {% if plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length == 3 %}
+            {# si j2 a joué "cadeau" #}
+            <div class="echange-advs">
+                {% for carte in plateau.actions.j1.2.cartes %}
+                    <form class="cadeau_choix" method="post" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}">
+                        <label class="card-hole full">
+                            <input type="checkbox" class="mycheck"/>
+                            <span class="destination">
+                        <div data-tilt class="card card-deck">
+                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                        </div>
+                    </span>
+                        </label>
+                        <input type="hidden" name="action" value="cadeau_choix">
+                        <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}" style="cursor: pointer;">Choisir</button>
+                    </form>
+                {% endfor %}
+            </div>
+        {% elseif plateau.actions.j1.3.cartes is not empty %}
+            {# si j1 a joué "concurrence" #}
+            <div class="echange-advs">
+                {% for carte in plateau.actions.j1.3.cartes %}
+                    {% if loop.index0 %2 == 0 %}
+                    <form class="concurrence_choix" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
+                        <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        <input type="hidden" name="action" value="concurrence_choix">
+                        <label class="card-hole full">
+                            <input type="checkbox" class="mycheck"/>
+                            <span class="destination">
+                            <div data-tilt class="card card-deck" id="1">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                            </div>
+                        </span>
+                        </label>
+                    {% else %}
+                        <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
+                        <label class="card-hole full">
+                            <input type="checkbox" class="mycheck"/>
+                            <span class="destination">
+                            <div data-tilt class="card card-deck" id="1">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
+                            </div>
+                        </span>
+                        </label>
+                        <button class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
+                        </form>
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endif %}
-    {% endfor %}
-    <br/><br/>
-    {# affichage des cartes objets jouées par j1 #}
-    {% for objectif in objectifs %}
-        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
-            {% for carte in plateau.terrainJ1[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-            {% else %}
-                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
+    </section>
+    <section class="persos">
+        <div class="cartes">
+            {# affichage des cartes objets jouées par j1 #}
+            {% for objectif in objectifs %}
+                <div class="carte">
+                    <ul class="carte-top">
+                        {% for carte in plateau.terrainJ1[objectif.id] %}
+                            <li>{{ objectif.id }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% if objectif.id in plateau.jetons.j1 %}
+                        <div class="jeton" style="transform:  translateY(-160%);"></div>
+                    {% elseif objectif.id in plateau.jetons.neutre %}
+                        <div class="jeton" style="transform:  translateY(-50%);"></div>
+                    {% elseif objectif.id in plateau.jetons.j2 %}
+                        <div class="jeton" style="transform:  translateY(65%);"></div>
+                    {% endif %}
+                    <img src="{{ asset('assets/images/cartes/persos/carte_'~objectif.id~'.jpg') }}" alt="">
+                    <ul class="carte-bot">
+                        {# affichage des cartes objets jouées par j2 #}
+                        {% for carte in plateau.terrainJ2[objectif.id] %}
+                            <li>{{ objectif.id }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endfor %}
         </div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des cartes objectifs #}
-    {% for objectif in objectifs %}
-        <div style="display:inline-block;background:indianred;width:150px;height:225px;">obj:{{ objectif.id }} | val:{{ objectif.valeur }}
-        {# affichage des jetons #}
-        {% if objectif.id in plateau.jetons.j2 %}
-            <div style="position: absolute">Jeton J2</div>
-        {% elseif objectif.id in plateau.jetons.neutre %}
-            <div style="position: absolute">Jeton neutre</div>
-        {% elseif objectif.id in plateau.jetons.j1 %}
-            <div style="position: absolute">Jeton J1</div>
-        {% endif %}
-        </div>
-    {% endfor %}
-    {# affichage de la pioche #}
-    {% if plateau.pioche is not empty %}
-        <div style="margin-left: 50px;display:inline-block;">
-            <div style="background:orange;width:75px;height:112.5px;">{{ cartes[plateau.pioche.0 - 1].id }}</div>
-        </div>
-    {% else %}
-        <div style="margin-left: 50px;display:inline-block;">
-            <div style="border:1px solid orange;width:75px;height:112.5px;"></div>
-        </div>
-    {% endif %}
-    <br/><br/>
-    {# affichage des cartes objets jouées par j2 #}
-    {% for objectif in objectifs %}
-        <div style="position:relative;left:-65px;display:inline-block;border:1px solid #000;width:150px;height:225px;">
-            {% for carte in plateau.terrainJ2[objectif.id] %}
-                <div style="display:inline-block;background:indianred;width:50px;height:75px;">obj:{{ cartes[carte-1].objectif }} | val:{{ cartes[carte-1].valeur }}</div>
-            {% else %}
-                <div style="display:inline-block;border:1px solid indianred;width:50px;height:75px;">non</div>
-            {% endfor %}
-        </div>
-    {% endfor %}
-    <br/><br/>
-    {# affichage des actions de j2 #}
-    {# si c'est au joueur 2 de jouer #}
+    </section>
     {% if partie.tourJoueurId == 2 and plateau.tourJoue.j2 == 0 and plateau.actions.j1.2.cartes is empty and plateau.actions.j1.3.cartes is empty %}
-        <form id="action_form" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-        {% for action in plateau.actions.j2 %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <button class="action_form_btn" name="action" value="{{ action.nom }}" style="background:cornflowerblue;padding:5px 30px; margin: auto 2px;">{{ action.nom }}</button>
-            {% endif %}
-        {# si ce n'est pas au joueur 2 de jouer #}
-        {% else %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-            {% endif %}
-        {% endfor %}
-        </form>
-    {% else %}
-        {% for action in plateau.actions.j2 %}
-            {% if action.jouee %}
-                <li style="background:darkred;padding:5px 30px">{{ action.nom}}</li>
-            {% else %}
-                <li style="background:cornflowerblue;padding:5px 30px">{{ action.nom}}</li>
-            {% endif %}
-        {% endfor %}
+        <script defer type="text/javascript">
+            var inputCart = '<label class="card-hole empty"><input type="checkbox" class="mycheck"><span class="destination"></span></label>';
+            var buttonCart = '<button type="submit">Jouer</button>';
+            var inputSecret = '<input type="hidden" name="action" value="secret">';
+            var inputCompromis = '<input type="hidden" name="action" value="compromis">';
+            var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
+            var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
+
+            $('#action1').click(function () {$('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);});
+            $('#action2').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);});
+            $('#action3').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);});
+            $('#action4').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);});
+        </script>
     {% endif %}
-    <br/><br/>
-    {# include deck #}
 {% endif %}
-</div>
+    <script src="{{ asset('assets/js/tilt.jquery.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
-            $('.action_form_btn').on('click', function () {
-                var cartes = [];
-                $("input:checked").each(function() {
-                    cartes.push($(this).val());
-                });
-                var action = $(this).val();
-                $('#action_form').submit(function(e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        type: 'POST',
-                        data: {
-                            cartes: JSON.stringify(cartes),
-                            action: action
-                        },
-                    });
+            $('#action_form').on('submit', function(e) {
+                console.log('action submited');
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(){
+                        $('.echange').hide();
+                    }
                 });
             });
             $('.cadeau_choix_btn').on('click', function () {
@@ -299,7 +356,7 @@
             });
             $('.concurrence_choix_btn').on('click', function () {
                 $(this).closest('form').submit(function(e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     //console.log($(this).serialize());
                     req = $(this).serialize().split('] ');
                     //action = action.split('&')[0];
@@ -315,5 +372,39 @@
                 });
             });
         });
+    </script>
+    <script type="text/javascript">
+        $('.mycheck').prop('checked', false);
+        $(".card-deck").mouseleave(function () {
+            $(".objet", this).addClass("transZ");
+        });
+        $(".card-deck").mouseenter(function () {
+            $(".objet", this).removeClass("transZ");
+        });
+        function cardToDeck(clic_id) {
+            console.log('card in deck '+clic_id);
+            $('#'+clic_id+':parent').parent().parent().addClass('empty').removeClass('full');
+            $("#"+clic_id).appendTo('.deck').hide().delay(100).show(200);
+            $("#"+clic_id).attr('onclick', 'cardToChange(this.id)');
+        }
+        function cardToChange(clic_id) {
+            console.log('card in change ' +clic_id);
+            $("#"+clic_id).appendTo('.echange form .empty .destination:first').hide().delay(100).show(200);
+            $('.echange form .empty:first > .mycheck').prop('checked', true);
+            $('.echange form .empty:first').addClass('full').removeClass('empty');
+            $("#"+clic_id).attr('onclick', 'cardToDeck(this.id)');
+        }
+    </script>
+
+    <script type="text/javascript">
+        ( function( $ ) {
+            $(".card-deck").tilt({
+                maxTilt: -8,
+                scale: 1.07
+            });
+            $(".carte").tilt({
+                maxTilt: -10,
+            });
+        }( jQuery ) );
     </script>
 {% endblock %}

@@ -1,0 +1,286 @@
+/* line 2, ../sass/_neon.scss */
+.border, .border-top, .border-top2, .border-right, .border-right2, .border-bottom, .border-bottom2, .border-left, .border-left2 {
+  position: absolute;
+  background-color: #fed3ff;
+  border-radius: 20px;
+  z-index: 120;
+}
+
+/* line 8, ../sass/_neon.scss */
+.border-top, .border-top2 {
+  top: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 2px 20px #ff5ef7;
+  border-bottom: 3px solid #ffb0fa;
+}
+
+/* line 16, ../sass/_neon.scss */
+.border-top2 {
+  background-color: #d7eeeb;
+  box-shadow: 0 2px 20px #00b3ee;
+  border-bottom: 3px solid #92f5fe;
+}
+
+/* line 22, ../sass/_neon.scss */
+.border-right, .border-right2 {
+  top: 0;
+  right: -1px;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
+}
+
+/* line 31, ../sass/_neon.scss */
+.border-right2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
+/* line 37, ../sass/_neon.scss */
+.border-bottom, .border-bottom2 {
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 -2px 20px #ff5ef7;
+  border-top: 3px solid #ffbaf4;
+}
+
+/* line 45, ../sass/_neon.scss */
+.border-bottom2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-top: 3px solid #92f5fe;
+}
+
+/* line 51, ../sass/_neon.scss */
+.border-left, .border-left2 {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  box-shadow: 2px 0 20px #ff5ef7;
+  border-left: 3px solid #ffbaf4;
+}
+
+/* line 60, ../sass/_neon.scss */
+.border-left2 {
+  background-color: #d7eeeb;
+  box-shadow: 2px 0 20px #00b3ee;
+  border-left: 3px solid #92f5fe;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes drop {
+  0% {
+    box-shadow: 0 0 1000px rgba(130, 35, 120, 0.4), 0 0 1300px rgba(0, 0, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 1000px rgba(130, 35, 120, 0.5), 0 0 1300px rgba(0, 0, 0, 0.7);
+  }
+}
+@keyframes drop2 {
+  0% {
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 500px rgba(45, 120, 150, 0.3);
+  }
+}
+/* line 91, ../sass/_neon.scss */
+.glitch {
+  animation: flicker var(--animation-time) ease alternate infinite;
+}
+
+/* line 94, ../sass/_neon.scss */
+#dropform {
+  animation: drop var(--animation-time) ease alternate infinite;
+}
+
+/* line 97, ../sass/_neon.scss */
+#dropform2 {
+  animation: drop2 var(--animation-time) ease alternate infinite;
+}
+
+/* line 3, ../sass/chat.scss */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: black;
+}
+
+/* line 11, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-left p, .chat .chat-body .chat-messages .bulle-right p {
+  position: relative;
+  border-radius: 4px;
+  min-height: 10px;
+  min-width: 40px;
+  max-width: 75%;
+  display: inline-block;
+  margin: 10px;
+  padding: 7px 10px;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+/* line 23, ../sass/chat.scss */
+.chat {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  height: 350px;
+  width: 300px;
+  background: #222;
+  box-shadow: 0 0 100px #731768;
+}
+/* line 31, ../sass/chat.scss */
+.chat .chat-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: end;
+}
+/* line 41, ../sass/chat.scss */
+.chat .chat-body .chat-messages {
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  align-items: end;
+  flex-flow: wrap;
+  box-sizing: border-box;
+  padding: 10px;
+}
+/* line 50, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-left {
+  width: 100%;
+  display: block;
+}
+/* line 53, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-left p {
+  background: #444;
+  color: whitesmoke;
+  float: left;
+}
+/* line 58, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-left p::before {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: -3px;
+  height: 0;
+  width: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #444;
+  border-bottom: 7px solid transparent;
+}
+/* line 71, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-right {
+  width: 100%;
+  display: block;
+}
+/* line 74, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-right p {
+  background: #DC1ABF;
+  color: white;
+  float: right;
+}
+/* line 79, ../sass/chat.scss */
+.chat .chat-body .chat-messages .bulle-right p::before {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  right: -4px;
+  height: 0;
+  width: 0;
+  border-top: 7px solid transparent;
+  border-left: 7px solid #DC1ABF;
+  border-bottom: 7px solid transparent;
+}
+/* line 94, ../sass/chat.scss */
+.chat .chat-foot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+/* line 104, ../sass/chat.scss */
+.chat .chat-foot form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #444;
+}
+/* line 112, ../sass/chat.scss */
+.chat .chat-foot form textarea {
+  position: absolute;
+  width: 78%;
+  top: 15%;
+  height: 65%;
+  left: 15px;
+  padding: 8px 10px 0;
+  background-color: rgba(50, 50, 50, 0.3);
+  color: white;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+  z-index: 15;
+  transition: 0.2s;
+  overflow: hidden;
+}
+/* line 127, ../sass/chat.scss */
+.chat .chat-foot form textarea:focus {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 16px 25px;
+}
+/* line 135, ../sass/chat.scss */
+.chat .chat-foot form button {
+  font-size: 2em;
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  width: 45px;
+  height: 45px;
+  transform: rotate(45deg);
+  background: url("../images/send.svg");
+  background-size: 50%;
+  background-position: 10px 13px;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 50%;
+  box-sizing: border-box;
+  z-index: 20;
+  transition: 0.1s;
+}
+/* line 152, ../sass/chat.scss */
+.chat .chat-foot form button:active {
+  background-color: rgba(200, 200, 200, 0.2);
+}

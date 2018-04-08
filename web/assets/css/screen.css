@@ -323,8 +323,9 @@ footer {
   padding: 0 100px;
   box-sizing: border-box;
   font-size: 0.8em;
+  z-index: 2;
 }
-/* line 10, ../sass/_footer.scss */
+/* line 11, ../sass/_footer.scss */
 footer ul {
   padding: 2px;
   margin: 0;
@@ -332,11 +333,11 @@ footer ul {
   list-style: none;
   overflow: hidden;
 }
-/* line 16, ../sass/_footer.scss */
+/* line 17, ../sass/_footer.scss */
 footer ul li {
   display: inline-block;
 }
-/* line 18, ../sass/_footer.scss */
+/* line 19, ../sass/_footer.scss */
 footer ul li a {
   color: white;
   border-radius: 2px;
@@ -346,18 +347,18 @@ footer ul li a {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.6) inset;
   background-color: rgba(0, 0, 0, 0.5);
 }
-/* line 28, ../sass/_footer.scss */
+/* line 29, ../sass/_footer.scss */
 footer ul .deco {
   float: right;
 }
-/* line 30, ../sass/_footer.scss */
+/* line 31, ../sass/_footer.scss */
 footer ul .deco a {
   margin: 0;
   color: red;
   border-color: red;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.6) inset;
 }
-/* line 39, ../sass/_footer.scss */
+/* line 40, ../sass/_footer.scss */
 footer .input-check-2 {
   display: flex;
   align-items: center;
@@ -365,7 +366,7 @@ footer .input-check-2 {
   right: 50px;
   font-size: 1.4em;
 }
-/* line 46, ../sass/_footer.scss */
+/* line 47, ../sass/_footer.scss */
 footer .input-check-2::before {
   content: 'Animations';
   position: absolute;
@@ -376,18 +377,19 @@ footer .input-check-2::before {
   text-decoration: underline;
   font-weight: bold;
 }
-/* line 56, ../sass/_footer.scss */
+/* line 57, ../sass/_footer.scss */
 footer .input-check-2 .switch {
   margin: 0 10px;
 }
 
-/* line 62, ../sass/_footer.scss */
+/* line 63, ../sass/_footer.scss */
 .admin, .backto-profil {
   position: absolute;
   top: 30px;
   right: 0px;
+  z-index: 99;
 }
-/* line 66, ../sass/_footer.scss */
+/* line 67, ../sass/_footer.scss */
 .admin a, .backto-profil a {
   font-size: 0.8em;
   font-family: "Bungee Inline", cursive;
@@ -400,7 +402,7 @@ footer .input-check-2 .switch {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* line 78, ../sass/_footer.scss */
+/* line 79, ../sass/_footer.scss */
 .backto-profil {
   top: 22%;
   left: 100px;
@@ -415,31 +417,72 @@ body {
   font-family: monospace;
   letter-spacing: 1px;
   color: white;
-  background-color: #111;
-  background-image: url("../images/back.gif");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 0 5000px black inset;
 }
 
-/* line 16, ../sass/_index.scss */
+/* line 11, ../sass/_index.scss */
 .clear {
   all: unset;
 }
 
-/* line 19, ../sass/_index.scss */
+/* line 14, ../sass/_index.scss */
 a {
   text-decoration: none;
   cursor: pointer !important;
   opacity: 0.8;
 }
-/* line 23, ../sass/_index.scss */
+/* line 18, ../sass/_index.scss */
 a:hover {
   opacity: 1;
 }
 
-/* line 29, ../sass/_index.scss */
+/* line 23, ../sass/_index.scss */
+.video-back {
+  background: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  text-align: center;
+  overflow: hidden;
+  background-image: url("../images/back.jpg");
+  background-repeat: no-repeat;
+  background-size: 104%;
+  background-position: center;
+}
+/* line 34, ../sass/_index.scss */
+.video-back::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: -1px;
+}
+/* line 42, ../sass/_index.scss */
+.video-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 5000px black inset;
+  z-index: 1;
+}
+/* line 52, ../sass/_index.scss */
+.video-back video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 150%;
+  max-height: 120%;
+  display: inline-block;
+  vertical-align: middle;
+  transition: 0.2s;
+}
+
+/* line 66, ../sass/_index.scss */
 .logo {
   position: absolute;
   top: 40px;
@@ -450,9 +493,10 @@ a:hover {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  z-index: 2;
 }
 
-/* line 39, ../sass/_index.scss */
+/* line 77, ../sass/_index.scss */
 .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique {
   position: absolute;
   top: 52%;
@@ -464,14 +508,14 @@ a:hover {
   color: white;
   z-index: 50;
 }
-/* line 53, ../sass/_index.scss */
+/* line 91, ../sass/_index.scss */
 .case h1, .formulaire h1, .profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1 {
   font-size: 1.8em;
   text-shadow: 0 0 20px white;
   margin: 15px;
   font-family: "Bungee Inline", cursive;
 }
-/* line 59, ../sass/_index.scss */
+/* line 97, ../sass/_index.scss */
 .case .container, .formulaire .container, .profil .container, .jouer .container, .edit .container, .passchange .container, .classement .container, .historique .container {
   position: absolute;
   top: 0;
@@ -482,7 +526,7 @@ a:hover {
   z-index: 52;
   box-sizing: border-box;
 }
-/* line 69, ../sass/_index.scss */
+/* line 107, ../sass/_index.scss */
 .case .sub-container, .formulaire .sub-container, .profil .sub-container, .jouer .sub-container, .edit .sub-container, .passchange .sub-container, .classement .sub-container, .historique .sub-container {
   position: relative;
   width: 100%;
@@ -492,7 +536,7 @@ a:hover {
   z-index: 53;
   box-sizing: border-box;
 }
-/* line 77, ../sass/_index.scss */
+/* line 115, ../sass/_index.scss */
 .case .sub-container .foot, .formulaire .sub-container .foot, .profil .sub-container .foot, .jouer .sub-container .foot, .edit .sub-container .foot, .passchange .sub-container .foot, .classement .sub-container .foot, .historique .sub-container .foot {
   position: absolute;
   bottom: 0;
@@ -502,7 +546,7 @@ a:hover {
   font-size: 0.9em;
   box-sizing: border-box;
 }
-/* line 86, ../sass/_index.scss */
+/* line 124, ../sass/_index.scss */
 .case .sub-container a, .formulaire .sub-container a, .profil .sub-container a, .jouer .sub-container a, .edit .sub-container a, .passchange .sub-container a, .classement .sub-container a, .historique .sub-container a {
   font-family: monospace;
   color: white;
@@ -510,7 +554,7 @@ a:hover {
   padding: 6px 13px;
   letter-spacing: initial;
 }
-/* line 96, ../sass/_index.scss */
+/* line 134, ../sass/_index.scss */
 .case .back-head, .formulaire .back-head, .profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
   position: absolute;
   top: -20px;
@@ -522,24 +566,24 @@ a:hover {
   z-index: 51;
   pointer-events: none;
 }
-/* line 107, ../sass/_index.scss */
+/* line 145, ../sass/_index.scss */
 .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
   top: initial;
   bottom: -50px;
 }
 
-/* line 114, ../sass/_index.scss */
+/* line 152, ../sass/_index.scss */
 .formulaire {
   text-align: center;
 }
-/* line 118, ../sass/_index.scss */
+/* line 156, ../sass/_index.scss */
 .formulaire .foot {
   opacity: 0.8;
   padding: 20px 0;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* line 126, ../sass/_index.scss */
+/* line 164, ../sass/_index.scss */
 .connexion, .inscription {
   position: absolute;
   top: 0;
@@ -549,7 +593,7 @@ a:hover {
   transition: 0.3s;
   z-index: 60;
 }
-/* line 135, ../sass/_index.scss */
+/* line 173, ../sass/_index.scss */
 .connexion .form-container .connexion-options, .inscription .form-container .connexion-options {
   display: flex;
   align-items: center;
@@ -557,22 +601,22 @@ a:hover {
   padding: 0 6% 0 8%;
   box-sizing: border-box;
 }
-/* line 142, ../sass/_index.scss */
+/* line 180, ../sass/_index.scss */
 .connexion .form-container a, .inscription .form-container a {
   float: left;
   border: none;
 }
 
-/* line 148, ../sass/_index.scss */
+/* line 186, ../sass/_index.scss */
 .inscription {
   left: 100%;
 }
-/* line 151, ../sass/_index.scss */
+/* line 189, ../sass/_index.scss */
 .inscription input {
   margin: 5px 0;
 }
 
-/* line 155, ../sass/_index.scss */
+/* line 193, ../sass/_index.scss */
 .form-container {
   position: absolute;
   top: 54%;
@@ -581,7 +625,7 @@ a:hover {
   width: 90%;
   height: 75%;
 }
-/* line 162, ../sass/_index.scss */
+/* line 200, ../sass/_index.scss */
 .form-container #check1, .form-container #check2, .form-container .edit .edit-form #check2, .edit .edit-form .form-container #check2, .form-container .passchange .edit-form #check2, .passchange .edit-form .form-container #check2 {
   position: absolute;
   bottom: 108px;
@@ -589,17 +633,17 @@ a:hover {
   color: #34ce57;
   text-shadow: 0 0 10px rgba(10, 255, 10, 0.5);
 }
-/* line 169, ../sass/_index.scss */
+/* line 207, ../sass/_index.scss */
 .form-container #check2 {
   bottom: 57px;
 }
 
-/* line 174, ../sass/_index.scss */
+/* line 212, ../sass/_index.scss */
 .toleft {
   transform: translate(-100%, 0) !important;
 }
 
-/* line 179, ../sass/_index.scss */
+/* line 217, ../sass/_index.scss */
 form {
   position: absolute;
   top: 50%;
@@ -607,7 +651,7 @@ form {
   transform: translate(-50%, -50%);
   width: 100%;
 }
-/* line 185, ../sass/_index.scss */
+/* line 223, ../sass/_index.scss */
 form input {
   width: 80%;
   margin: 15px 0;
@@ -622,11 +666,11 @@ form input {
   font-size: 1.2em;
   text-shadow: 0 0 10px white;
 }
-/* line 199, ../sass/_index.scss */
+/* line 237, ../sass/_index.scss */
 form input:-webkit-autofill {
   background-color: rgba(50, 50, 50, 0.4) !important;
 }
-/* line 203, ../sass/_index.scss */
+/* line 241, ../sass/_index.scss */
 form button {
   padding: 6px 13px;
   margin-top: 10px;
@@ -639,11 +683,11 @@ form button {
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.3), 0 0 10px rgba(130, 35, 120, 0.6) inset;
   transition: 0.1s;
 }
-/* line 214, ../sass/_index.scss */
+/* line 252, ../sass/_index.scss */
 form button:hover {
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
 }
-/* line 217, ../sass/_index.scss */
+/* line 255, ../sass/_index.scss */
 form button:active {
   opacity: 0.7;
 }

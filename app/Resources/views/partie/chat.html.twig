@@ -1,14 +1,25 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    {% for message in messages|reverse %}
-    <p style="margin-bottom: 7px;">
-        {% if message.joueur == partie.joueur1.id %}
-            {{ partie.joueur1.username }}
-        {% elseif message.joueur == partie.joueur2.id %}
-            {{ partie.joueur2.username }}
+<div class="chat-messages">
+{% for message in messages|reverse %}
+    {% if joueur == 1 %}
+        {% if message.joueur.id == partie.joueur2.id %}
+            <div class="bulle-left">
+                <p>{{ message.contenu }}</p>
+            </div>
+        {% elseif message.joueur.id == partie.joueur1.id %}
+            <div class="bulle-right">
+                <p>{{ message.contenu }}</p>
+            </div>
         {% endif %}
-        ({{ message.createdAt|date("H:i") }}) : {{ message.contenu }}
-    </p>
-    {% endfor %}
-{% endblock %}
+    {% elseif joueur == 2 %}
+        {% if message.joueur.id == partie.joueur1.id %}
+            <div class="bulle-left">
+                <p>{{ message.contenu }}</p>
+            </div>
+        {% elseif message.joueur.id == partie.joueur2.id %}
+            <div class="bulle-right">
+                <p>{{ message.contenu }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</div>
