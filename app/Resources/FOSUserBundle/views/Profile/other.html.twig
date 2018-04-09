@@ -32,11 +32,13 @@
             <div class="back-head"></div>
             <div class="sub-container">
                 <div class="profil-img">
-                    {% if user.imageName is empty %}
-                        <img src="{{ gravatar(user.email) }}" id="profil-img" alt=""/>
-                    {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" id="profil-img" alt="image de {{ user.username }}" width="150px">
-                    {% endif %}
+                    <div class="profil-img-container">
+                        {% if user.imageName is empty %}
+                            <img src="{{ gravatar(user.email) }}" id="profil-img" alt=""/>
+                        {% else %}
+                            <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" id="profil-img" alt="image de {{ user.username }}">
+                        {% endif %}
+                    </div>
                 </div>
                 <h1>{{ user.username }}</h1>
                 <br>
