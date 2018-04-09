@@ -116,6 +116,10 @@
             </div>
         {% endif %}
     </section>
+    <section class="infos">
+        <p class="nb-card-deck">{{ plateau.pioche|length }}</p>
+        <p class="round">Round {{ partie.manche }}</p>
+    </section>
     <section class="persos">
         <div class="cartes">
         {# affichage des cartes objets jouées par j2 #}
@@ -270,6 +274,10 @@
                 {% endfor %}
             </div>
         {% endif %}
+    </section>
+    <section class="infos">
+        <p class="nb-card-deck">{{ plateau.pioche|length }}</p>
+        <p class="round">Round {{ partie.manche }}</p>
     </section>
     <section class="persos">
         <div class="cartes">
