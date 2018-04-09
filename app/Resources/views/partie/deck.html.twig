@@ -35,3 +35,30 @@
     </section>
 </section>
 {% endif %}
+<script defer type="text/javascript">
+    $(document).ready(function(){
+        $(".card-deck").tilt({
+            maxTilt: -8,
+            scale: 1.07
+        });
+        $(".carte").tilt({
+            maxTilt: -10,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#action_form').on('submit', function(e) {
+            console.log('action submited');
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(){
+                    $('.echange').hide();
+                }
+            });
+        });
+    });
+</script>

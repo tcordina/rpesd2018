@@ -297,7 +297,7 @@
                     });
                 });
             });
-            $('.concurrence_choix_btn').on('click', function () {
+            $('.concurrence_choix_btn').on('click', function (e) {
                 $(this).closest('form').submit(function(e) {
                     e.preventDefault();
                     //console.log($(this).serialize());

@@ -4,6 +4,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
 {% endblock %}
+{% block body %}
     <div class="video-back">
         <video loop="true" autoplay="true">
             <source src="{{ asset('assets/images/back.mp4') }}" type="video/mp4">

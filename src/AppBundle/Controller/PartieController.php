@@ -793,8 +793,8 @@ class PartieController extends Controller
         $user = $this->getUser();
 
         $message = new Message();
-        $message->setPartie($partie->getId());
-        $message->setJoueur($user->getId());
+        $message->setPartie($partie);
+        $message->setJoueur($user);
         $message->setContenu($content);
 
         $em->persist($message);

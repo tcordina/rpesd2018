@@ -6,6 +6,7 @@ use AppBundle\Entity\Carte;
 use AppBundle\Entity\Partie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -28,15 +29,12 @@ class ActionController extends PartieController
      */
     public function actionHandler(Request $request, Partie $partie, $joueur)
     {
+        //return new JsonResponse($request->request->all());
         $em = $this->getDoctrine()->getManager();
         $cards = $em->getRepository('AppBundle:Carte')->findAll();
         $action = $request->request->get('action');
         if (!empty($request->request->get('cartes'))) {
-            if(is_array($request->request->get('cartes'))) {
-                $postCartes = $request->request->get('cartes');
-            }else{
-                $postCartes = json_decode($request->request->get('cartes'));
-            }
+            $postCartes = $request->request->get('cartes');
             foreach($postCartes as $carte) {
                 $cartes[] = $cards[(int) $carte - 1];
             }
@@ -72,12 +70,15 @@ class ActionController extends PartieController
 
     private function secretAction(Partie $partie, $joueur, $carte)
     {
+        $actions = json_decode($partie->getActions());
+        if($actions->$joueur[0]->jouee == true){
+            return new Response('Action déjà jouée');
+        }
         if(!isset($carte[1])) {
             $carte = $carte[0];
             if ($joueur == 'j1') {
                 $main = json_decode($partie->getMainJ1());
                 if (in_array($carte->getId(), $main)) {
-                    $actions = json_decode($partie->getActions());
                     $actions->$joueur[0]->jouee = true;
                     $actions->$joueur[0]->cartes = [$carte->getId()];
                     $partie->setActions(json_encode($actions));
@@ -92,7 +93,6 @@ class ActionController extends PartieController
             } elseif ($joueur == 'j2') {
                 $main = json_decode($partie->getMainJ2());
                 if (in_array($carte->getId(), $main)) {
-                    $actions = json_decode($partie->getActions());
                     $actions->$joueur[0]->jouee = true;
                     $actions->$joueur[0]->cartes = [$carte->getId()];
                     $partie->setActions(json_encode($actions));
@@ -124,6 +124,10 @@ class ActionController extends PartieController
 
     private function compromisAction(Partie $partie, $joueur, $cartes)
     {
+        $actions = json_decode($partie->getActions());
+        if($actions->$joueur[1]->jouee == true){
+            return new Response('Action déjà jouée !');
+        }
         if(is_array($cartes) && count($cartes) == 2) {
             if ($joueur == 'j1') {
                 $main = json_decode($partie->getMainJ1());
@@ -158,7 +162,6 @@ class ActionController extends PartieController
                 $played->j2 = true;
                 $partie->setTourActions(json_encode($played));
             }
-            $actions = json_decode($partie->getActions());
             $actions->$joueur[1]->jouee = true;
             $actions->$joueur[1]->cartes = $cards;
             $partie->setActions(json_encode($actions));
@@ -181,6 +184,10 @@ class ActionController extends PartieController
 
     private function cadeauAction(Partie $partie, $joueur, $cartes)
     {
+        $actions = json_decode($partie->getActions());
+        if($actions->$joueur[2]->jouee == true){
+            return new Response('Action déjà jouée !');
+        }
         if(is_array($cartes) && count($cartes) == 3) {
             if ($joueur == 'j1') {
                 $main = json_decode($partie->getMainJ1());
@@ -215,7 +222,6 @@ class ActionController extends PartieController
                 $played->j2 = true;
                 $partie->setTourActions(json_encode($played));
             }
-            $actions = json_decode($partie->getActions());
             $actions->$joueur[2]->cartes = $cards;
             $partie->setActions(json_encode($actions));
 
@@ -311,6 +317,10 @@ class ActionController extends PartieController
 
     private function concurrenceAction(Partie $partie, $joueur, $cartes)
     {
+        $actions = json_decode($partie->getActions());
+        if($actions->$joueur[3]->jouee == true){
+            return new Response('Action déjà jouée !');
+        }
         if(is_array($cartes) && count($cartes) == 4) {
             if ($joueur == 'j1') {
                 $main = json_decode($partie->getMainJ1());
@@ -345,8 +355,6 @@ class ActionController extends PartieController
                 $played->j2 = true;
                 $partie->setTourActions(json_encode($played));
             }
-            //die(var_dump($cards));
-            $actions = json_decode($partie->getActions());
             $actions->$joueur[3]->cartes = $cards;
             $partie->setActions(json_encode($actions));
 

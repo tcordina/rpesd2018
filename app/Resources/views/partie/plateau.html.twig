@@ -1,9 +1,4 @@
-{% extends 'base.html.twig' %}
-{% block stylesheets %}
-    {##}{{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/css/plateau.css') }}">
-{% endblock %}
-{% block body %}
+<link rel="stylesheet" href="{{ asset('assets/css/plateau.css') }}">
 
 {% for message in app.flashes('notice') %}
     {{ message }}
@@ -18,9 +13,9 @@
             <div class="profil-img">
                 <div class="profil-img-container">
                     {% if partie.joueur2.imageName is empty %}
-                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" alt=""/>
+                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" class="plateau-img" alt=""/>
                     {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" alt="image de {{ partie.joueur2.username }}">
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" class="plateau-img" alt="image de {{ partie.joueur2.username }}">
                     {% endif %}
                 </div>
             </div>
@@ -40,9 +35,9 @@
             <div class="profil-img">
                 <div class="profil-img-container">
                     {% if partie.joueur1.imageName is empty %}
-                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" alt=""/>
+                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" class="plateau-img" alt=""/>
                     {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" alt="image de {{ partie.joueur1.username }}">
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" class="plateau-img" alt="image de {{ partie.joueur1.username }}">
                     {% endif %}
                 </div>
             </div>
@@ -81,7 +76,8 @@
                     </span>
                 </label>
                 <input type="hidden" name="action" value="cadeau_choix">
-                <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}" style="cursor: pointer;">Choisir</button>
+                <input type="hidden" name="carte" value="{{ cartes[carte-1].id }}">
+                <button type="submit" class="cadeau_choix_btn" style="cursor: pointer;">Choisir</button>
             </form>
             {% endfor %}
         </div>
@@ -113,7 +109,7 @@
                             </div>
                         </span>
                     </label>
-                    <button class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
+                    <button type="submit" class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
                     </form>
                 {% endif %}
             {% endfor %}
@@ -127,7 +123,7 @@
             <div class="carte">
                 <ul class="carte-top">
                 {% for carte in plateau.terrainJ2[objectif.id] %}
-                    <li>{{ objectif.id }}</li>
+                    <li>{{ objectif.valeur }}</li>
                 {% endfor %}
                 </ul>
                 {% if objectif.id in plateau.jetons.j2 %}
@@ -141,7 +137,7 @@
                 <ul class="carte-bot">
                 {# affichage des cartes objets jouées par j1 #}
                 {% for carte in plateau.terrainJ1[objectif.id] %}
-                    <li>{{ objectif.id }}</li>
+                    <li>{{ objectif.valeur }}</li>
                 {% endfor %}
                 </ul>
             </div>
@@ -172,9 +168,9 @@
             <div class="profil-img">
                 <div class="profil-img-container">
                     {% if partie.joueur1.imageName is empty %}
-                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" alt=""/>
+                        <img src="{{ gravatar(partie.joueur1.email) }}" id="profil-img" class="plateau-img" alt=""/>
                     {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" alt="image de {{ partie.joueur1.username }}">
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur1.imageName) }}" id="profil-img" class="plateau-img" alt="image de {{ partie.joueur1.username }}">
                     {% endif %}
                 </div>
             </div>
@@ -194,9 +190,9 @@
             <div class="profil-img">
                 <div class="profil-img-container">
                     {% if partie.joueur2.imageName is empty %}
-                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" alt=""/>
+                        <img src="{{ gravatar(partie.joueur2.email) }}" id="profil-img" class="plateau-img" alt=""/>
                     {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" alt="image de {{ partie.joueur2.username }}">
+                        <img src="{{ asset('uploads/images/profile/' ~ partie.joueur2.imageName) }}" id="profil-img" class="plateau-img" alt="image de {{ partie.joueur2.username }}">
                     {% endif %}
                 </div>
             </div>
@@ -221,7 +217,7 @@
             {% endfor %}
         </div>
         {% if plateau.actions.j1.2.cartes is not empty and plateau.actions.j1.2.cartes|length == 3 %}
-            {# si j2 a joué "cadeau" #}
+            {# si j1 a joué "cadeau" #}
             <div class="echange-advs">
                 {% for carte in plateau.actions.j1.2.cartes %}
                     <form class="cadeau_choix" method="post" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}">
@@ -235,7 +231,8 @@
                     </span>
                         </label>
                         <input type="hidden" name="action" value="cadeau_choix">
-                        <button class="cadeau_choix_btn" name="carte" value="{{ cartes[carte-1].id }}" style="cursor: pointer;">Choisir</button>
+                        <input type="hidden" name="carte" value="{{ cartes[carte-1].id }}">
+                        <button type="submit" class="cadeau_choix_btn" style="cursor: pointer;">Choisir</button>
                     </form>
                 {% endfor %}
             </div>
@@ -267,7 +264,7 @@
                             </div>
                         </span>
                         </label>
-                        <button class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
+                        <button type="submit" class="concurrence_choix_btn" style="cursor: pointer;">Choisir</button>
                         </form>
                     {% endif %}
                 {% endfor %}
@@ -281,7 +278,7 @@
                 <div class="carte">
                     <ul class="carte-top">
                         {% for carte in plateau.terrainJ1[objectif.id] %}
-                            <li>{{ objectif.id }}</li>
+                            <li>{{ objectif.valeur }}</li>
                         {% endfor %}
                     </ul>
                     {% if objectif.id in plateau.jetons.j1 %}
@@ -295,7 +292,7 @@
                     <ul class="carte-bot">
                         {# affichage des cartes objets jouées par j2 #}
                         {% for carte in plateau.terrainJ2[objectif.id] %}
-                            <li>{{ objectif.id }}</li>
+                            <li>{{ objectif.valeur }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -318,20 +315,20 @@
         </script>
     {% endif %}
 {% endif %}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            var img = document.getElementById('profil-img')
-            var width = img.clientWidth
-            var height = img.clientHeight
-            console.log(width, height)
-            if(height > width || height === width){
-                $('#profil-img').css('width','101%')
-            }else if(height < width){
-                $('#profil-img').css('height','101%')
-            }
+    <script defer type="text/javascript">
+        $(document).ready(function() {
+            $('.plateau-img').each(function(){
+                var width = this.clientWidth
+                var height = this.clientHeight
+                if (height > width || height === width) {
+                    $(this).css('width', '101%')
+                } else if (height < width) {
+                    $(this).css('height', '101%')
+                }
+            })
         })
     </script>
-    <script type="text/javascript">
+    <script defer type="text/javascript">
         $('.mycheck').prop('checked', false);
         $(".card-deck").mouseleave(function () {
             $(".objet", this).addClass("transZ");
@@ -353,7 +350,7 @@
             $("#"+clic_id).attr('onclick', 'cardToDeck(this.id)');
         }
     </script>
-    <script type="text/javascript">
+    <script defer type="text/javascript">
         $(document).ready(function(){
             $(".card-deck").tilt({
                 maxTilt: -8,
@@ -364,4 +361,29 @@
             });
         });
     </script>
-{% endblock %}
+    <script>
+        $('.cadeau_choix').on('submit', function(e) {
+            e.preventDefault();
+            console.log($(this).serialize());
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (res) {
+                    $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                }
+            });
+        });
+        $('.concurrence_choix').on('submit', function(e) {
+            e.preventDefault();
+            console.log($(this).serialize());
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (res) {
+                    $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
+                }
+            });
+        });
+    </script>
