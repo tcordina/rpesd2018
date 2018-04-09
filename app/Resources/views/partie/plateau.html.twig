@@ -328,10 +328,12 @@
             $('.plateau-img').each(function(){
                 var width = this.clientWidth
                 var height = this.clientHeight
-                if (height > width || height === width) {
+                if (height > width) {
                     $(this).css('width', '101%')
                 } else if (height < width) {
                     $(this).css('height', '101%')
+                }else{
+                    $(this).css('width', '101%')
                 }
             })
         })

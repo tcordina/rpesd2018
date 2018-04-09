@@ -33,9 +33,9 @@
             <div class="sub-container">
                 <div class="profil-img">
                     {% if user.imageName is empty %}
-                        <img src="{{ gravatar(user.email) }}" class="profil-img" alt=""/>
+                        <img src="{{ gravatar(user.email) }}" id="profil-img" alt=""/>
                     {% else %}
-                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" class="profil-img" alt="image de {{ user.username }}" width="150px">
+                        <img src="{{ asset('uploads/images/profile/' ~ user.imageName) }}" id="profil-img" alt="image de {{ user.username }}" width="150px">
                     {% endif %}
                 </div>
                 <h1>{{ user.username }}</h1>
@@ -165,10 +165,12 @@
             var width = img.clientWidth
             var height = img.clientHeight
             console.log(width, height)
-            if(height > width || height === width){
+            if(height > width){
                 $('#profil-img').css('width','101%')
             }else if(height < width){
                 $('#profil-img').css('height','101%')
+            }else{
+                $('#profil-img').css('width','101%')
             }
         })
     </script>

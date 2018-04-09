@@ -1,3 +1,4 @@
+{% trans_default_domain 'FOSUserBundle' %}
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
@@ -183,10 +184,12 @@
             var width = img.clientWidth
             var height = img.clientHeight
             console.log(width, height)
-            if(height > width || height === width){
+            if(height > width){
                 $('#profil-img').css('width','101%')
             }else if(height < width){
                 $('#profil-img').css('height','101%')
+            }else{
+                $('#profil-img').css('width','101%')
             }
         })
     </script>
