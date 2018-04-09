@@ -10,16 +10,6 @@
             <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
-            <style>
-                #plateau li {
-                    display: inline-block;
-                    list-style-type: none;
-                }
-                a {
-                    color: inherit;
-                    text-decoration: none;
-                }
-            </style>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -28,6 +18,7 @@
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+            <script src="{{ asset('assets/js/tilt.jquery.js') }}"></script>
         {% endblock %}
     </body>
 </html>

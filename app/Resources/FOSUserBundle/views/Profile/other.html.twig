@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
+    <div class="video-back">
+        <video loop="true" autoplay="true">
+            <source src="{{ asset('assets/images/back.mp4') }}" type="video/mp4">
+        </video>
+    </div>
     <div class="logo"></div>
     {% for message in app.flashes('notice') %}
         <span class="alert" style="position:absolute;width:100vw;background-color:darkred;text-align:center;padding:15px 0;">
@@ -94,35 +99,46 @@
             var intervalFlicker = setInterval(changeAnimationTime, 500)
 
             // CHECKED
-            if ($('#check_animation').prop('checked')) {
+            if($('#check_animation').prop('checked')){
                 intervalFlicker = setInterval(changeAnimationTime, 500);
                 $("[class*='border-']").addClass('glitch');
-                $(".dropform").attr("id", "dropform");
-                $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
-            } else {
+                $(".profil").attr("id","dropform");
+                $(".jouer").attr("id","dropform2");
+                $("video").css('display','inline-block');
+                setTimeout(function(){$("video").css('opacity','1');}, 100);
+            }else{
                 clearInterval(intervalFlicker);
                 $("[class*='border-']").removeClass('glitch');
-                $(".dropform").removeAttr("id");
-                $("body").css('background-image', 'url("{{ asset('assets/images/background.jpg') }}")');
+                $(".profil").removeAttr("id");
+                $(".jouer").removeAttr("id");
+                $("video").css('opacity','0');
+                setTimeout(function(){$("video").css('display','none');}, 300);
             }
 
-            $('#check_animation').on('click', function () {
-                if ($(this).prop('checked')) {
+
+            $('#check_animation').on('click',function(){
+                if($(this).prop('checked')){
+                    console.log('checked');
                     intervalFlicker = setInterval(changeAnimationTime, 500);
                     $("[class*='border-']").addClass('glitch');
-                    $(".dropform").attr("id", "dropform");
-                    $("body").css('background-image', 'url("{{ asset('assets/images/back.gif') }}")');
+                    $(".profil").attr("id","dropform");
+                    $(".jouer").attr("id","dropform2");
+                    $("video").css('display','inline-block');
+                    setTimeout(function(){$("video").css('opacity','1');}, 100);
                     $.ajax({
                         type: 'POST',
                         url: '{{ path('cookie_animation', { 'checked':1 }) }}'
                     })
-                } else {
+                }else{
+                    console.log('unckecked');
                     clearInterval(intervalFlicker);
                     $("[class*='border-']").removeClass('glitch');
-                    $(".dropform").removeAttr("id");
-                    $("body").css('background-image', 'url("{{ asset('assets/images/background.jpg') }}")');
+                    $(".profil").removeAttr("id");
+                    $(".jouer").removeAttr("id");
+                    $("video").css('opacity','0');
+                    setTimeout(function(){$("video").css('display','none');}, 300);
                     $.ajax({
-                        type: 'post',
+                        type: 'POST',
                         url: '{{ path('cookie_animation', { 'checked':0 }) }}'
                     })
                 }
@@ -142,5 +158,18 @@
         function hideAlert() {
             $('.alert').fadeOut()
         }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var img = document.getElementById('profil-img')
+            var width = img.clientWidth
+            var height = img.clientHeight
+            console.log(width, height)
+            if(height > width || height === width){
+                $('#profil-img').css('width','101%')
+            }else if(height < width){
+                $('#profil-img').css('height','101%')
+            }
+        })
     </script>
 {% endblock %}
