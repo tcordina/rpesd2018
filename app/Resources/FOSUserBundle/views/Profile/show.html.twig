@@ -145,20 +145,6 @@
         })
     })
     </script>
-
-    <script type="text/javascript">
-        $("#play-link").click(function() {
-            $(".drop-password").addClass("drop-password-dropped");
-        });
-        $("#close-pass-form").click(function() {
-            $(".drop-password").removeClass("drop-password-dropped");
-        });
-    </script>
-    <script type="text/javascript">
-        function hideAlert() {
-            $('.alert').fadeOut()
-        }
-    </script>
     <script type="text/javascript">
         $(document).ready(function(){
             var img = document.getElementById('profil-img')
@@ -173,5 +159,18 @@
                 $('#profil-img').css('width','101%')
             }
         })
+    </script>
+    <script type="text/javascript">
+        $("#play-link").click(function() {
+            $(".drop-password").addClass("drop-password-dropped");
+        });
+        $("#close-pass-form").click(function() {
+            $(".drop-password").removeClass("drop-password-dropped");
+        });
+    </script>
+    <script type="text/javascript">
+        function hideAlert() {
+            $('.alert').fadeOut()
+        }
     </script>
 {% endblock %}

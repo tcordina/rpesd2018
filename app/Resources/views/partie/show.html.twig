@@ -61,25 +61,6 @@
             setInterval(function() {
                 $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
             }, 3000)
-
-            $('.action_form_btn').on('click', function () {
-                var cartes = []
-                $("input:checked").each(function() {
-                    cartes.push($(this).val())
-                })
-                var action = $(this).val()
-                $('#action_form').submit(function(e) {
-                    e.preventDefault()
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        type: 'POST',
-                        data: {
-                            cartes: JSON.stringify(cartes),
-                            action: action
-                        }
-                    })
-                })
-            })
         })
     </script>
     {% if (joueur == 1) %}
