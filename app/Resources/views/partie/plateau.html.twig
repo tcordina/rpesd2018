@@ -7,8 +7,11 @@
 {% if joueur == 1 %}
     <aside>
         <div class="glitch border-right2"></div>
-
+        {% if partie.tourJoueurId == 1 %}
+        <div class="section-jr-top not-is-turn">
+        {% else %}
         <div class="section-jr-top">
+        {% endif %}
             <h2>{{ partie.joueur2.username }}</h2>
             <div class="profil-img">
                 <div class="profil-img-container">
@@ -29,7 +32,11 @@
                 {% endfor %}
             </ul>
         </div>
+        {% if partie.tourJoueurId == 1 %}
         <div class="section-jr-bot">
+        {% else %}
+        <div class="section-jr-bot not-is-turn">
+        {% endif %}
             <h2>{{ partie.joueur1.username }}</h2>
             <div class="profil-img">
                 <div class="profil-img-container">
@@ -52,7 +59,11 @@
         </div>
     </aside>
     <section class="adversaire">
+        {% if partie.tourJoueurId == 1 %}
+        <div class="deck-advs not-is-turn">
+        {% else %}
         <div class="deck-advs">
+        {% endif %}
             {# affichage de la main de j2 #}
             {% for carte in plateau.mainJ2 %}
                 {# Afficher dos de carte #}
@@ -68,7 +79,7 @@
                     <input type="checkbox" class="mycheck"/>
                     <span class="destination">
                         <div data-tilt class="card card-deck">
-                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                             <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                         </div>
                     </span>
@@ -91,7 +102,7 @@
                         <input type="checkbox" class="mycheck"/>
                         <span class="destination">
                             <div data-tilt class="card card-deck" id="1">
-                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                                 <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                             </div>
                         </span>
@@ -102,7 +113,7 @@
                         <input type="checkbox" class="mycheck"/>
                         <span class="destination">
                             <div data-tilt class="card card-deck" id="1">
-                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                                 <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                             </div>
                         </span>
@@ -155,17 +166,33 @@
         var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
         var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
 
-        $('#action1').click(function () {$('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);});
-        $('#action2').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);});
-        $('#action3').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);});
-        $('#action4').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);});
+        $('#action1').click(function () {
+            isFilled();
+            $('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);
+        });
+        $('#action2').click(function () {
+            isFilled();
+            $('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);
+        });
+        $('#action3').click(function () {
+            isFilled();
+            $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);
+        });
+        $('#action4').click(function () {
+            isFilled();
+            $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);
+        });
     </script>
     {% endif %}
 {% elseif joueur == 2 %}
     <aside>
         <div class="glitch border-right2"></div>
 
+        {% if partie.tourJoueurId == 2 %}
+        <div class="section-jr-top not-is-turn">
+        {% else %}
         <div class="section-jr-top">
+        {% endif %}
             <h2>{{ partie.joueur1.username }}</h2>
             <div class="profil-img">
                 <div class="profil-img-container">
@@ -186,7 +213,11 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="section-jr-bot">
+            {% if partie.tourJoueurId == 2 %}
+            <div class="section-jr-bot">
+            {% else %}
+            <div class="section-jr-bot not-is-turn">
+            {% endif %}
             <h2>{{ partie.joueur2.username }}</h2>
             <div class="profil-img">
                 <div class="profil-img-container">
@@ -209,7 +240,11 @@
         </div>
     </aside>
     <section class="adversaire">
-        <div class="deck-advs">
+        {% if partie.tourJoueurId == 2 %}
+        <div class="deck-advs not-is-turn">
+            {% else %}
+            <div class="deck-advs">
+                {% endif %}
             {# affichage de la main de j1 #}
             {% for carte in plateau.mainJ1 %}
                 {# Afficher dos de carte #}
@@ -225,7 +260,7 @@
                             <input type="checkbox" class="mycheck"/>
                             <span class="destination">
                         <div data-tilt class="card card-deck">
-                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                             <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                         </div>
                     </span>
@@ -248,7 +283,7 @@
                             <input type="checkbox" class="mycheck"/>
                             <span class="destination">
                             <div data-tilt class="card card-deck" id="1">
-                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                                 <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                             </div>
                         </span>
@@ -259,7 +294,7 @@
                             <input type="checkbox" class="mycheck"/>
                             <span class="destination">
                             <div data-tilt class="card card-deck" id="1">
-                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                                 <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                             </div>
                         </span>
@@ -312,10 +347,23 @@
             var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
             var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
 
-            $('#action1').click(function () {$('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);});
-            $('#action2').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);});
-            $('#action3').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);});
-            $('#action4').click(function () {$('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);});
+            $('#action1').click(function () {
+                isFilled();
+                $('.form-joueur-actif').html(inputCart+inputSecret+buttonCart);
+            });
+            $('#action2').click(function () {
+                isFilled();
+                $('.form-joueur-actif').html(inputCart+inputCart+inputCompromis+buttonCart);
+            });
+            $('#action3').click(function () {
+                isFilled();
+                $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCadeau+buttonCart);
+            });
+            $('#action4').click(function () {
+                isFilled();
+                $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);
+            });
+        </script>
         </script>
     {% endif %}
 {% endif %}
@@ -333,28 +381,6 @@
                 }
             })
         })
-    </script>
-    <script defer type="text/javascript">
-        $('.mycheck').prop('checked', false);
-        $(".card-deck").mouseleave(function () {
-            $(".objet", this).addClass("transZ");
-        });
-        $(".card-deck").mouseenter(function () {
-            $(".objet", this).removeClass("transZ");
-        });
-        function cardToDeck(clic_id) {
-            console.log('card in deck '+clic_id);
-            $('#'+clic_id+':parent').parent().parent().addClass('empty').removeClass('full');
-            $("#"+clic_id).appendTo('.deck').hide().delay(100).show(200);
-            $("#"+clic_id).attr('onclick', 'cardToChange(this.id)');
-        }
-        function cardToChange(clic_id) {
-            console.log('card in change ' +clic_id);
-            $("#"+clic_id).appendTo('.echange form .empty .destination:first').hide().delay(100).show(200);
-            $('.echange form .empty:first > .mycheck').prop('checked', true);
-            $('.echange form .empty:first').addClass('full').removeClass('empty');
-            $("#"+clic_id).attr('onclick', 'cardToDeck(this.id)');
-        }
     </script>
     <script>
         $('.cadeau_choix').on('submit', function(e) {

@@ -1,14 +1,16 @@
 {% if joueur == 1 %}
     <section class="main-joueur">
         <div class="echange" style="display: ;">
-            <form onsubmit="submitFormJouer" id="action_form" class="form-joueur-actif" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post">
-                <input type="checkbox" class="empty">
-            </form>
+            <form id="action_form" class="form-joueur-actif" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j1'}) }}" method="post"></form>
         </div>
+        {% if partie.tourJoueurId == 1 %}
         <div class="deck">
+        {% else %}
+        <div class="deck not-is-turn">
+        {% endif %}
             {% for carte in plateau.mainJ1|sort %}
                 <div data-tilt class="card card-deck" onclick="cardToChange(this.id)" id="{{ loop.index }}">
-                    <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                    <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                     <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                 </div>
@@ -19,14 +21,16 @@
 {% elseif joueur == 2 %}
     <section class="main-joueur">
         <div class="echange" style="display: ;">
-            <form id="action_form" class="form-joueur-actif" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post">
-
-            </form>
+            <form id="action_form" class="form-joueur-actif" action="{{ path('action_handler', {'partie': partie.id, 'joueur': 'j2'}) }}" method="post"></form>
         </div>
+        {% if partie.tourJoueurId == 2 %}
         <div class="deck">
+        {% else %}
+        <div class="deck not-is-turn">
+        {% endif %}
             {% for carte in plateau.mainJ2|sort %}
                 <div data-tilt class="card card-deck" onclick="cardToChange(this.id)" id="{{ loop.index }}">
-                    <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.png') }}" alt="" class="fond">
+                    <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
                     <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" class="objet">
                     <input type="hidden" name="cartes[]" value="{{ cartes[carte-1].id }}">
                 </div>

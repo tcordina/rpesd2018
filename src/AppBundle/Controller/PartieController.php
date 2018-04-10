@@ -312,14 +312,12 @@ class PartieController extends Controller
      * Charge le plateau via appel AJAX
      * @Route("/plateau/{id}", name="partie_plateau")
      * @param Partie $partie
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return bool|Response
      */
     public function plateauAction(Partie $partie)
     {
         if($partie->getEnded() == true) {
-            return $this->render('partie/ended.html.twig', [
-                'partie' => $partie
-            ]);
+            return false;
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
@@ -354,14 +352,12 @@ class PartieController extends Controller
      * Charge le deck via appel AJAX
      * @Route("/deck/{id}", name="partie_deck")
      * @param Partie $partie
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return bool|Response
      */
     public function deckAction(Partie $partie)
     {
         if($partie->getEnded() == true) {
-            return $this->render('partie/ended.html.twig', [
-                'partie' => $partie
-            ]);
+            return false;
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
@@ -557,18 +553,17 @@ class PartieController extends Controller
         $em->persist($partie);
         $em->flush();
 
-        if(array_sum($valeurs['j1']) >= 11 || count($jetons['j1']) >= 4){
-            //die(var_dump('j1'));
+        if(array_sum($valeurs['j1']) >= 11) {
             return $this->winAction($partie, 1);
-        }elseif(array_sum($valeurs['j2']) >= 11 || count($jetons['j2']) >= 4){
-            //die(var_dump('j2'));
+        }elseif(array_sum($valeurs['j2']) >= 11) {
             return $this->winAction($partie, 2);
-        }else{
-            //die(var_dump('nouvelle manche !!!'));
+        }elseif(count($jetons['j1']) >= 4) {
+            return $this->winAction($partie, 1);
+        }elseif(count($jetons['j2']) >= 4) {
+            return $this->winAction($partie, 2);
+        }else {
             return $this->newMancheAction($partie);
         }
-
-        //return $this->redirectToRoute('partie_plateau', ['id' => $partie->getId()]);
     }
 
     public function winAction(Partie $partie, $joueur)

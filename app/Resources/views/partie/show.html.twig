@@ -116,4 +116,38 @@
             })
         </script>
     {% endif %}
+    <script defer type="text/javascript">
+        $('.mycheck').prop('checked', false);
+        $(".card-deck").mouseleave(function () {
+            $(".objet", this).addClass("transZ");
+        });
+        $(".card-deck").mouseenter(function () {
+            $(".objet", this).removeClass("transZ");
+        });
+        function cardToDeck(clic_id) {
+            console.log('card in deck '+clic_id);
+            $('#'+clic_id+':parent').parent().parent().addClass('empty').removeClass('full');
+            $("#"+clic_id).appendTo('.deck').hide().delay(100).show(200);
+            $("#"+clic_id).attr('onclick', 'cardToChange(this.id)');
+        }
+        function cardToChange(clic_id) {
+            console.log('card in change ' +clic_id);
+            $("#"+clic_id).appendTo('.echange form .empty .destination:first').hide().delay(100).show(200);
+            $('.echange form .empty:first > .mycheck').prop('checked', true);
+            $('.echange form .empty:first').addClass('full').removeClass('empty');
+            $("#"+clic_id).attr('onclick', 'cardToDeck(this.id)');
+        }
+        function isFilled() {
+            var items = $('.form-joueur-actif > .card-hole > .destination');
+            var counter = 0;
+            items.each(function(i, item) {
+                if (item.firstChild) {
+                    counter++;
+                }
+            });
+            if(counter > 0){
+                $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
+            }
+        }
+    </script>
 {% endblock %}
