@@ -20,14 +20,13 @@
                 </div>
             </div>
             <ul class="actions">
-                <li class="action1"><i class="fas fa-check"></i></li>
-                <li class="action2"><i class="fas fa-times"></i></li>
-                <li class="action3">
-                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
-                </li>
-                <li class="action4">
-                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
-                </li>
+                {% for action in plateau.actions.j2 %}
+                    {% if action.jouee %}
+                        <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% else %}
+                        <li class="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="section-jr-bot">
@@ -42,14 +41,13 @@
                 </div>
             </div>
             <ul class="actions">
-                <li class="action1" id="action1" onclick="add_fields()"><i class="fas fa-check"></i></li>
-                <li class="action2" id="action2"><i class="fas fa-times"></i></li>
-                <li class="action3" id="action3">
-                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
-                </li>
-                <li class="action4" id="action4">
-                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
-                </li>
+                {% for action in plateau.actions.j1 %}
+                    {% if action.jouee %}
+                        <li class="action{{ action.id }} disabled-action" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% else %}
+                        <li class="action{{ action.id }}" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </aside>
@@ -131,11 +129,11 @@
                 {% endfor %}
                 </ul>
                 {% if objectif.id in plateau.jetons.j2 %}
-                    <div class="jeton" style="transform:  translateY(-160%);"></div>
+                    <div class="jeton" style="transform: translate3D(40%,-205%,30px);"></div>
                 {% elseif objectif.id in plateau.jetons.neutre %}
-                    <div class="jeton" style="transform:  translateY(-50%);"></div>
+                    <div class="jeton"></div>
                 {% elseif objectif.id in plateau.jetons.j1 %}
-                    <div class="jeton" style="transform:  translateY(65%);"></div>
+                    <div class="jeton" style="transform: translate3D(-140%,105%,30px);"></div>
                 {% endif %}
                 <img src="{{ asset('assets/images/cartes/persos/carte_'~objectif.id~'.jpg') }}" alt="">
                 <ul class="carte-bot">
@@ -179,14 +177,13 @@
                 </div>
             </div>
             <ul class="actions">
-                <li class="action1"><i class="fas fa-check"></i></li>
-                <li class="action2"><i class="fas fa-times"></i></li>
-                <li class="action3">
-                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
-                </li>
-                <li class="action4">
-                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
-                </li>
+                {% for action in plateau.actions.j1 %}
+                    {% if action.jouee %}
+                        <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% else %}
+                        <li class="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="section-jr-bot">
@@ -201,14 +198,13 @@
                 </div>
             </div>
             <ul class="actions">
-                <li class="action1" id="action1" onclick="add_fields()"><i class="fas fa-check"></i></li>
-                <li class="action2" id="action2"><i class="fas fa-times"></i></li>
-                <li class="action3" id="action3">
-                    <i class="fas fa-angle-down"></i><i class="fas fa-angle-up"></i><i class="fas fa-angle-down"></i>
-                </li>
-                <li class="action4" id="action4">
-                    <i class="fas fa-angle-double-up"></i><i class="fas fa-angle-double-down"></i>
-                </li>
+                {% for action in plateau.actions.j2 %}
+                    {% if action.jouee %}
+                        <li class="action{{ action.id }} disabled-action" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% else %}
+                        <li class="action{{ action.id }}" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </aside>
@@ -290,11 +286,11 @@
                         {% endfor %}
                     </ul>
                     {% if objectif.id in plateau.jetons.j1 %}
-                        <div class="jeton" style="transform:  translateY(-160%);"></div>
+                        <div class="jeton" style="transform: translate3D(40%,-205%,30px);"></div>
                     {% elseif objectif.id in plateau.jetons.neutre %}
-                        <div class="jeton" style="transform:  translateY(-50%);"></div>
+                        <div class="jeton"></div>
                     {% elseif objectif.id in plateau.jetons.j2 %}
-                        <div class="jeton" style="transform:  translateY(65%);"></div>
+                        <div class="jeton" style="transform: translate3D(-140%,105%,30px);"></div>
                     {% endif %}
                     <img src="{{ asset('assets/images/cartes/persos/carte_'~objectif.id~'.jpg') }}" alt="">
                     <ul class="carte-bot">
@@ -323,7 +319,7 @@
         </script>
     {% endif %}
 {% endif %}
-    <script defer type="text/javascript">
+    <script async type="text/javascript">
         $(document).ready(function() {
             $('.plateau-img').each(function(){
                 var width = this.clientWidth
@@ -360,17 +356,6 @@
             $("#"+clic_id).attr('onclick', 'cardToDeck(this.id)');
         }
     </script>
-    <script defer type="text/javascript">
-        $(document).ready(function(){
-            $(".card-deck").tilt({
-                maxTilt: -8,
-                scale: 1.07
-            });
-            $(".carte").tilt({
-                maxTilt: -10,
-            });
-        });
-    </script>
     <script>
         $('.cadeau_choix').on('submit', function(e) {
             e.preventDefault();
@@ -394,6 +379,17 @@
                 success: function (res) {
                     $("#plateau").load("{{ path('partie_plateau', {id: partie.id}) }}")
                 }
+            });
+        });
+    </script>
+    <script defer type="text/javascript">
+        $(document).ready(function(){
+            $(".card-deck").tilt({
+                maxTilt: -8,
+                scale: 1.07
+            });
+            $(".carte").tilt({
+                maxTilt: -10,
             });
         });
     </script>

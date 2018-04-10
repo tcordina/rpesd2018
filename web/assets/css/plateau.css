@@ -6,9 +6,10 @@ body {
   height: 100vh;
   overflow: hidden;
   background: #171717 url("../images/darknoise-dark.jpg");
+  font-size: 0.8vw;
 }
 
-/* line 9, ../sass/plateau.scss */
+/* line 10, ../sass/plateau.scss */
 * {
   box-sizing: border-box;
 }
@@ -159,7 +160,7 @@ aside .section-jr-top .profil-img, aside .section-jr-bot .profil-img {
   border: solid 1px #ff5ef7;
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
 }
-/* line 15, ../sass/plateau.scss */
+/* line 16, ../sass/plateau.scss */
 aside .section-jr-top .profil-img::after, aside .section-jr-bot .profil-img::after {
   content: '';
   display: block;
@@ -209,8 +210,19 @@ aside .section-jr-top .actions li, aside .section-jr-bot .actions li {
   border: solid 2px #ff5ef7;
   box-shadow: 0 0 8px #DC1ABF inset, 0 0 10px #DC1ABF;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* line 72, ../sass/_aside-plateau.scss */
+/* line 73, ../sass/_aside-plateau.scss */
+aside .section-jr-top .actions li img, aside .section-jr-bot .actions li img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 80%;
+}
+/* line 82, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action1 i, aside .section-jr-bot .actions .action1 i, aside .section-jr-top .actions .action2 i, aside .section-jr-bot .actions .action2 i {
   position: absolute;
   padding: 0;
@@ -219,52 +231,52 @@ aside .section-jr-top .actions .action1 i, aside .section-jr-bot .actions .actio
   left: 50%;
   transform: translate(-50%, -50%);
 }
-/* line 82, ../sass/_aside-plateau.scss */
+/* line 92, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action3 i, aside .section-jr-bot .actions .action3 i {
   position: absolute;
   padding: 0;
   margin: 0;
 }
-/* line 87, ../sass/_aside-plateau.scss */
+/* line 97, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action3 i:first-child, aside .section-jr-bot .actions .action3 i:first-child {
   bottom: 10%;
   left: 17%;
 }
-/* line 91, ../sass/_aside-plateau.scss */
+/* line 101, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action3 i:nth-child(2), aside .section-jr-bot .actions .action3 i:nth-child(2) {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
 }
-/* line 96, ../sass/_aside-plateau.scss */
+/* line 106, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action3 i:last-child, aside .section-jr-bot .actions .action3 i:last-child {
   bottom: 10%;
   right: 17%;
 }
-/* line 102, ../sass/_aside-plateau.scss */
+/* line 112, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action4 i, aside .section-jr-bot .actions .action4 i {
   position: absolute;
   padding: 0;
   margin: 0;
 }
-/* line 107, ../sass/_aside-plateau.scss */
+/* line 117, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action4 i:first-child, aside .section-jr-bot .actions .action4 i:first-child {
   top: 10%;
   left: 18%;
 }
-/* line 111, ../sass/_aside-plateau.scss */
+/* line 121, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .action4 i:last-child, aside .section-jr-bot .actions .action4 i:last-child {
   bottom: 10%;
   right: 18%;
 }
-/* line 116, ../sass/_aside-plateau.scss */
+/* line 126, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .disabled-action, aside .section-jr-bot .actions .disabled-action {
   opacity: 0.6;
   pointer-events: none;
   cursor: unset;
 }
 
-/* line 124, ../sass/_aside-plateau.scss */
+/* line 134, ../sass/_aside-plateau.scss */
 aside {
   position: absolute;
   top: 0;
@@ -275,27 +287,27 @@ aside {
   z-index: 200;
   box-sizing: initial;
 }
-/* line 133, ../sass/_aside-plateau.scss */
+/* line 143, ../sass/_aside-plateau.scss */
 aside .section-jr-top {
   top: 0;
   height: 45%;
 }
-/* line 138, ../sass/_aside-plateau.scss */
+/* line 148, ../sass/_aside-plateau.scss */
 aside .section-jr-bot {
   bottom: 0;
   height: 50%;
   transform: rotate(180deg);
 }
-/* line 143, ../sass/_aside-plateau.scss */
+/* line 153, ../sass/_aside-plateau.scss */
 aside .section-jr-bot h2, aside .section-jr-bot .profil-img, aside .section-jr-bot .actions {
   transform: rotate(180deg);
 }
-/* line 146, ../sass/_aside-plateau.scss */
+/* line 156, ../sass/_aside-plateau.scss */
 aside .section-jr-bot .actions {
   max-height: 30vh !important;
 }
 
-/* line 153, ../sass/_aside-plateau.scss */
+/* line 163, ../sass/_aside-plateau.scss */
 .infos {
   position: absolute;
   top: 0;
@@ -303,25 +315,28 @@ aside .section-jr-bot .actions {
   width: 20vw;
   height: 6vw;
   color: white;
+  font-size: 1vw;
 }
-/* line 160, ../sass/_aside-plateau.scss */
+/* line 171, ../sass/_aside-plateau.scss */
 .infos p {
   float: right;
   position: relative;
-  display: inline-block;
   font-family: "Bungee Inline";
   font-size: 1.6em;
-  padding: 12px 23px;
-  margin: 10px 10px;
+  padding: 0 1vw;
+  height: 5vw;
+  margin: 1vw;
+  display: flex;
+  align-items: center;
 }
-/* line 169, ../sass/_aside-plateau.scss */
+/* line 182, ../sass/_aside-plateau.scss */
 .infos .nb-card-deck {
   border: solid 2px #00ccff;
   margin-right: 3vw;
   border-radius: 5%;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 174, ../sass/_aside-plateau.scss */
+/* line 187, ../sass/_aside-plateau.scss */
 .infos .nb-card-deck::after, .infos .nb-card-deck::before {
   content: '';
   position: absolute;
@@ -333,9 +348,17 @@ aside .section-jr-bot .actions {
   border: solid 1px #00ccff;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 185, ../sass/_aside-plateau.scss */
+/* line 198, ../sass/_aside-plateau.scss */
 .infos .nb-card-deck::before {
   right: -1vw;
+}
+
+/* line 205, ../sass/_aside-plateau.scss */
+.not-is-turn {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: unset;
+  filter: grayscale(60%);
 }
 
 /* line 1, ../sass/_persos.scss */
@@ -401,8 +424,9 @@ aside .section-jr-bot .actions {
   height: 74%;
   margin: 1%;
   z-index: 90;
+  transform-style: preserve-3d;
 }
-/* line 57, ../sass/_persos.scss */
+/* line 58, ../sass/_persos.scss */
 .persos .cartes .carte img {
   position: absolute;
   top: 50%;
@@ -412,24 +436,26 @@ aside .section-jr-bot .actions {
   border-radius: 2%;
   z-index: 90;
 }
-/* line 66, ../sass/_persos.scss */
+/* line 67, ../sass/_persos.scss */
 .persos .cartes .carte .jeton {
   position: absolute;
   top: 50%;
-  left: 30%;
-  width: 4vw;
-  height: 4vw;
+  left: 50%;
+  transform: translate3D(-50%, -50%, 30px);
+  width: 3vw;
+  height: 3vw;
   background-color: blue;
   z-index: 100;
   border-radius: 1000px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
   background: url("../images/cartes/card_token.jpg") no-repeat center/cover;
+  transition: 0.2s;
 }
-/* line 78, ../sass/_persos.scss */
+/* line 81, ../sass/_persos.scss */
 .persos .cartes .carte .carte-top {
   top: -15%;
 }
-/* line 82, ../sass/_persos.scss */
+/* line 85, ../sass/_persos.scss */
 .persos .cartes .carte .carte-bot {
   bottom: -15%;
 }
@@ -550,13 +576,13 @@ aside .section-jr-bot .actions {
   background: #444;
 }
 /* line 102, ../sass/_chat.scss */
-.chat .chat-foot form textarea {
+.chat .chat-foot form input {
   position: absolute;
   width: 78%;
   top: 15%;
   height: 65%;
   left: 15px;
-  padding: 8px 10px 0;
+  padding: 0 10px;
   background-color: rgba(50, 50, 50, 0.3);
   color: white;
   border: none;
@@ -565,16 +591,17 @@ aside .section-jr-bot .actions {
   z-index: 15;
   transition: 0.2s;
   overflow: hidden;
+  font-size: 1em;
 }
-/* line 117, ../sass/_chat.scss */
-.chat .chat-foot form textarea:focus {
+/* line 118, ../sass/_chat.scss */
+.chat .chat-foot form input:focus {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 16px 25px;
+  padding: 0 25px;
 }
-/* line 125, ../sass/_chat.scss */
+/* line 126, ../sass/_chat.scss */
 .chat .chat-foot form button {
   font-size: 2em;
   position: absolute;
@@ -593,7 +620,7 @@ aside .section-jr-bot .actions {
   z-index: 20;
   transition: 0.1s;
 }
-/* line 142, ../sass/_chat.scss */
+/* line 143, ../sass/_chat.scss */
 .chat .chat-foot form button:active {
   background-color: rgba(200, 200, 200, 0.2);
 }
