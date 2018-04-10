@@ -36,6 +36,7 @@
                             <th>Pseudo</th>
                             <th>Grade</th>
                             <th>Elo</th>
+                            <th>Victoires</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,6 +46,7 @@
                                 <td><a class="ranking-profile" href="{{ path('fos_user_profile_other', {'username': user.username}) }}">{{ user.username }}</a></td>
                                 <td>{{ user.rank }}</td>
                                 <td>{{ user.elo }}</td>
+                                <td>{{ (100*(user.wins/(user.wins+user.losses)))|round(2, 'common') }} %</td>
                             </tr>
                         {% endfor %}
                         </tbody>

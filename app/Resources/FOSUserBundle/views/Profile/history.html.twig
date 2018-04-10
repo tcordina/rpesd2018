@@ -81,6 +81,7 @@
                         <tr>
                             <th>#</th>
                             <th>Adversaire</th>
+                            <th>Tour</th>
                             <th>Manches</th>
                         </tr>
                         </thead>
@@ -90,8 +91,18 @@
                                 <td><a href="{{ path('partie_show', {'id': partie.id}) }}">{{ loop.index }}</a></td>
                                 {% if app.user.id == partie.joueur1.id %}
                                     <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur2.username}) }}">{{ partie.joueur2.username }}</a></td>
+                                    {% if partie.tourJoueurId == 1 %}
+                                        <td>Vous</td>
+                                    {% else %}
+                                        <td>Adversaire</td>
+                                    {% endif %}
                                 {% elseif app.user.id == partie.joueur2.id %}
                                     <td><a href="{{ path('fos_user_profile_other', {'username':partie.joueur1.username}) }}">{{ partie.joueur1.username }}</a></td>
+                                    {% if partie.tourJoueurId == 2 %}
+                                        <td>Vous</td>
+                                    {% else %}
+                                        <td>Adversaire</td>
+                                    {% endif %}
                                 {% endif %}
                                 <td>{{ partie.manche }}</td>
                             </tr>
