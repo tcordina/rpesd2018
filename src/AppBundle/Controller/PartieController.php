@@ -714,8 +714,7 @@ class PartieController extends Controller
         $partie->setCarteEcartee($cartes[0]->getId());
         unset($cartes[0]);
         $cartes = array_values($cartes);
-
-        $partie->setTourJoueurId(random_int(1,2));
+        $partie->getTourJoueurId() == 1 ? $partie->setTourJoueurId(2) : $partie->setTourJoueurId(1);
 
         $t = array();
         for($i=0; $i<7; $i++){
