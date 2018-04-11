@@ -68,3 +68,20 @@
         });
     });
 </script>
+{% if joueur == 1 %}
+    {% if partie.tourJoueurId == 1 %}
+        {% if plateau.mainJ1 is empty %}
+            <script>
+                $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
+            </script>
+        {% endif %}
+    {% endif %}
+{% elseif joueur == 2 %}
+    {% if partie.tourJoueurId == 2 %}
+        {% if plateau.mainJ2 is empty %}
+            <script>
+                $("#deck").load("{{ path('partie_deck', {id: partie.id}) }}")
+            </script>
+        {% endif %}
+    {% endif %}
+{% endif %}
