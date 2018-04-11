@@ -51,29 +51,31 @@
                     {% endif %}
                 </div>
             </div>
-            <ul class="actions">
+            <li class="actions">
                 {% for action in plateau.actions.j1 %}
                     {% if action.jouee %}
                         {% if action.id == 1 %}
-                        <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
-                        <div class="tooltip-right">
-                        {%  for carte in plateau.actions.j1.0.cartes %}
-                            <div data-tilt class="card card-deck">
-                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
-                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
-                            </div>
-                        {% endfor %}
-                        </div>
-                        {% elseif action.id == 2 %}
-                            <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                        <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt="">
                             <div class="tooltip-right">
-                                {%  for carte in plateau.actions.j1.1.cartes %}
-                                    <div data-tilt class="card card-deck">
-                                        <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
-                                        <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
-                                    </div>
-                                {% endfor %}
+                            {%  for carte in plateau.actions.j1.0.cartes %}
+                                <div data-tilt class="card card-deck">
+                                    <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                    <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                </div>
+                            {% endfor %}
                             </div>
+                        </li>
+                        {% elseif action.id == 2 %}
+                            <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt="">
+                                <div class="tooltip-right">
+                                    {%  for carte in plateau.actions.j1.1.cartes %}
+                                        <div data-tilt class="card card-deck">
+                                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
                         {% else %}
                             <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
                         {% endif %}
@@ -262,25 +264,27 @@
                     {% for action in plateau.actions.j2 %}
                         {% if action.jouee %}
                             {% if action.id == 1 %}
-                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
-                                <div class="tooltip-right">
-                                    {%  for carte in plateau.actions.j2.0.cartes %}
-                                        <div data-tilt class="card card-deck">
-                                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
-                                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt="">
+                                    <div class="tooltip-right">
+                                        {%  for carte in plateau.actions.j2.0.cartes %}
+                                            <div data-tilt class="card card-deck">
+                                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </li>
                             {% elseif action.id == 2 %}
-                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
-                                <div class="tooltip-right">
-                                    {%  for carte in plateau.actions.j2.1.cartes %}
-                                        <div data-tilt class="card card-deck">
-                                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
-                                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt="">
+                                    <div class="tooltip-right">
+                                        {%  for carte in plateau.actions.j2.1.cartes %}
+                                            <div data-tilt class="card card-deck">
+                                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </li>
                             {% else %}
                                 <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
                             {% endif %}
@@ -484,10 +488,10 @@
     </script>
     <script>
         $(".tooltip-mouse").mouseenter(function(){
-            $(".tooltip-bottom").addClass("tooltip-hover-bt");
-            $(".tooltip-top").addClass("tooltip-hover-tp");
-            $(".tooltip-left").addClass("tooltip-hover-lf");
-            $(".tooltip-right").addClass("tooltip-hover-rg");
+            $(".tooltip-bottom", this).addClass("tooltip-hover-bt");
+            $(".tooltip-top", this).addClass("tooltip-hover-tp");
+            $(".tooltip-left", this).addClass("tooltip-hover-lf");
+            $(".tooltip-right", this).addClass("tooltip-hover-rg");
         });
         $(".tooltip-mouse").mouseleave(function(){
             $(".tooltip-bottom").removeClass("tooltip-hover-bt");

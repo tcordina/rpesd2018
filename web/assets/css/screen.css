@@ -214,7 +214,7 @@ input:checked + .slider:before {
   filter: drop-shadow(0 0 4px black);
   opacity: 0;
   transition: 0.3s;
-  z-index: 1000;
+  z-index: 1000000;
   pointer-events: none;
 }
 /* line 16, ../sass/_tooltip.scss */
@@ -384,12 +384,12 @@ footer .input-check-2 .switch {
 
 /* line 63, ../sass/_footer.scss */
 .admin, .backto-profil {
+  z-index: 2;
   position: absolute;
   top: 30px;
   right: 0px;
-  z-index: 99;
 }
-/* line 67, ../sass/_footer.scss */
+/* line 68, ../sass/_footer.scss */
 .admin a, .backto-profil a {
   font-size: 0.8em;
   font-family: "Bungee Inline", cursive;
@@ -402,7 +402,7 @@ footer .input-check-2 .switch {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* line 79, ../sass/_footer.scss */
+/* line 80, ../sass/_footer.scss */
 .backto-profil {
   top: 22%;
   left: 100px;
@@ -497,7 +497,7 @@ a:hover {
 }
 
 /* line 77, ../sass/_index.scss */
-.case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique {
+.case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique, .fin-partie {
   position: absolute;
   top: 52%;
   left: 100px;
@@ -509,14 +509,14 @@ a:hover {
   z-index: 50;
 }
 /* line 91, ../sass/_index.scss */
-.case h1, .formulaire h1, .profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1 {
+.case h1, .formulaire h1, .profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1, .fin-partie h1 {
   font-size: 1.8em;
   text-shadow: 0 0 20px white;
   margin: 15px;
   font-family: "Bungee Inline", cursive;
 }
 /* line 97, ../sass/_index.scss */
-.case .container, .formulaire .container, .profil .container, .jouer .container, .edit .container, .passchange .container, .classement .container, .historique .container {
+.case .container, .formulaire .container, .profil .container, .jouer .container, .edit .container, .passchange .container, .classement .container, .historique .container, .fin-partie .container {
   position: absolute;
   top: 0;
   left: 0;
@@ -527,7 +527,7 @@ a:hover {
   box-sizing: border-box;
 }
 /* line 107, ../sass/_index.scss */
-.case .sub-container, .formulaire .sub-container, .profil .sub-container, .jouer .sub-container, .edit .sub-container, .passchange .sub-container, .classement .sub-container, .historique .sub-container {
+.case .sub-container, .formulaire .sub-container, .profil .sub-container, .jouer .sub-container, .edit .sub-container, .passchange .sub-container, .classement .sub-container, .historique .sub-container, .fin-partie .sub-container {
   position: relative;
   width: 100%;
   height: 100%;
@@ -537,7 +537,7 @@ a:hover {
   box-sizing: border-box;
 }
 /* line 115, ../sass/_index.scss */
-.case .sub-container .foot, .formulaire .sub-container .foot, .profil .sub-container .foot, .jouer .sub-container .foot, .edit .sub-container .foot, .passchange .sub-container .foot, .classement .sub-container .foot, .historique .sub-container .foot {
+.case .sub-container .foot, .formulaire .sub-container .foot, .profil .sub-container .foot, .jouer .sub-container .foot, .edit .sub-container .foot, .passchange .sub-container .foot, .classement .sub-container .foot, .historique .sub-container .foot, .fin-partie .sub-container .foot {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -547,7 +547,7 @@ a:hover {
   box-sizing: border-box;
 }
 /* line 124, ../sass/_index.scss */
-.case .sub-container a, .formulaire .sub-container a, .profil .sub-container a, .jouer .sub-container a, .edit .sub-container a, .passchange .sub-container a, .classement .sub-container a, .historique .sub-container a {
+.case .sub-container a, .formulaire .sub-container a, .profil .sub-container a, .jouer .sub-container a, .edit .sub-container a, .passchange .sub-container a, .classement .sub-container a, .historique .sub-container a, .fin-partie .sub-container a {
   font-family: monospace;
   color: white;
   border: solid 1px white;
@@ -555,7 +555,7 @@ a:hover {
   letter-spacing: initial;
 }
 /* line 134, ../sass/_index.scss */
-.case .back-head, .formulaire .back-head, .profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
+.case .back-head, .formulaire .back-head, .profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .fin-partie .back-head, .case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot, .fin-partie .back-foot {
   position: absolute;
   top: -20px;
   left: 0;
@@ -567,7 +567,7 @@ a:hover {
   pointer-events: none;
 }
 /* line 145, ../sass/_index.scss */
-.case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
+.case .back-foot, .formulaire .back-foot, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot, .fin-partie .back-foot {
   top: initial;
   bottom: -50px;
 }
@@ -693,28 +693,28 @@ form button:active {
 }
 
 /* line 3, ../sass/_profil.scss */
-.profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
+.profil .back-head, .jouer .back-head, .edit .back-head, .passchange .back-head, .classement .back-head, .historique .back-head, .fin-partie .back-head, .profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot, .fin-partie .back-foot {
   height: 140px;
 }
 /* line 6, ../sass/_profil.scss */
-.profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot {
+.profil .back-foot, .jouer .back-foot, .edit .back-foot, .passchange .back-foot, .classement .back-foot, .historique .back-foot, .fin-partie .back-foot {
   bottom: -70px;
 }
 /* line 9, ../sass/_profil.scss */
-.profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1 {
+.profil h1, .jouer h1, .edit h1, .passchange h1, .classement h1, .historique h1, .fin-partie h1 {
   margin: 0;
   width: 70%;
   line-height: 1.2em;
 }
 /* line 14, ../sass/_profil.scss */
-.profil .email, .jouer .email, .edit .email, .passchange .email, .classement .email, .historique .email, .profil .drop-password .mail-form .password, .drop-password .mail-form .profil .password, .jouer .drop-password .mail-form .password, .drop-password .mail-form .jouer .password, .edit .drop-password .mail-form .password, .drop-password .mail-form .edit .password, .passchange .drop-password .mail-form .password, .drop-password .mail-form .passchange .password, .classement .drop-password .mail-form .password, .drop-password .mail-form .classement .password, .historique .drop-password .mail-form .password, .drop-password .mail-form .historique .password {
+.profil .email, .jouer .email, .edit .email, .passchange .email, .classement .email, .historique .email, .fin-partie .email, .profil .drop-password .mail-form .password, .drop-password .mail-form .profil .password, .jouer .drop-password .mail-form .password, .drop-password .mail-form .jouer .password, .edit .drop-password .mail-form .password, .drop-password .mail-form .edit .password, .passchange .drop-password .mail-form .password, .drop-password .mail-form .passchange .password, .classement .drop-password .mail-form .password, .drop-password .mail-form .classement .password, .historique .drop-password .mail-form .password, .drop-password .mail-form .historique .password, .fin-partie .drop-password .mail-form .password, .drop-password .mail-form .fin-partie .password {
   display: block;
   opacity: 0.6;
   padding: 5px 10px 5px 0;
   font-size: 1.1em;
 }
 /* line 20, ../sass/_profil.scss */
-.profil .profil-img, .jouer .profil-img, .edit .profil-img, .passchange .profil-img, .classement .profil-img, .historique .profil-img {
+.profil .profil-img, .jouer .profil-img, .edit .profil-img, .passchange .profil-img, .classement .profil-img, .historique .profil-img, .fin-partie .profil-img {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -725,7 +725,7 @@ form button:active {
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
 }
 /* line 29, ../sass/_profil.scss */
-.profil .profil-img .profil-img-container, .jouer .profil-img .profil-img-container, .edit .profil-img .profil-img-container, .passchange .profil-img .profil-img-container, .classement .profil-img .profil-img-container, .historique .profil-img .profil-img-container {
+.profil .profil-img .profil-img-container, .jouer .profil-img .profil-img-container, .edit .profil-img .profil-img-container, .passchange .profil-img .profil-img-container, .classement .profil-img .profil-img-container, .historique .profil-img .profil-img-container, .fin-partie .profil-img .profil-img-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -735,14 +735,14 @@ form button:active {
   overflow: hidden;
 }
 /* line 38, ../sass/_profil.scss */
-.profil .profil-img img, .jouer .profil-img img, .edit .profil-img img, .passchange .profil-img img, .classement .profil-img img, .historique .profil-img img {
+.profil .profil-img img, .jouer .profil-img img, .edit .profil-img img, .passchange .profil-img img, .classement .profil-img img, .historique .profil-img img, .fin-partie .profil-img img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 /* line 45, ../sass/_profil.scss */
-.profil .info-joueur, .jouer .info-joueur, .edit .info-joueur, .passchange .info-joueur, .classement .info-joueur, .historique .info-joueur {
+.profil .info-joueur, .jouer .info-joueur, .edit .info-joueur, .passchange .info-joueur, .classement .info-joueur, .historique .info-joueur, .fin-partie .info-joueur {
   position: absolute;
   top: 53%;
   left: 50%;
@@ -754,12 +754,12 @@ form button:active {
   font-family: "Bungee Inline", cursive;
 }
 /* line 55, ../sass/_profil.scss */
-.profil .info-joueur a, .jouer .info-joueur a, .edit .info-joueur a, .passchange .info-joueur a, .classement .info-joueur a, .historique .info-joueur a {
+.profil .info-joueur a, .jouer .info-joueur a, .edit .info-joueur a, .passchange .info-joueur a, .classement .info-joueur a, .historique .info-joueur a, .fin-partie .info-joueur a {
   font-family: "Bungee Inline", cursive;
   border: none;
 }
 /* line 60, ../sass/_profil.scss */
-.profil .foot, .jouer .foot, .edit .foot, .passchange .foot, .classement .foot, .historique .foot {
+.profil .foot, .jouer .foot, .edit .foot, .passchange .foot, .classement .foot, .historique .foot, .fin-partie .foot {
   padding: 25px 30px;
   display: flex;
   justify-content: space-between;
@@ -1108,4 +1108,19 @@ form button:active {
 /* line 44, ../sass/_historique.scss */
 .historique #table-hist-right {
   left: 100%;
+}
+
+/* line 1, ../sass/_fin-partie.scss */
+.fin-partie {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 250px;
+}
+/* line 10, ../sass/_fin-partie.scss */
+.fin-partie .foot a {
+  color: #00ccff;
+  border: solid 1px #00ccff;
+  box-shadow: 0 0 20px #003F4F, 0 0 10px #003F4F inset;
 }

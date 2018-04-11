@@ -1,8 +1,8 @@
 $(".tooltip-mouse").mouseenter(function(){
-    $(".tooltip-bottom").addClass("tooltip-hover-bt");
-    $(".tooltip-top").addClass("tooltip-hover-tp");
-    $(".tooltip-left").addClass("tooltip-hover-lf");
-    $(".tooltip-right").addClass("tooltip-hover-rg");
+    $(".tooltip-bottom", this).addClass("tooltip-hover-bt");
+    $(".tooltip-top", this).addClass("tooltip-hover-tp");
+    $(".tooltip-left", this).addClass("tooltip-hover-lf");
+    $(".tooltip-right", this).addClass("tooltip-hover-rg");
 });
 $(".tooltip-mouse").mouseleave(function(){
     $(".tooltip-bottom").removeClass("tooltip-hover-bt");

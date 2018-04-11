@@ -1,10 +1,129 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen.css') }}" type="text/css">
+{% endblock %}
+
 {% block body %}
-    <h1 style="text-align:center;">Cette partie est terminée</h1>
-    {% if partie.winner == 1 %}
-        <h4 style="text-align:center;">Le joueur {{ partie.joueur1.username }} a gagné</h4>
-    {% else %}
-        <h4 style="text-align:center;">Le joueur {{ partie.joueur2.username }} a gagné</h4>
-    {% endif %}
+    <div class="video-back">
+        <video loop="true" autoplay="true">
+            <source src="{{ asset('assets/images/back.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="dropform" class="fin-partie">
+        <div class="glitch border-top2"></div>
+        <div class="glitch border-right2"></div>
+        <div class="glitch border-bottom2"></div>
+        <div class="glitch border-left2"></div>
+
+        <div class="container">
+            <div class="back-head"></div>
+            <div class="sub-container">
+                <h1>Partie terminée</h1>
+                <br>
+                <span class="email">
+                        {% if partie.winner == 1 %}
+                            <h4 style="text-align:center;">Le joueur {{ partie.joueur1.username }} a gagné</h4>
+                        {% else %}
+                            <h4 style="text-align:center;">Le joueur {{ partie.joueur2.username }} a gagné</h4>
+                        {% endif %}
+                </span>
+
+                <div class="foot">
+                    <a href="{{ path('fos_user_profile_show') }}">Retour</a>
+                    {% if partie.winner == 1 %}
+                        <a href="{{ path('fos_user_profile_other', {'username': partie.joueur2.username}) }}">Revanche</a>
+                    {% else %}
+                        <a href="{{ path('fos_user_profile_other', {'username': partie.joueur1.username}) }}">Revanche</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="back-foot"></div>
+        </div>
+    </div>
+    <footer>
+        <div class="input-check-2">
+            off
+            <label class="switch">
+                {% if app.request.cookies.get('ANIMATIONS') is not null %}
+                    {% if app.request.cookies.get('ANIMATIONS') == 1 %}
+                        <input type="checkbox" id="check_animation" checked>
+                    {% else %}
+                        <input type="checkbox" id="check_animation">
+                    {% endif %}
+                {% else %}
+                    <input type="checkbox" id="check_animation" checked>
+                {% endif %}
+                <span class="slider"></span>
+            </label>
+            on
+        </div>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- TOOLTIP -->
+    <script src="{{ asset('assets/js/tooltip.js') }}" type="text/javascript"></script>
+    <!-- FLICKER EFFECT -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            const neon = document.querySelector('.glitch');
+            const neon6 = document.querySelector('#dropform2');
+
+            function setProperty(duration) {
+                neon.style.setProperty('--animation-time', duration + 's');
+                neon6.style.setProperty('--animation-time', duration + 's');
+            }
+
+            function changeAnimationTime() {
+                const animationDuration = Math.random();
+                setProperty(animationDuration);
+            }
+
+            var intervalFlicker = setInterval(changeAnimationTime, 500)
+
+            // CHECKED
+            if($('#check_animation').prop('checked')){
+                intervalFlicker = setInterval(changeAnimationTime, 500);
+                $("[class*='border-']").addClass('glitch');
+                $(".historique").attr("id","dropform2");
+                $("video").css('display','inline-block');
+                setTimeout(function(){$("video").css('opacity','1');}, 100);
+            }else{
+                clearInterval(intervalFlicker);
+                $("[class*='border-']").removeClass('glitch');
+                $(".historique").removeAttr("id");
+                $("video").css('opacity','0');
+                setTimeout(function(){$("video").css('display','none');}, 300);
+            }
+
+            $('#check_animation').on('click',function(){
+                if($(this).prop('checked')){
+                    console.log('checked');
+                    intervalFlicker = setInterval(changeAnimationTime, 500);
+                    $("[class*='border-']").addClass('glitch');
+                    $(".historique").attr("id","dropform2");
+                    $("video").css('display','inline-block');
+                    setTimeout(function(){$("video").css('opacity','1');}, 100);
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('cookie_animation', { 'checked':1 }) }}'
+                    })
+                }else{
+                    console.log('unckecked');
+                    clearInterval(intervalFlicker);
+                    $("[class*='border-']").removeClass('glitch');
+                    $(".historique").removeAttr("id");
+                    $("video").css('opacity','0');
+                    setTimeout(function(){$("video").css('display','none');}, 300);
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('cookie_animation', { 'checked':0 }) }}'
+                    })
+                }
+            })
+        })
+    </script>
 {% endblock %}
