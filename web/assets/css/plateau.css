@@ -14,6 +14,163 @@ body {
   box-sizing: border-box;
 }
 
+@keyframes rotate {
+  30%,70% {
+    transform: rotate(90deg);
+  }
+  95%,100% {
+    transform: rotate(0);
+  }
+}
+/* line 33, ../sass/plateau.scss */
+.turn-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  flex-flow: wrap;
+  z-index: 10000;
+  color: whitesmoke;
+  font-family: "Bungee Inline";
+  font-size: 6em;
+  padding: 40vh 20vw;
+  text-align: center;
+  line-height: 4vh;
+}
+/* line 51, ../sass/plateau.scss */
+.turn-message i {
+  animation: rotate 2s 1s infinite;
+  transition: .3s;
+  font-size: 3em;
+  margin-top: 2vh;
+}
+
+/* line 59, ../sass/plateau.scss */
+.fin-partie {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+}
+
+/* line 2, ../sass/_tooltip.scss */
+.tooltip, .tooltip-bottom, .tooltip-top, .tooltip-left, .tooltip-right {
+  position: absolute;
+  min-width: 150px;
+  background-color: #333;
+  border-radius: 3px;
+  font-family: monospace !important;
+  font-size: 0.9em;
+  padding: 8px 10px;
+  filter: drop-shadow(0 0 4px black);
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 1000000;
+  pointer-events: none;
+}
+/* line 16, ../sass/_tooltip.scss */
+.tooltip::before, .tooltip-bottom::before, .tooltip-top::before, .tooltip-left::before, .tooltip-right::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* line 26, ../sass/_tooltip.scss */
+.tooltip-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 80%);
+}
+/* line 31, ../sass/_tooltip.scss */
+.tooltip-bottom::before {
+  top: -5px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-bottom: 10px solid #333;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+/* line 40, ../sass/_tooltip.scss */
+.tooltip-hover-bt {
+  opacity: 1;
+  transform: translate(-50%, 110%);
+}
+
+/* line 47, ../sass/_tooltip.scss */
+.tooltip-top {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+/* line 52, ../sass/_tooltip.scss */
+.tooltip-top::before {
+  bottom: -5px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-top: 10px solid #333;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+/* line 61, ../sass/_tooltip.scss */
+.tooltip-hover-tp {
+  opacity: 1;
+  transform: translate(-50%, -110%);
+}
+
+/* line 68, ../sass/_tooltip.scss */
+.tooltip-left {
+  left: 0;
+  top: 50%;
+  transform: translate(-95%, -50%);
+}
+/* line 73, ../sass/_tooltip.scss */
+.tooltip-left::before {
+  right: -8px;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-top: 10px solid transparent;
+  border-left: 10px solid #333;
+  border-bottom: 10px solid transparent;
+}
+
+/* line 82, ../sass/_tooltip.scss */
+.tooltip-hover-lf {
+  opacity: 1;
+  transform: translate(-110%, -50%);
+}
+
+/* line 89, ../sass/_tooltip.scss */
+.tooltip-right {
+  right: 0;
+  top: 50%;
+  transform: translate(95%, -50%);
+}
+/* line 94, ../sass/_tooltip.scss */
+.tooltip-right::before {
+  left: -8px;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-top: 10px solid transparent;
+  border-right: 10px solid #333;
+  border-bottom: 10px solid transparent;
+}
+
+/* line 103, ../sass/_tooltip.scss */
+.tooltip-hover-rg {
+  opacity: 1;
+  transform: translate(110%, -50%);
+}
+
 /* line 2, ../sass/_neon.scss */
 .border, .border-top, .border-top2, .border-right, .border-right2, .border-bottom, .border-bottom2, .border-left, .border-left2 {
   position: absolute;
@@ -160,7 +317,7 @@ aside .section-jr-top .profil-img, aside .section-jr-bot .profil-img {
   border: solid 1px #ff5ef7;
   box-shadow: 0 0 20px rgba(130, 35, 120, 0.8), 0 0 10px #822378 inset;
 }
-/* line 16, ../sass/plateau.scss */
+/* line 25, ../sass/plateau.scss */
 aside .section-jr-top .profil-img::after, aside .section-jr-bot .profil-img::after {
   content: '';
   display: block;
@@ -272,11 +429,10 @@ aside .section-jr-top .actions .action4 i:last-child, aside .section-jr-bot .act
 /* line 126, ../sass/_aside-plateau.scss */
 aside .section-jr-top .actions .disabled-action, aside .section-jr-bot .actions .disabled-action {
   opacity: 0.6;
-  pointer-events: none;
   cursor: unset;
 }
 
-/* line 134, ../sass/_aside-plateau.scss */
+/* line 133, ../sass/_aside-plateau.scss */
 aside {
   position: absolute;
   top: 0;
@@ -287,28 +443,56 @@ aside {
   z-index: 200;
   box-sizing: initial;
 }
-/* line 143, ../sass/_aside-plateau.scss */
+/* line 142, ../sass/_aside-plateau.scss */
+aside .border, aside .border-top, aside .border-top2, aside .border-right, aside .border-right2, aside .border-bottom, aside .border-bottom2, aside .border-left, aside .border-left2 {
+  z-index: auto;
+}
+/* line 145, ../sass/_aside-plateau.scss */
 aside .section-jr-top {
   top: 0;
   height: 45%;
 }
-/* line 148, ../sass/_aside-plateau.scss */
+/* line 150, ../sass/_aside-plateau.scss */
 aside .section-jr-bot {
   bottom: 0;
   height: 50%;
   transform: rotate(180deg);
 }
-/* line 153, ../sass/_aside-plateau.scss */
+/* line 155, ../sass/_aside-plateau.scss */
 aside .section-jr-bot h2, aside .section-jr-bot .profil-img, aside .section-jr-bot .actions {
   transform: rotate(180deg);
 }
-/* line 156, ../sass/_aside-plateau.scss */
+/* line 158, ../sass/_aside-plateau.scss */
 aside .section-jr-bot .actions {
   max-height: 30vh !important;
 }
-
-/* line 163, ../sass/_aside-plateau.scss */
-.infos {
+/* line 162, ../sass/_aside-plateau.scss */
+aside .action1 {
+  position: absolute;
+}
+/* line 167, ../sass/_aside-plateau.scss */
+aside .action2 .tooltip-right {
+  width: 17vw;
+}
+/* line 171, ../sass/_aside-plateau.scss */
+aside .tooltip-right {
+  padding-right: 0;
+}
+/* line 173, ../sass/_aside-plateau.scss */
+aside .tooltip-right .card {
+  position: relative;
+  display: inline-block;
+  width: 8vw;
+  height: 9vw;
+  margin: 0;
+  padding: 0;
+}
+/* line 180, ../sass/_aside-plateau.scss */
+aside .tooltip-right .card:last-child {
+  float: right;
+}
+/* line 186, ../sass/_aside-plateau.scss */
+aside .infos {
   position: absolute;
   top: 0;
   right: 0;
@@ -317,8 +501,8 @@ aside .section-jr-bot .actions {
   color: white;
   font-size: 1vw;
 }
-/* line 171, ../sass/_aside-plateau.scss */
-.infos p {
+/* line 194, ../sass/_aside-plateau.scss */
+aside .infos p {
   float: right;
   position: relative;
   font-family: "Bungee Inline";
@@ -329,15 +513,15 @@ aside .section-jr-bot .actions {
   display: flex;
   align-items: center;
 }
-/* line 182, ../sass/_aside-plateau.scss */
-.infos .nb-card-deck {
+/* line 205, ../sass/_aside-plateau.scss */
+aside .infos .nb-card-deck {
   border: solid 2px #00ccff;
   margin-right: 3vw;
   border-radius: 5%;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 187, ../sass/_aside-plateau.scss */
-.infos .nb-card-deck::after, .infos .nb-card-deck::before {
+/* line 210, ../sass/_aside-plateau.scss */
+aside .infos .nb-card-deck::after, aside .infos .nb-card-deck::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -348,12 +532,12 @@ aside .section-jr-bot .actions {
   border: solid 1px #00ccff;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 198, ../sass/_aside-plateau.scss */
-.infos .nb-card-deck::before {
+/* line 221, ../sass/_aside-plateau.scss */
+aside .infos .nb-card-deck::before {
   right: -1vw;
 }
 
-/* line 205, ../sass/_aside-plateau.scss */
+/* line 229, ../sass/_aside-plateau.scss */
 .not-is-turn {
   opacity: 0.6;
   pointer-events: none;
@@ -832,7 +1016,7 @@ aside .section-jr-bot .actions {
   height: 137%;
   bottom: 70%;
   border-radius: 5px;
-  background: #111 url("../images/cartes/card_back.jpg") no-repeat center/contain;
+  background: #111 url("../images/cartes/card_back.jpg") no-repeat top/contain;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
   transform: rotate(180deg);
 }

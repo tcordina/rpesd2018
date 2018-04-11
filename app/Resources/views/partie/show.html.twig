@@ -13,12 +13,11 @@
             <div class="glitch border-right"></div>
             <div class="glitch border-left"></div>
             <div class="chat-body" id="chat">
-
             </div>
             <div class="chat-foot">
                 <form id="postermessage" action="{{ path('partie_posterMessage', {'partie':partie}) }}" method="post">
-                    <textarea id="message" name="message" placeholder="envoyer un message..."></textarea>
-                    <button type="submit"></button>
+                    <input type="text" id="message" name="message" placeholder="envoyer un message..." />
+                    <button type="submit" id="text-button"></button>
                 </form>
             </div>
         </section>

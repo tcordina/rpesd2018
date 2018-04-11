@@ -317,7 +317,9 @@ class PartieController extends Controller
     public function plateauAction(Partie $partie)
     {
         if($partie->getEnded() == true) {
-            return false;
+            return $this->render('partie/ended.html.twig', [
+                'partie' => $partie
+            ]);
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {
@@ -352,12 +354,12 @@ class PartieController extends Controller
      * Charge le deck via appel AJAX
      * @Route("/deck/{id}", name="partie_deck")
      * @param Partie $partie
-     * @return bool|Response
+     * @return bool|Response|NotFoundHttpException
      */
     public function deckAction(Partie $partie)
     {
         if($partie->getEnded() == true) {
-            return false;
+            return new NotFoundHttpException();
         }
         $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if($user == $partie->getJoueur1()->getId() || $user == $partie->getJoueur2()->getId()) {

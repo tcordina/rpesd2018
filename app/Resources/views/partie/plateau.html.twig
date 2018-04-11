@@ -5,6 +5,10 @@
 {% endfor %}
 
 {% if joueur == 1 %}
+    <div class="turn-message">
+        Veuillez passez en paysage ou agrandir votre fenêtre. <br>
+        <i class="fas fa-mobile-alt"></i>
+    </div>
     <aside>
         <div class="glitch border-right2"></div>
         {% if partie.tourJoueurId == 1 %}
@@ -50,7 +54,29 @@
             <ul class="actions">
                 {% for action in plateau.actions.j1 %}
                     {% if action.jouee %}
-                        <li class="action{{ action.id }} disabled-action" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                        {% if action.id == 1 %}
+                        <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                        <div class="tooltip-right">
+                        {%  for carte in plateau.actions.j1.0.cartes %}
+                            <div data-tilt class="card card-deck">
+                                <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                            </div>
+                        {% endfor %}
+                        </div>
+                        {% elseif action.id == 2 %}
+                            <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                            <div class="tooltip-right">
+                                {%  for carte in plateau.actions.j1.1.cartes %}
+                                    <div data-tilt class="card card-deck">
+                                        <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                        <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                        {% endif %}
                     {% else %}
                         <li class="action{{ action.id }}" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
                     {% endif %}
@@ -185,6 +211,10 @@
     </script>
     {% endif %}
 {% elseif joueur == 2 %}
+    <div class="turn-message">
+        Veuillez passez en paysage ou agrandir votre fenêtre. <br>
+        <i class="fas fa-mobile-alt"></i>
+    </div>
     <aside>
         <div class="glitch border-right2"></div>
 
@@ -228,15 +258,37 @@
                     {% endif %}
                 </div>
             </div>
-            <ul class="actions">
-                {% for action in plateau.actions.j2 %}
-                    {% if action.jouee %}
-                        <li class="action{{ action.id }} disabled-action" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
-                    {% else %}
-                        <li class="action{{ action.id }}" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+                <ul class="actions">
+                    {% for action in plateau.actions.j2 %}
+                        {% if action.jouee %}
+                            {% if action.id == 1 %}
+                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                                <div class="tooltip-right">
+                                    {%  for carte in plateau.actions.j2.0.cartes %}
+                                        <div data-tilt class="card card-deck">
+                                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% elseif action.id == 2 %}
+                                <li class="action{{ action.id }} disabled-action tooltip-mouse"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                                <div class="tooltip-right">
+                                    {%  for carte in plateau.actions.j2.1.cartes %}
+                                        <div data-tilt class="card card-deck">
+                                            <img src="{{ asset('assets/images/cartes/objets/fond_'~cartes[carte-1].objectif~'.jpg') }}" alt="" class="fond">
+                                            <img src="{{ asset('assets/images/cartes/objets/objet_'~cartes[carte-1].objectif~'.png') }}" alt="" class="objet">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <li class="action{{ action.id }} disabled-action"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="action{{ action.id }}" id="action{{ action.id }}"><img src="{{ asset('assets/images/action_'~action.id~'.svg') }}" alt=""></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
         </div>
     </aside>
     <section class="adversaire">
@@ -417,5 +469,30 @@
             $(".carte").tilt({
                 maxTilt: -10,
             });
+        });
+    </script>
+    <script type="text/javascript">
+        function resize(){
+            if($('body').width() < $('body').height()){
+                $('.turn-message').css('display','block');
+            } else {
+                $('.turn-message').css('display','none');
+            }
+        }
+        resize();
+        $(window).resize(function(){resize();})
+    </script>
+    <script>
+        $(".tooltip-mouse").mouseenter(function(){
+            $(".tooltip-bottom").addClass("tooltip-hover-bt");
+            $(".tooltip-top").addClass("tooltip-hover-tp");
+            $(".tooltip-left").addClass("tooltip-hover-lf");
+            $(".tooltip-right").addClass("tooltip-hover-rg");
+        });
+        $(".tooltip-mouse").mouseleave(function(){
+            $(".tooltip-bottom").removeClass("tooltip-hover-bt");
+            $(".tooltip-top").removeClass("tooltip-hover-tp");
+            $(".tooltip-left").removeClass("tooltip-hover-lf");
+            $(".tooltip-right").removeClass("tooltip-hover-rg");
         });
     </script>
