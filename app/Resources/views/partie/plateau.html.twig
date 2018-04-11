@@ -51,7 +51,7 @@
                     {% endif %}
                 </div>
             </div>
-            <li class="actions">
+            <ul class="actions">
                 {% for action in plateau.actions.j1 %}
                     {% if action.jouee %}
                         {% if action.id == 1 %}
@@ -193,6 +193,7 @@
         var inputCompromis = '<input type="hidden" name="action" value="compromis">';
         var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
         var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
+        var hrNeon = '<hr>';
 
         $('#action1').click(function () {
             isFilled();
@@ -208,7 +209,7 @@
         });
         $('#action4').click(function () {
             isFilled();
-            $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);
+            $('.form-joueur-actif').html(inputCart+inputCart+hrNeon+inputCart+inputCart+inputConcurrence+buttonCart);
         });
     </script>
     {% endif %}
@@ -402,6 +403,7 @@
             var inputCompromis = '<input type="hidden" name="action" value="compromis">';
             var inputCadeau = '<input type="hidden" name="action" value="cadeau">';
             var inputConcurrence = '<input type="hidden" name="action" value="concurrence">';
+            var hrNeon = '<hr>';
 
             $('#action1').click(function () {
                 isFilled();
@@ -417,9 +419,8 @@
             });
             $('#action4').click(function () {
                 isFilled();
-                $('.form-joueur-actif').html(inputCart+inputCart+inputCart+inputCart+inputConcurrence+buttonCart);
+                $('.form-joueur-actif').html(inputCart+inputCart+hrNeon+inputCart+inputCart+inputConcurrence+buttonCart);
             });
-        </script>
         </script>
     {% endif %}
 {% endif %}

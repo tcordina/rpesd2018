@@ -34,9 +34,9 @@
                 <div class="foot">
                     <a href="{{ path('fos_user_profile_show') }}">Retour</a>
                     {% if partie.winner == 1 %}
-                        <a href="{{ path('fos_user_profile_other', {'username': partie.joueur2.username}) }}">Revanche</a>
-                    {% else %}
                         <a href="{{ path('fos_user_profile_other', {'username': partie.joueur1.username}) }}">Revanche</a>
+                    {% else %}
+                        <a href="{{ path('fos_user_profile_other', {'username': partie.joueur2.username}) }}">Revanche</a>
                     {% endif %}
                 </div>
             </div>

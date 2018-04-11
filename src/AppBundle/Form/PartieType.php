@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Repository\UserAdminRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,10 @@ class PartieType extends AbstractType
         $builder->add('joueur2', EntityType::class, [
             'class' => 'AppBundle\Entity\UserAdmin',
             'choice_label' => 'username',
-            'label' => false
+            'label' => false,
+            'query_builder' => function (UserAdminRepository $repo) {
+                return $repo->createQueryBuilder('u')->orderBy('u.username', 'ASC');
+            },
         ]);
     }/**
      * {@inheritdoc}

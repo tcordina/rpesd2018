@@ -866,13 +866,14 @@ aside .infos .nb-card-deck::before {
   width: 7vw;
   height: 9.5vw;
   margin-right: 0.5vw;
-  background: #111;
+  background: #0e0e0e;
+  border: solid 1px #222;
   border-radius: 5%;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.8) inset;
   pointer-events: none;
   overflow: hidden;
 }
-/* line 56, ../sass/_deck.scss */
+/* line 57, ../sass/_deck.scss */
 .echange .card-hole .destination .card, .echange-advs .card-hole .destination .card {
   pointer-events: auto !important;
   position: absolute;
@@ -882,11 +883,11 @@ aside .infos .nb-card-deck::before {
   top: 50%;
   transform: translate(-50%, -50%) rotateY(0) rotateX(0) perspective(0) !important;
 }
-/* line 64, ../sass/_deck.scss */
+/* line 65, ../sass/_deck.scss */
 .echange .card-hole .destination .card::before, .echange-advs .card-hole .destination .card::before {
   display: none;
 }
-/* line 67, ../sass/_deck.scss */
+/* line 68, ../sass/_deck.scss */
 .echange .card-hole .destination .card::after, .echange-advs .card-hole .destination .card::after {
   content: 'remettre la carte dans la main';
   color: white;
@@ -906,12 +907,24 @@ aside .infos .nb-card-deck::before {
   opacity: 0;
   transition: 0.2s;
 }
-/* line 86, ../sass/_deck.scss */
+/* line 87, ../sass/_deck.scss */
 .echange .card-hole .destination .card:hover::after, .echange-advs .card-hole .destination .card:hover::after {
   opacity: 1;
 }
-
 /* line 94, ../sass/_deck.scss */
+.echange hr, .echange-advs hr {
+  border: solid 1px #999;
+  box-shadow: 0 0 20px whitesmoke;
+  position: relative;
+  display: inline-block;
+  width: 3px;
+  height: 9.5vw;
+  margin: 0.5vw 0.5vw 0 0;
+  background: whitesmoke;
+  border-radius: 1000px;
+}
+
+/* line 108, ../sass/_deck.scss */
 .deck {
   position: absolute;
   bottom: -3vw;
@@ -922,16 +935,16 @@ aside .infos .nb-card-deck::before {
   justify-content: space-evenly;
   z-index: 100;
 }
-/* line 104, ../sass/_deck.scss */
+/* line 118, ../sass/_deck.scss */
 .deck .card:hover {
   top: -40%;
   z-index: 30;
 }
-/* line 107, ../sass/_deck.scss */
+/* line 121, ../sass/_deck.scss */
 .deck .card:hover::before {
   box-shadow: 0 20px 70px -10px rgba(0, 0, 0, 0.3), 0 50px 100px 0 rgba(0, 0, 0, 0.4);
 }
-/* line 110, ../sass/_deck.scss */
+/* line 124, ../sass/_deck.scss */
 .deck .card:hover .objet {
   bottom: 1vw;
   -webkit-user-select: none;
@@ -939,12 +952,12 @@ aside .infos .nb-card-deck::before {
   -ms-user-select: none;
   user-select: none;
 }
-/* line 118, ../sass/_deck.scss */
+/* line 132, ../sass/_deck.scss */
 .deck .card:active {
   transform: scale3d(1, 1, 1) !important;
 }
 
-/* line 123, ../sass/_deck.scss */
+/* line 137, ../sass/_deck.scss */
 .card {
   position: relative;
   width: 15%;
@@ -958,7 +971,7 @@ aside .infos .nb-card-deck::before {
   -ms-user-select: none;
   transition: top 0.2s;
 }
-/* line 135, ../sass/_deck.scss */
+/* line 149, ../sass/_deck.scss */
 .card:before {
   content: '';
   position: absolute;
@@ -970,7 +983,7 @@ aside .infos .nb-card-deck::before {
   box-shadow: 0 20px 70px -10px rgba(0, 0, 0, 0.3), 0 50px 100px 0 rgba(0, 0, 0, 0.4);
   z-index: -1;
 }
-/* line 146, ../sass/_deck.scss */
+/* line 160, ../sass/_deck.scss */
 .card .fond {
   position: absolute;
   top: 0;
@@ -979,7 +992,7 @@ aside .infos .nb-card-deck::before {
   border-radius: 3%;
   pointer-events: none;
 }
-/* line 154, ../sass/_deck.scss */
+/* line 168, ../sass/_deck.scss */
 .card .objet {
   position: absolute;
   bottom: 2%;
@@ -994,7 +1007,7 @@ aside .infos .nb-card-deck::before {
   user-select: none;
 }
 
-/* line 170, ../sass/_deck.scss */
+/* line 183, ../sass/_deck.scss */
 .transZ {
   transform: translateZ(0) !important;
 }

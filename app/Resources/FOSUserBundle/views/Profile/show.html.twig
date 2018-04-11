@@ -13,7 +13,7 @@
     </div>
     <div class="logo"></div>
     {% for message in app.flashes('notice') %}
-        <span class="alert" style="position:absolute;width:100vw;background-color:darkred;text-align:center;padding:15px 0;">
+        <span class="alert" style="position:absolute;z-index:999;width:100vw;background-color:darkred;text-align:center;padding:15px 0;">
             {{ message }}
             <i class="fas fa-times" style="cursor:pointer;position:absolute;right:2px;top:2px;" onclick="hideAlert()"></i>
         </span>
