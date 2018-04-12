@@ -106,9 +106,6 @@
                                 {% endif %}
                                 <td>{{ partie.manche }}</td>
                             </tr>
-                        {% else %}
-                            <p>Vous n'avez pas de partie en cours</p>
-                            <a href="{{ path('partie_new') }}">Y remédier</a>
                         {% endfor %}
                         </tbody>
                     </table>
