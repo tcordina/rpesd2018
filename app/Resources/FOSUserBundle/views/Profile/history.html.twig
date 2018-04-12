@@ -83,6 +83,7 @@
                             <th>Adversaire</th>
                             <th>Tour</th>
                             <th>Manches</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -105,6 +106,7 @@
                                     {% endif %}
                                 {% endif %}
                                 <td>{{ partie.manche }}</td>
+                                <td><a href="{{ path('partie_show', {'id': partie.id}) }}">Rejoindre</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

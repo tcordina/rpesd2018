@@ -734,7 +734,7 @@ form button:active {
 /* line 45, ../sass/_profil.scss */
 .profil .info-joueur, .jouer .info-joueur, .edit .info-joueur, .passchange .info-joueur, .classement .info-joueur, .historique .info-joueur, .fin-partie .info-joueur {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   padding: 0;
   transform: translate(-50%, -50%);
@@ -744,11 +744,16 @@ form button:active {
   font-family: "Bungee Inline", cursive;
 }
 /* line 55, ../sass/_profil.scss */
+.profil .info-joueur img, .jouer .info-joueur img, .edit .info-joueur img, .passchange .info-joueur img, .classement .info-joueur img, .historique .info-joueur img, .fin-partie .info-joueur img {
+  border-radius: 1000px;
+  box-shadow: 0 0 6px #999;
+}
+/* line 59, ../sass/_profil.scss */
 .profil .info-joueur a, .jouer .info-joueur a, .edit .info-joueur a, .passchange .info-joueur a, .classement .info-joueur a, .historique .info-joueur a, .fin-partie .info-joueur a {
   font-family: "Bungee Inline", cursive;
   border: none;
 }
-/* line 60, ../sass/_profil.scss */
+/* line 64, ../sass/_profil.scss */
 .profil .foot, .jouer .foot, .edit .foot, .passchange .foot, .classement .foot, .historique .foot, .fin-partie .foot {
   padding: 25px 30px;
   display: flex;
@@ -756,7 +761,7 @@ form button:active {
   align-items: center;
 }
 
-/* line 67, ../sass/_profil.scss */
+/* line 71, ../sass/_profil.scss */
 .jouer {
   position: relative;
   margin-left: 50px;
@@ -766,7 +771,7 @@ form button:active {
   background-position: center;
   background-size: cover;
 }
-/* line 75, ../sass/_profil.scss */
+/* line 79, ../sass/_profil.scss */
 .jouer a {
   position: absolute;
   top: 0;
@@ -778,11 +783,11 @@ form button:active {
   justify-content: center;
   transition: 0.2s;
 }
-/* line 85, ../sass/_profil.scss */
+/* line 89, ../sass/_profil.scss */
 .jouer a:hover .title-jouer {
   font-size: 3.3em;
 }
-/* line 89, ../sass/_profil.scss */
+/* line 93, ../sass/_profil.scss */
 .jouer .title-jouer {
   font-family: 'Rock Salt', cursive;
   width: 70%;
@@ -792,33 +797,33 @@ form button:active {
   text-shadow: 0 0 10px #00b3ee, 0 0 30px #00ccff;
   transition: 0.2s;
 }
-/* line 98, ../sass/_profil.scss */
+/* line 102, ../sass/_profil.scss */
 .jouer .sub-container {
   background-color: rgba(0, 0, 0, 0.9);
 }
-/* line 100, ../sass/_profil.scss */
+/* line 104, ../sass/_profil.scss */
 .jouer .sub-container .fa-times {
   color: #92f5fe;
   text-shadow: 0 0 10px #00ccff;
 }
-/* line 104, ../sass/_profil.scss */
+/* line 108, ../sass/_profil.scss */
 .jouer .sub-container .form-container {
   height: 60%;
   display: flex;
   justify-content: center;
 }
-/* line 108, ../sass/_profil.scss */
+/* line 112, ../sass/_profil.scss */
 .jouer .sub-container .form-container form {
   margin-top: 30px;
 }
-/* line 110, ../sass/_profil.scss */
+/* line 114, ../sass/_profil.scss */
 .jouer .sub-container .form-container form .styled-select {
   position: relative;
   width: 200px;
   height: 40px;
   margin: 0 auto;
 }
-/* line 116, ../sass/_profil.scss */
+/* line 120, ../sass/_profil.scss */
 .jouer .sub-container .form-container form select {
   color: white;
   position: absolute;
@@ -834,7 +839,7 @@ form button:active {
   background-color: rgba(30, 30, 30, 0.9);
   -webkit-appearance: none;
 }
-/* line 131, ../sass/_profil.scss */
+/* line 135, ../sass/_profil.scss */
 .jouer .sub-container .form-container form .select-arrow {
   background-color: #222;
   position: absolute;
@@ -850,7 +855,7 @@ form button:active {
   color: #92f5fe;
   text-shadow: 0 0 10px #92f5fe;
 }
-/* line 146, ../sass/_profil.scss */
+/* line 150, ../sass/_profil.scss */
 .jouer .sub-container .form-container form button {
   color: #92f5fe;
   border-color: #92f5fe;

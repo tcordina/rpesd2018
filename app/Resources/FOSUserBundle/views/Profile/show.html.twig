@@ -45,10 +45,10 @@
                 <span class="email">{{ user.email }}</span>
                 <ul class="info-joueur tooltip-mouse">
                     <a href="{{ path('classement') }}" class="clear">
-                    <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100" /></li>
-                    <li>{{ user.rank }}&nbsp; | &nbsp;Elo : {{ user.elo }}</li>
-                    <li class="clear"><i class="fa fa-trophy"></i>&nbsp;&nbsp;{{ user.wins }}</li>
-                    <div class="tooltip-bottom">Accéder au classement</div>
+                        <li><img src="{{ asset('assets/images/medailles/'~user.rank~'.jpg') }}" alt="grade" height="100"/></li>
+                        <li>{{ user.rank }}&nbsp; | &nbsp;Elo : {{ user.elo }}</li>
+                        <li class="clear"><i class="fa fa-trophy"></i>&nbsp;&nbsp;{{ user.wins }}</li>
+                        <div class="tooltip-bottom">Accéder au classement</div>
                     </a>
                 </ul>
                 <div class="foot">
