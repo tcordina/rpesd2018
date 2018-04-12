@@ -1130,110 +1130,119 @@ form button:active {
   box-shadow: 0 0 20px #003F4F, 0 0 10px #003F4F inset;
 }
 
-@media (max-width: 1210px) {
-  /* line 2, ../sass/_responsive.scss */
-  .jouer {
-    margin-top: 20px;
-    margin-left: 100px;
-    height: 130px;
-  }
-}
-@media (max-width: 800px) {
-  /* line 10, ../sass/_responsive.scss */
-  .video-back {
-    display: none;
-  }
-
-  /* line 13, ../sass/_responsive.scss */
-  .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique, .fin-partie {
-    margin: 0 auto 0;
-    float: none;
-    display: block;
-  }
-
-  /* line 18, ../sass/_responsive.scss */
-  .jouer {
-    margin-top: 20px;
-  }
-
-  /* line 21, ../sass/_responsive.scss */
-  .logo {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* line 25, ../sass/_responsive.scss */
-  footer {
-    width: 520px;
-    padding: 0;
-    margin: 5vh auto 0;
-    display: block;
-  }
-  /* line 30, ../sass/_responsive.scss */
-  footer .deco {
-    float: initial;
-  }
-
-  /* line 34, ../sass/_responsive.scss */
-  .input-check-2 {
-    display: none;
-  }
-}
-@media (max-width: 702px) {
-  /* line 40, ../sass/_responsive.scss */
-  .classement, .historique {
-    width: 100%;
-    left: 0;
-  }
-}
-@media (max-width: 576px) {
-  /* line 47, ../sass/_responsive.scss */
-  body {
-    font-size: 0.9em;
-  }
-
-  /* line 50, ../sass/_responsive.scss */
-  .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique, .fin-partie {
-    width: 100%;
-    left: 0;
-  }
-
-  /* line 54, ../sass/_responsive.scss */
-  footer {
-    width: 100%;
-    padding: 0 10vw;
-  }
-  /* line 57, ../sass/_responsive.scss */
-  footer ul {
-    width: 100% !important;
-  }
-  /* line 59, ../sass/_responsive.scss */
-  footer ul li {
-    margin-bottom: 10px;
-  }
-
-  /* line 64, ../sass/_responsive.scss */
-  .admin, .backto-profil {
-    top: 20vh;
-    right: 10px;
-  }
-  /* line 67, ../sass/_responsive.scss */
-  .admin a, .backto-profil a {
-    margin-right: 0;
-  }
-
-  /* line 71, ../sass/_responsive.scss */
-  .backto-profil {
-    left: 10px;
-  }
-}
 @media (max-height: 665px) {
-  /* line 77, ../sass/_responsive.scss */
+  /* line 2, ../sass/_responsive.scss */
   footer {
     position: relative;
     display: inline-block;
     width: 100%;
     margin-top: 5vh;
     padding: 0 100px;
+  }
+}
+@media (max-width: 1210px) {
+  /* line 12, ../sass/_responsive.scss */
+  .jouer {
+    margin-top: 20px;
+    margin-left: 100px;
+    height: 130px;
+  }
+
+  /* line 17, ../sass/_responsive.scss */
+  footer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-top: 5vh;
+    padding: 0 100px;
+  }
+}
+@media (max-width: 800px) {
+  /* line 27, ../sass/_responsive.scss */
+  .video-back {
+    display: none;
+  }
+
+  /* line 30, ../sass/_responsive.scss */
+  .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique, .fin-partie {
+    margin: 0 auto 0;
+    float: none;
+    display: block;
+  }
+
+  /* line 35, ../sass/_responsive.scss */
+  .jouer {
+    margin-top: 20px;
+  }
+
+  /* line 38, ../sass/_responsive.scss */
+  .logo {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* line 42, ../sass/_responsive.scss */
+  footer {
+    width: 520px;
+    padding: 0;
+    margin: 5vh auto 0;
+    display: block;
+  }
+  /* line 47, ../sass/_responsive.scss */
+  footer .deco {
+    float: initial;
+  }
+
+  /* line 51, ../sass/_responsive.scss */
+  .input-check-2 {
+    display: none;
+  }
+}
+@media (max-width: 702px) {
+  /* line 57, ../sass/_responsive.scss */
+  .classement, .historique {
+    width: 100%;
+    left: 0;
+  }
+}
+@media (max-width: 576px) {
+  /* line 64, ../sass/_responsive.scss */
+  body {
+    font-size: 0.9em;
+  }
+
+  /* line 67, ../sass/_responsive.scss */
+  .case, .formulaire, .profil, .jouer, .edit, .passchange, .classement, .historique, .fin-partie {
+    width: 100%;
+    left: 0;
+  }
+
+  /* line 71, ../sass/_responsive.scss */
+  footer {
+    width: 100%;
+    padding: 0 10vw;
+  }
+  /* line 74, ../sass/_responsive.scss */
+  footer ul {
+    width: 100% !important;
+  }
+  /* line 76, ../sass/_responsive.scss */
+  footer ul li {
+    margin-bottom: 10px;
+  }
+
+  /* line 81, ../sass/_responsive.scss */
+  .admin, .backto-profil {
+    top: 20vh;
+    right: 10px;
+  }
+  /* line 84, ../sass/_responsive.scss */
+  .admin a, .backto-profil a {
+    margin-right: 0;
+  }
+
+  /* line 88, ../sass/_responsive.scss */
+  .backto-profil {
+    left: 10px;
   }
 }
