@@ -46,9 +46,12 @@
                 <br>
                 <span class="email">{{ user.email }}</span>
                 <ul class="info-joueur tooltip-mouse">
-                    <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100" /></li>
-                    <li><a href="{{ path('classement') }}" class="clear">{{ user.rank }}&nbsp; | &nbsp;Elo : {{ user.elo }}</a></li>
-                    <div class="tooltip-bottom">Accéder au classement</div>
+                    <a href="{{ path('classement') }}" class="clear">
+                        <li><img src="{{ asset('assets/images/badge_platin.png') }}" alt="Platine" height="100" /></li>
+                        <li>{{ user.rank }}&nbsp; | &nbsp;Elo : {{ user.elo }}</li>
+                        <li class="clear"><i class="fa fa-trophy"></i>&nbsp;&nbsp;{{ user.wins }}</li>
+                        <div class="tooltip-bottom">Accéder au classement</div>
+                    </a>
                 </ul>
             </div>
             <div class="back-foot"></div>

@@ -1,3 +1,6 @@
+{% if app.request.pathinfo == '/register/register' %}
+    <META HTTP-EQUIV="Refresh" CONTENT="0; URL={{ path('fos_user_registration_register_view') }}">
+{% else %}
 {% trans_default_domain 'FOSUserBundle' %}
 <form id="vuejs" action="{{ path('fos_user_registration_register_submit') }}" method="POST" >
     {% if app.request.pathinfo == '/login' %}
@@ -24,3 +27,4 @@
     <button type="submit">S'inscrire</button>
     </fieldset>
 </form>
+{% endif %}
