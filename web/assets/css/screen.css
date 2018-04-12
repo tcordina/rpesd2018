@@ -1111,6 +1111,16 @@ form button:active {
 }
 
 /* line 1, ../sass/_fin-partie.scss */
+.back-end {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../images/end.jpg") no-repeat center/cover;
+}
+
+/* line 9, ../sass/_fin-partie.scss */
 .fin-partie {
   top: 50%;
   left: 50%;
@@ -1118,7 +1128,7 @@ form button:active {
   width: 400px;
   height: 250px;
 }
-/* line 10, ../sass/_fin-partie.scss */
+/* line 18, ../sass/_fin-partie.scss */
 .fin-partie .foot a {
   color: #00ccff;
   border: solid 1px #00ccff;

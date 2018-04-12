@@ -467,13 +467,15 @@
     </script>
     <script defer type="text/javascript">
         $(document).ready(function(){
-            $(".card-deck").tilt({
-                maxTilt: -8,
-                scale: 1.07
-            });
-            $(".carte").tilt({
-                maxTilt: -10,
-            });
+            if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+                $(".card-deck").tilt({
+                    maxTilt: -8,
+                    scale: 1.07
+                });
+                $(".carte").tilt({
+                    maxTilt: -10,
+                });
+            }
         });
     </script>
     <script type="text/javascript">

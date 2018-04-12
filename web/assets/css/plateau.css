@@ -10,7 +10,7 @@ body {
 }
 
 /* line 10, ../sass/plateau.scss */
-* {
+*:not(.chat, aside) {
   box-sizing: border-box;
 }
 
@@ -305,6 +305,7 @@ aside .section-jr-top h2, aside .section-jr-bot h2 {
   color: #ff5ef7;
   font-family: "Bungee Inline";
   text-shadow: 0 0 10px #DC1ABF;
+  box-sizing: border-box;
   font-size: 1vw;
 }
 /* line 22, ../sass/_aside-plateau.scss */
@@ -441,7 +442,7 @@ aside {
   width: 7vw;
   background: #191919 url("../images/darknoise.png");
   z-index: 200;
-  box-sizing: initial;
+  box-sizing: padding-box;
 }
 /* line 142, ../sass/_aside-plateau.scss */
 aside .border, aside .border-top, aside .border-top2, aside .border-right, aside .border-right2, aside .border-bottom, aside .border-bottom2, aside .border-left, aside .border-left2 {
@@ -587,7 +588,7 @@ aside .infos .nb-card-deck::before {
   left: 0;
   width: 100%;
   height: 18vw;
-  background-color: #111;
+  background: #111 url("../images/boat.jpg") no-repeat center/cover;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.8) inset;
 }
 /* line 42, ../sass/_persos.scss */
@@ -661,6 +662,7 @@ aside .infos .nb-card-deck::before {
 /* line 13, ../sass/_chat.scss */
 .chat {
   position: absolute;
+  box-sizing: revert;
   bottom: 0;
   right: 3vw;
   height: 19.5vw;
@@ -668,7 +670,7 @@ aside .infos .nb-card-deck::before {
   background: #222;
   box-shadow: 0 0 100px #731768;
 }
-/* line 21, ../sass/_chat.scss */
+/* line 22, ../sass/_chat.scss */
 .chat .chat-body {
   position: absolute;
   top: 0;
@@ -680,7 +682,7 @@ aside .infos .nb-card-deck::before {
   display: flex;
   align-items: end;
 }
-/* line 31, ../sass/_chat.scss */
+/* line 32, ../sass/_chat.scss */
 .chat .chat-body .chat-messages {
   width: 100%;
   max-height: 100%;
@@ -691,18 +693,18 @@ aside .infos .nb-card-deck::before {
   box-sizing: border-box;
   padding: 10px;
 }
-/* line 40, ../sass/_chat.scss */
+/* line 41, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left {
   width: 100%;
   display: block;
 }
-/* line 43, ../sass/_chat.scss */
+/* line 44, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left p {
   background: #444;
   color: whitesmoke;
   float: left;
 }
-/* line 48, ../sass/_chat.scss */
+/* line 49, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left p::before {
   content: '';
   position: absolute;
@@ -714,18 +716,18 @@ aside .infos .nb-card-deck::before {
   border-right: 7px solid #444;
   border-bottom: 7px solid transparent;
 }
-/* line 61, ../sass/_chat.scss */
+/* line 62, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right {
   width: 100%;
   display: block;
 }
-/* line 64, ../sass/_chat.scss */
+/* line 65, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right p {
   background: #DC1ABF;
   color: white;
   float: right;
 }
-/* line 69, ../sass/_chat.scss */
+/* line 70, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right p::before {
   content: '';
   position: absolute;
@@ -737,7 +739,7 @@ aside .infos .nb-card-deck::before {
   border-left: 7px solid #DC1ABF;
   border-bottom: 7px solid transparent;
 }
-/* line 84, ../sass/_chat.scss */
+/* line 85, ../sass/_chat.scss */
 .chat .chat-foot {
   position: absolute;
   bottom: 0;
@@ -749,7 +751,7 @@ aside .infos .nb-card-deck::before {
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
   z-index: 20;
 }
-/* line 94, ../sass/_chat.scss */
+/* line 95, ../sass/_chat.scss */
 .chat .chat-foot form {
   position: absolute;
   top: 0;
@@ -759,7 +761,7 @@ aside .infos .nb-card-deck::before {
   box-sizing: border-box;
   background: #444;
 }
-/* line 102, ../sass/_chat.scss */
+/* line 103, ../sass/_chat.scss */
 .chat .chat-foot form input {
   position: absolute;
   width: 78%;
@@ -777,7 +779,7 @@ aside .infos .nb-card-deck::before {
   overflow: hidden;
   font-size: 1em;
 }
-/* line 118, ../sass/_chat.scss */
+/* line 119, ../sass/_chat.scss */
 .chat .chat-foot form input:focus {
   top: 0;
   left: 0;
@@ -785,7 +787,7 @@ aside .infos .nb-card-deck::before {
   height: 100%;
   padding: 0 25px;
 }
-/* line 126, ../sass/_chat.scss */
+/* line 127, ../sass/_chat.scss */
 .chat .chat-foot form button {
   font-size: 2em;
   position: absolute;
@@ -804,7 +806,7 @@ aside .infos .nb-card-deck::before {
   z-index: 20;
   transition: 0.1s;
 }
-/* line 143, ../sass/_chat.scss */
+/* line 144, ../sass/_chat.scss */
 .chat .chat-foot form button:active {
   background-color: rgba(200, 200, 200, 0.2);
 }
