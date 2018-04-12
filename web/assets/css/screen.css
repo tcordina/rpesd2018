@@ -381,15 +381,19 @@ footer .input-check-2::before {
 footer .input-check-2 .switch {
   margin: 0 10px;
 }
+/* line 61, ../sass/_footer.scss */
+footer p {
+  opacity: 0.4;
+}
 
-/* line 63, ../sass/_footer.scss */
+/* line 66, ../sass/_footer.scss */
 .admin, .backto-profil {
   z-index: 2;
   position: absolute;
   top: 30px;
   right: 0px;
 }
-/* line 68, ../sass/_footer.scss */
+/* line 71, ../sass/_footer.scss */
 .admin a, .backto-profil a {
   font-size: 0.8em;
   font-family: "Bungee Inline", cursive;
@@ -402,7 +406,7 @@ footer .input-check-2 .switch {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* line 80, ../sass/_footer.scss */
+/* line 83, ../sass/_footer.scss */
 .backto-profil {
   top: 22%;
   left: 100px;

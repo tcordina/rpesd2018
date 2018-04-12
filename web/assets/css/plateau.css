@@ -41,23 +41,14 @@ body {
   padding: 40vh 20vw;
   text-align: center;
   line-height: 4vh;
+  box-sizing: border-box;
 }
-/* line 51, ../sass/plateau.scss */
+/* line 52, ../sass/plateau.scss */
 .turn-message i {
   animation: rotate 2s 1s infinite;
   transition: .3s;
   font-size: 3em;
   margin-top: 2vh;
-}
-
-/* line 59, ../sass/plateau.scss */
-.fin-partie {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 300px;
-  transform: translate(-50%, -50%);
 }
 
 /* line 2, ../sass/_tooltip.scss */
@@ -492,8 +483,9 @@ aside .tooltip-right .card {
 aside .tooltip-right .card:last-child {
   float: right;
 }
-/* line 186, ../sass/_aside-plateau.scss */
-aside .infos {
+
+/* line 187, ../sass/_aside-plateau.scss */
+.infos {
   position: absolute;
   top: 0;
   right: 0;
@@ -502,8 +494,8 @@ aside .infos {
   color: white;
   font-size: 1vw;
 }
-/* line 194, ../sass/_aside-plateau.scss */
-aside .infos p {
+/* line 195, ../sass/_aside-plateau.scss */
+.infos p {
   float: right;
   position: relative;
   font-family: "Bungee Inline";
@@ -514,15 +506,15 @@ aside .infos p {
   display: flex;
   align-items: center;
 }
-/* line 205, ../sass/_aside-plateau.scss */
-aside .infos .nb-card-deck {
+/* line 206, ../sass/_aside-plateau.scss */
+.infos .nb-card-deck {
   border: solid 2px #00ccff;
   margin-right: 3vw;
   border-radius: 5%;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 210, ../sass/_aside-plateau.scss */
-aside .infos .nb-card-deck::after, aside .infos .nb-card-deck::before {
+/* line 211, ../sass/_aside-plateau.scss */
+.infos .nb-card-deck::after, .infos .nb-card-deck::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -533,8 +525,8 @@ aside .infos .nb-card-deck::after, aside .infos .nb-card-deck::before {
   border: solid 1px #00ccff;
   box-shadow: 0 0 10px #00b3ee inset, 0 0 20px #00b3ee;
 }
-/* line 221, ../sass/_aside-plateau.scss */
-aside .infos .nb-card-deck::before {
+/* line 222, ../sass/_aside-plateau.scss */
+.infos .nb-card-deck::before {
   right: -1vw;
 }
 
