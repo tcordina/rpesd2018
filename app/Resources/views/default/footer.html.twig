@@ -8,24 +8,24 @@
             {% endif %}
         </ul>
     </nav>
-    <div class="input-check-2">
-        off
-        <label class="switch">
-            {% if app.request.cookies.get('ANIMATIONS') is not null %}
-                {% if app.request.cookies.get('ANIMATIONS') == 1 %}
-                    <input type="checkbox" id="check_animation" checked>
-                {% else %}
-                    <input type="checkbox" id="check_animation">
-                {% endif %}
-            {% else %}
-                <input type="checkbox" id="check_animation" checked>
-            {% endif %}
-            <span class="slider"></span>
-        </label>
-        on
-    </div>
     <p>Copyright © 2018 Joqer</p>
 </footer>
+<div class="input-check-2">
+    off
+    <label class="switch">
+        {% if app.request.cookies.get('ANIMATIONS') is not null %}
+            {% if app.request.cookies.get('ANIMATIONS') == 1 %}
+                <input type="checkbox" id="check_animation" checked>
+            {% else %}
+                <input type="checkbox" id="check_animation">
+            {% endif %}
+        {% else %}
+            <input type="checkbox" id="check_animation" checked>
+        {% endif %}
+        <span class="slider"></span>
+    </label>
+    on
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     if($(window).width() < 778){
