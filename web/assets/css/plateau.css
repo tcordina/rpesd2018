@@ -22,7 +22,7 @@ body {
     transform: rotate(0);
   }
 }
-/* line 33, ../sass/plateau.scss */
+/* line 32, ../sass/plateau.scss */
 .turn-message {
   display: none;
   position: fixed;
@@ -43,7 +43,7 @@ body {
   line-height: 4vh;
   box-sizing: border-box;
 }
-/* line 52, ../sass/plateau.scss */
+/* line 51, ../sass/plateau.scss */
 .turn-message i {
   animation: rotate 2s 1s infinite;
   transition: .3s;
@@ -650,8 +650,19 @@ aside .tooltip-right .card:last-child {
   box-sizing: border-box;
   font-family: monospace;
 }
+/* line 12, ../sass/_chat.scss */
+.chat .chat-body .chat-messages .bulle-left p sub, .chat .chat-body .chat-messages .bulle-right p sub {
+  position: relative;
+  right: -5px;
+  bottom: -5px;
+  font-size: 0.8em;
+  float: right;
+  padding: 0;
+  margin: 0;
+  opacity: 0.7;
+}
 
-/* line 13, ../sass/_chat.scss */
+/* line 23, ../sass/_chat.scss */
 .chat {
   position: absolute;
   box-sizing: revert;
@@ -662,7 +673,7 @@ aside .tooltip-right .card:last-child {
   background: #222;
   box-shadow: 0 0 100px #731768;
 }
-/* line 22, ../sass/_chat.scss */
+/* line 32, ../sass/_chat.scss */
 .chat .chat-body {
   position: absolute;
   top: 0;
@@ -674,7 +685,7 @@ aside .tooltip-right .card:last-child {
   display: flex;
   align-items: end;
 }
-/* line 32, ../sass/_chat.scss */
+/* line 42, ../sass/_chat.scss */
 .chat .chat-body .chat-messages {
   width: 100%;
   max-height: 100%;
@@ -685,18 +696,18 @@ aside .tooltip-right .card:last-child {
   box-sizing: border-box;
   padding: 10px;
 }
-/* line 41, ../sass/_chat.scss */
+/* line 51, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left {
   width: 100%;
   display: block;
 }
-/* line 44, ../sass/_chat.scss */
+/* line 54, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left p {
   background: #444;
   color: whitesmoke;
   float: left;
 }
-/* line 49, ../sass/_chat.scss */
+/* line 59, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-left p::before {
   content: '';
   position: absolute;
@@ -708,18 +719,18 @@ aside .tooltip-right .card:last-child {
   border-right: 7px solid #444;
   border-bottom: 7px solid transparent;
 }
-/* line 62, ../sass/_chat.scss */
+/* line 72, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right {
   width: 100%;
   display: block;
 }
-/* line 65, ../sass/_chat.scss */
+/* line 75, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right p {
   background: #DC1ABF;
   color: white;
   float: right;
 }
-/* line 70, ../sass/_chat.scss */
+/* line 80, ../sass/_chat.scss */
 .chat .chat-body .chat-messages .bulle-right p::before {
   content: '';
   position: absolute;
@@ -731,7 +742,7 @@ aside .tooltip-right .card:last-child {
   border-left: 7px solid #DC1ABF;
   border-bottom: 7px solid transparent;
 }
-/* line 85, ../sass/_chat.scss */
+/* line 95, ../sass/_chat.scss */
 .chat .chat-foot {
   position: absolute;
   bottom: 0;
@@ -743,7 +754,7 @@ aside .tooltip-right .card:last-child {
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
   z-index: 20;
 }
-/* line 95, ../sass/_chat.scss */
+/* line 105, ../sass/_chat.scss */
 .chat .chat-foot form {
   position: absolute;
   top: 0;
@@ -753,7 +764,7 @@ aside .tooltip-right .card:last-child {
   box-sizing: border-box;
   background: #444;
 }
-/* line 103, ../sass/_chat.scss */
+/* line 113, ../sass/_chat.scss */
 .chat .chat-foot form input {
   position: absolute;
   width: 78%;
@@ -771,7 +782,7 @@ aside .tooltip-right .card:last-child {
   overflow: hidden;
   font-size: 1em;
 }
-/* line 119, ../sass/_chat.scss */
+/* line 129, ../sass/_chat.scss */
 .chat .chat-foot form input:focus {
   top: 0;
   left: 0;
@@ -779,7 +790,7 @@ aside .tooltip-right .card:last-child {
   height: 100%;
   padding: 0 25px;
 }
-/* line 127, ../sass/_chat.scss */
+/* line 137, ../sass/_chat.scss */
 .chat .chat-foot form button {
   font-size: 2em;
   position: absolute;
@@ -798,7 +809,7 @@ aside .tooltip-right .card:last-child {
   z-index: 20;
   transition: 0.1s;
 }
-/* line 144, ../sass/_chat.scss */
+/* line 154, ../sass/_chat.scss */
 .chat .chat-foot form button:active {
   background-color: rgba(200, 200, 200, 0.2);
 }
