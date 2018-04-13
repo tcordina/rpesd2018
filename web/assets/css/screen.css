@@ -1123,6 +1123,8 @@ form button:active {
   transform: translate(-50%, -50%);
   width: 400px;
   height: 250px;
+  margin: 0 !important;
+  margin-left: 0 !important;
 }
 /* line 18, ../sass/_fin-partie.scss */
 .fin-partie .foot a {
