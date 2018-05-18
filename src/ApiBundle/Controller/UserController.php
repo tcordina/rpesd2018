@@ -25,6 +25,7 @@ class UserController extends Controller
     {
         $params = [];
         $criteria = [];
+        $output = [];
         if(!$request->query->get('key') || $request->query->get('key') != 'Goy_S4' ){
             Throw new AccessDeniedHttpException();
         }
@@ -40,11 +41,11 @@ class UserController extends Controller
         if($request->query->get('orderBy')) {
             $order = $request->query->get('orderBy');
             $orderArray = explode('-', $order);
-            //die(var_dump($order, $orderArray));
             $orderBy = array((string) $orderArray[0] => (string) $orderArray[1]);
         }else { $orderBy = null; }
         $limit = $request->query->get('limit') ? $request->query->get('limit') : null;
         $offset = $request->query->get('offset') ? $request->query->get('offset') : null;
+
         foreach($params as $key=>$param){
             $criteria[$key] = $param;
         }
@@ -55,8 +56,8 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->findBy(
             $criteria,
             $orderBy,
-            $limit,
-            $offset
+            (int) $limit,
+            (int) $offset
         );
         foreach($users as $user) {
             $output[] = [
