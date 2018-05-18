@@ -19,6 +19,7 @@ class UserController extends Controller
     /**
      * @Route("/", name="api_users_index")
      * @method("GET")
+     * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
@@ -42,7 +43,7 @@ class UserController extends Controller
             $order = $request->query->get('orderBy');
             $orderArray = explode('-', $order);
             $orderBy = array((string) $orderArray[0] => (string) $orderArray[1]);
-        }else { $orderBy = null; }
+        } else { $orderBy = null; }
         $limit = $request->query->get('limit') ? $request->query->get('limit') : null;
         $offset = $request->query->get('offset') ? $request->query->get('offset') : null;
 
@@ -56,9 +57,10 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->findBy(
             $criteria,
             $orderBy,
-            (int) $limit,
-            (int) $offset
+            $limit,
+            $offset
         );
+
         foreach($users as $user) {
             $output[] = [
                 'id' => $user->getId(),

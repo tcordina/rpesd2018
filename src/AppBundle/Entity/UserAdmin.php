@@ -28,11 +28,11 @@ class UserAdmin extends BaseUser
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="Joueur1")
      */
-    public $parties1;
+    private $parties1;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="Joueur2")
      */
-    public $parties2;
+    private $parties2;
 
     /**
      * @var int
