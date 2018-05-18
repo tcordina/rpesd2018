@@ -79,6 +79,12 @@ class UserAdmin extends BaseUser
     private $imageFile;
 
     /**
+     * @ORM\Column(name="api_key", type="string", length=10)
+     * @var string
+     */
+    private $apiKey;
+
+    /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var \DateTime
      */
@@ -383,5 +389,29 @@ class UserAdmin extends BaseUser
     public function removeMessage(\AppBundle\Entity\Message $message)
     {
         $this->messages->removeElement($message);
+    }
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return UserAdmin
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 }

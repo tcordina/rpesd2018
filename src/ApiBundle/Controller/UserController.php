@@ -24,12 +24,16 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        header("Access-Control-Allow-Origin: *");
+
         $params = [];
         $criteria = [];
         $output = [];
-        if(!$request->query->get('key') || $request->query->get('key') != 'Goy_S4' ){
+        $em = $this->getDoctrine()->getManager();
+
+        if(!$request->query->get('key') || !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
             Throw new AccessDeniedHttpException();
-        }
+
         if($request->query->get('id'))
             $params['id'] = $request->query->get('id');
         if($request->query->get('username'))
@@ -54,7 +58,7 @@ class UserController extends Controller
             $criteria = array('enabled' => 1);
         }
 
-        $users = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->findBy(
+        $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
             $criteria,
             $orderBy,
             $limit,

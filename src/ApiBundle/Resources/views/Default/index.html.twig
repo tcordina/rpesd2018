@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Documentation API</h1>
         <h2>Ressources</h2>
-        Pour le moment il n'est possible d'accéder qu'a la ressource users à l'adresse <code>{{ app.request.getSchemeAndHttpHost() ~ path('api_users_index') }}</code><br/>avec une clé.
+        Pour le moment il n'est possible d'accéder qu'a la ressource users à l'adresse <code>{{ app.request.getSchemeAndHttpHost() ~ path('api_users_index') }}</code>avec une clé.
 
         <h2>Paramètres</h2>
         <table class="table">
@@ -23,23 +23,23 @@
                 </tr>
                 <tr>
                     <td>id</td>
-                    <td>id d'un utilisateur</td>
-                    <td><code>/api/users?key=[key]&id=2</code><br/>retourne l'utilisateur ayant l'ID <b>2</b></td>
+                    <td>ID de l'utilisateur</td>
+                    <td><code>/api/users?key=[key]&id=2</code><br/>retourne l'utilisateur ayant <b>l'ID 2</b></td>
                 </tr>
                 <tr>
                     <td>username</td>
                     <td>Pseudo de l'utilisateur</td>
-                    <td><code>/api/users?key=[key]&username=toto</code><br/>retourne l'utilisateur ayant pour pseudo <b>toto</b> </td>
+                    <td><code>/api/users?key=[key]&username=toto</code><br/>retourne l'utilisateur ayant pour <b>pseudo toto</b> </td>
                 </tr>
                 <tr>
                     <td>elo</td>
                     <td>Elo de l'utilisateur</td>
-                    <td><code>/api/users?key=[key]&elo=1200</code><br/>retourne tous les utilisateurs ayant <b>1200</b> d'elo</td>
+                    <td><code>/api/users?key=[key]&elo=1200</code><br/>retourne tous les utilisateurs ayant <b>1200 d'elo</b></td>
                 </tr>
                 <tr>
                     <td>rank</td>
                     <td>Grade de l'utilisateur</td>
-                    <td><code>/api/users?key=[key]&rank=silver</code><br/>retourne tous les utilisateurs ayant le grade <b>argent</b></td>
+                    <td><code>/api/users?key=[key]&rank=silver</code><br/>retourne tous les utilisateurs ayant le <b>grade argent</b></td>
                 </tr>
                 <tr>
                     <td> </td>
@@ -49,17 +49,17 @@
                 <tr>
                     <td>orderBy</td>
                     <td>Ordonne les résultats</td>
-                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc</code><br/>ordonne la requête du dessus par elo décroissant</td>
+                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc</code><br/>ordonne la requête par <b>elo décroissant</b></td>
                 </tr>
                 <tr>
                     <td>limit</td>
                     <td>Limite les résultats</td>
-                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc&limit=5</code><br/>retourne les 5 premiers utilisateurs ayant le grade <b>argent</b></td>
+                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc&limit=5</code><br/>Limite la requête aux <b>5 premiers</b> résultats</td>
                 </tr>
                 <tr>
                     <td>offset</td>
                     <td><i>A utiliser avec limit.</i><br/>Décale le résultat de <b>limit</b></td>
-                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc&limit=5&offset=10</code><br/>retourne les 5 utilisateurs ayant un grade argent compris entre le 10ème et le 15ème </td>
+                    <td><code>/api/users?key=[key]&rank=silver&orderBy=elo-desc&limit=5&offset=10</code><br/><b>Décale</b> la requête de <b>10</b> résultats</td>
                 </tr>
             </tbody>
         </table>

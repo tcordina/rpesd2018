@@ -11,7 +11,7 @@ easy_admin:
                 fields: ['id', 'username', 'email', 'enabled', 'lastLogin', 'roles','elo', 'imageName', 'updatedAt']
                 sort: ['lastLogin', 'DESC']
             form:
-                fields: ['username', 'email', 'roles', 'elo', 'rank', { property: 'imageFile', type: 'vich_image' }]
+                fields: ['username', 'email', 'roles', 'elo', 'rank', 'apiKey', { property: 'imageFile', type: 'vich_image' }]
                 sort: ['lastLogin', 'DESC']
             disabled_actions: ['new']
         Partie:
