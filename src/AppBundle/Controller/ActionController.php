@@ -29,7 +29,6 @@ class ActionController extends PartieController
      */
     public function actionHandler(Request $request, Partie $partie, $joueur)
     {
-        //return new JsonResponse($request->request->all());
         $em = $this->getDoctrine()->getManager();
         $cards = $em->getRepository('AppBundle:Carte')->findAll();
         $action = $request->request->get('action');
@@ -42,8 +41,6 @@ class ActionController extends PartieController
             $carte = $request->request->get('carte');
             $cartes = $cards[$carte-1];
         }
-        //return new Response('cartes:'.json_encode($cartes));
-        //return new Response($request->request->get('cartes'));
 
         switch ($action) {
             case 'secret':
