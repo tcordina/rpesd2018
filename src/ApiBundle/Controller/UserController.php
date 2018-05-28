@@ -31,15 +31,15 @@ class UserController extends Controller
         $output = [];
         $em = $this->getDoctrine()->getManager();
 
-        if(!$request->query->get('key') || !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
+        if(!$request->query->get('key') == 'key' && !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
             Throw new AccessDeniedHttpException();
 
         if($request->query->get('id'))
-            $params['id'] = $request->query->get('id');
+            $params['id'] = (int) $request->query->get('id');
         if($request->query->get('username'))
             $params['username'] = $request->query->get('username');
         if($request->query->get('elo'))
-            $params['elo'] = $request->query->get('elo');
+            $params['elo'] = (int) $request->query->get('elo');
         if($request->query->get('rank'))
             $params['rank'] = $request->query->get('rank');
 
@@ -75,6 +75,29 @@ class UserController extends Controller
                 'losses' => $user->getLosses(),
             ];
         }
+
+        if(isset($params['id']) || isset($params['username'])) {
+            if (isset($params['id']))
+                $joueur = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->find($params['id']);
+            if (isset($params['username']))
+                $joueur = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->findOneByUsername($params['username']);
+            $partiesArray[] = $joueur->getParties1();
+            $partiesArray[] = $joueur->getParties2();
+            foreach ($partiesArray as $parties) {
+                foreach ($parties as $partie) {
+                    $output[0]['parties'][] = [
+                        'id' => $partie->getId(),
+                        1 => $partie->getJoueur1()->getUsername(),
+                        2 => $partie->getJoueur2()->getUsername(),
+                        'winner' => $partie->getWinner()
+                    ];
+                }
+            }
+            usort($output[0]['parties'], function($a, $b) {
+                return $a['id'] <=> $b['id'];
+            });
+        }
+
         return new JsonResponse($output);
     }
 }

@@ -31,15 +31,12 @@ class PartieController extends Controller
      * @param UserAdmin|null $joueur
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function newAction(Request $request, UserAdmin $joueur = null)
+    public function newAction(Request $request)
     {
         $partie = new Partie();
         $form = $this->createForm('AppBundle\Form\PartieType', $partie);
         $form->handleRequest($request);
 
-        if($joueur !== null) {
-            $partie->setJoueur2($joueur);
-        }
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             if($partie->getJoueur2() == $user) {
@@ -118,7 +115,6 @@ class PartieController extends Controller
 
             $partie->setManche(1);
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
             $em->flush();
 
