@@ -31,7 +31,7 @@ class UserController extends Controller
         $output = [];
         $em = $this->getDoctrine()->getManager();
 
-        if(!$request->query->get('key') == 'key' && !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
+        if(!$request->query->get('key') || !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
             Throw new AccessDeniedHttpException();
 
         if($request->query->get('id'))
