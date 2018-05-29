@@ -8,10 +8,10 @@ easy_admin:
         UserAdmin:
             class: AppBundle\Entity\UserAdmin
             list:
-                fields: ['id', 'username', 'email', 'enabled', 'lastLogin', 'roles','elo', 'imageName', 'updatedAt']
+                fields: ['id', 'username', 'email', 'enabled', 'lastLogin', 'roles','elo', 'imageName', 'apiCalls', 'updatedAt']
                 sort: ['lastLogin', 'DESC']
             form:
-                fields: ['username', 'email', 'roles', 'elo', 'rank', 'apiKey', { property: 'imageFile', type: 'vich_image' }]
+                fields: ['username', 'email', 'roles', 'elo', 'rank', 'apiKey', 'apiCalls', { property: 'imageFile', type: 'vich_image' }]
                 sort: ['lastLogin', 'DESC']
             disabled_actions: ['new']
         Partie:

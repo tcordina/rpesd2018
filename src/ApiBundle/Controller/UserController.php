@@ -31,8 +31,13 @@ class UserController extends Controller
         $output = [];
         $em = $this->getDoctrine()->getManager();
 
-        if(!$request->query->get('key') || !$em->getRepository('AppBundle:UserAdmin')->findOneBy(array('apiKey' => $request->query->get('key'))))
+        $caller = $em->getRepository('AppBundle:UserAdmin')->findOneBy(['apiKey' => $request->query->get('key')]);
+
+        if(!$request->query->get('key') || !$caller)
             Throw new AccessDeniedHttpException();
+
+        $calls = $caller->getApiCalls() == null ? 0 : $caller->getApiCalls();
+        $caller->setApiCalls($calls + 1);
 
         if($request->query->get('id'))
             $params['id'] = (int) $request->query->get('id');
@@ -97,6 +102,9 @@ class UserController extends Controller
                 return $a['id'] <=> $b['id'];
             });
         }
+
+        $em->persist($caller);
+        $em->flush();
 
         return new JsonResponse($output);
     }

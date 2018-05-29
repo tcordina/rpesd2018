@@ -28,8 +28,8 @@ class PartieController extends Controller
      * @Route("/new", name="partie_new")
      * @Method("POST")
      * @param Request $request
-     * @param UserAdmin|null $joueur
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @internal param UserAdmin $joueur
      */
     public function newAction(Request $request)
     {

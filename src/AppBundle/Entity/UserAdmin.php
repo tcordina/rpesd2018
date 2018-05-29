@@ -85,7 +85,13 @@ class UserAdmin extends BaseUser
     private $apiKey;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="api_calls", type="integer", nullable=true)
+     * @var integer
+     */
+    private $apiCalls;
+
+    /**
+     * @ORM\Column(name="updated_at", type="datetime")
      * @var \DateTime
      */
     private $updatedAt;
@@ -97,6 +103,7 @@ class UserAdmin extends BaseUser
         $this->setRank('argent');
         $this->setWins(0);
         $this->setLosses(0);
+        $this->setApiCalls(0);
     }
 
     /**
@@ -413,5 +420,29 @@ class UserAdmin extends BaseUser
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    /**
+     * Set apiCalls
+     *
+     * @param \int $apiCalls
+     *
+     * @return UserAdmin
+     */
+    public function setApiCalls($apiCalls)
+    {
+        $this->apiCalls = $apiCalls;
+
+        return $this;
+    }
+
+    /**
+     * Get apiCalls
+     *
+     * @return \int
+     */
+    public function getApiCalls()
+    {
+        return $this->apiCalls;
     }
 }
