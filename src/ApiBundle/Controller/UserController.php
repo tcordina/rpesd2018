@@ -56,6 +56,7 @@ class UserController extends Controller
         $limit = $request->query->get('limit') ? $request->query->get('limit') : null;
         $offset = $request->query->get('offset') ? $request->query->get('offset') : null;
         $showParties = $request->query->get('parties') ? filter_var($request->query->get('parties'), FILTER_VALIDATE_BOOLEAN) : 0;
+        $showEnCours = $request->query->get('playing') ? filter_var($request->query->get('playing'), FILTER_VALIDATE_BOOLEAN) : 0;
 
         foreach($params as $key=>$param){
             $criteria[$key] = $param;
@@ -88,11 +89,37 @@ class UserController extends Controller
             $partiesArray[] = $joueur->getParties2();
             foreach ($partiesArray as $parties) {
                 foreach ($parties as $partie) {
+                    if($showEnCours == false && $partie->getEnded() == 0) {
+                        continue;
+                    }
+                    if($partie->getWinner() == 1) {
+                        $winner = 'player1';
+                    }elseif($partie->getWinner() == 2) {
+                        $winner = 'player2';
+                    }else {
+                        $winner = null;
+                    }
                     $output[0]['parties'][] = [
                         'id' => $partie->getId(),
-                        1 => $partie->getJoueur1()->getUsername(),
-                        2 => $partie->getJoueur2()->getUsername(),
-                        'winner' => $partie->getWinner()
+                        'player1' => [
+                            'id' => $partie->getJoueur1()->getId(),
+                            'username' => $partie->getJoueur1()->getUsername(),
+                            'elo' => $partie->getJoueur1()->getElo(),
+                            'rank' => $partie->getJoueur1()->getRank(),
+                            'wins' => $partie->getJoueur1()->getWins(),
+                            'losses' => $partie->getJoueur1()->getLosses(),
+                        ],
+                        'player2' => [
+                            'id' => $partie->getJoueur2()->getId(),
+                            'username' => $partie->getJoueur2()->getUsername(),
+                            'elo' => $partie->getJoueur2()->getElo(),
+                            'rank' => $partie->getJoueur2()->getRank(),
+                            'wins' => $partie->getJoueur2()->getWins(),
+                            'losses' => $partie->getJoueur2()->getLosses(),
+                        ],
+                        'winner' => $winner,
+                        'rounds' => $partie->getManche(),
+                        'created_at' => $partie->getCreatedAt(),
                     ];
                 }
             }
