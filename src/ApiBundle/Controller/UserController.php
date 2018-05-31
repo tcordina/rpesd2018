@@ -27,7 +27,7 @@ class UserController extends Controller
         header("Access-Control-Allow-Origin: *");
 
         $params = [];
-        $criteria = [];
+        $criteria = ['enabled' => 1];
         $output = [];
         $em = $this->getDoctrine()->getManager();
 
@@ -55,12 +55,10 @@ class UserController extends Controller
         } else { $orderBy = null; }
         $limit = $request->query->get('limit') ? $request->query->get('limit') : null;
         $offset = $request->query->get('offset') ? $request->query->get('offset') : null;
+        $showParties = $request->query->get('parties') ? filter_var($request->query->get('parties'), FILTER_VALIDATE_BOOLEAN) : 0;
 
         foreach($params as $key=>$param){
             $criteria[$key] = $param;
-        }
-        if(count($criteria) == 0) {
-            $criteria = array('enabled' => 1);
         }
 
         $users = $em->getRepository('AppBundle:UserAdmin')->findBy(
@@ -81,7 +79,7 @@ class UserController extends Controller
             ];
         }
 
-        if(isset($params['id']) || isset($params['username'])) {
+        if((isset($params['id']) || isset($params['username'])) && $showParties == true) {
             if (isset($params['id']))
                 $joueur = $this->getDoctrine()->getRepository('AppBundle:UserAdmin')->find($params['id']);
             if (isset($params['username']))
