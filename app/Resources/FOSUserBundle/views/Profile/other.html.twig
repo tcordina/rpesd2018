@@ -20,6 +20,7 @@
     {% endfor %}
     {% if is_granted('ROLE_ADMIN') %}
         <div class="admin"><a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a></div>
+        <a href="{{ path('api_default_index') }}">API</a>
     {% endif %}
     <div class="backto-profil">
         <a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-chevron-left"></i>&nbsp; Profil</a>

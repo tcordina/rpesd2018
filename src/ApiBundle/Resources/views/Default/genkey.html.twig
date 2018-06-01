@@ -1,0 +1,47 @@
+{% extends '@Api/base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #form-key {
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15%;
+        }
+        p {
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Génération de clé</h1>
+        <div id="form-key">
+            <form action="{{ path('api_genkey') }}" method="POST" id="genkey">
+                <p>Votre clé est :</p>
+                <div class="form-inline">
+                    <input type="text" id="key" class="form-control" name="key" value="{{ key }}">
+                    <button class="btn btn-primary">Générer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#genkey').on('submit', function(e) {
+            e.preventDefault()
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('api_genkey') }}",
+                success: function (res) {
+                    $('#key').val(res)
+                }
+            })
+        })
+    </script>
+{% endblock %}
+

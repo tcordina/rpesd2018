@@ -5,7 +5,8 @@
         <h1>Documentation de l'API</h1>
         <br/>
         <h2>Ressources</h2>
-        Pour le moment il n'est possible d'accéder qu'a la ressource users à l'adresse <code>{{ app.request.getSchemeAndHttpHost() ~ path('api_users_index') }}</code>avec une clé.
+        Pour le moment il n'est possible d'accéder qu'a la ressource users à l'adresse <code>{{ app.request.getSchemeAndHttpHost() ~ path('api_users_index') }}</code>avec une clé.<br/>
+        Vous êtes administrateur ? <a href="{{ path('api_genkey') }}">Générer une clé</a>
         <br/><br/>
         <h2>Paramètres</h2>
         <table class="table">

@@ -19,7 +19,10 @@
         </span>
     {% endfor %}
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="admin"><a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a></div>
+        <div class="admin">
+            <a href="{{ path('admin') }}" style="margin-left: 85px">Administration</a>
+            <a href="{{ path('api_default_index') }}">API</a>
+        </div>
     {% endif %}
 
     <div id="dropform" class="profil">
