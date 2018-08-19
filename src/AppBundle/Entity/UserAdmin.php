@@ -79,7 +79,7 @@ class UserAdmin extends BaseUser
     private $imageFile;
 
     /**
-     * @ORM\Column(name="api_key", type="string", length=10)
+     * @ORM\Column(name="api_key", type="string", nullable=true, length=10)
      * @var string
      */
     private $apiKey;
