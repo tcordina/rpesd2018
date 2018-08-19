@@ -91,7 +91,7 @@ class UserAdmin extends BaseUser
     private $apiCalls;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var \DateTime
      */
     private $updatedAt;
